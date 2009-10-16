@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlimaKonflikt", "KlimaKonflikt\KlimaKonflikt.csproj", "{20E05587-688B-404C-970F-47419F11BFF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.Core", "GameDev.Core\GameDev.Core.csproj", "{685E36FA-7469-4DCB-B2BB-06D5470D5AD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.GameBoard", "GameDev.GameBoard\GameDev.GameBoard.csproj", "{FE295AC7-3102-4265-A606-A8784B3D34D0}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -19,6 +23,18 @@ Global
 		{20E05587-688B-404C-970F-47419F11BFF8}.Release|x86.Build.0 = Release|x86
 		{6DEEE6F3-A628-47E0-ADF5-FF0B9F490993}.Debug|x86.ActiveCfg = Debug|x86
 		{6DEEE6F3-A628-47E0-ADF5-FF0B9F490993}.Release|x86.ActiveCfg = Release|x86
+		{685E36FA-7469-4DCB-B2BB-06D5470D5AD8}.Debug|x86.ActiveCfg = Debug|x86
+		{685E36FA-7469-4DCB-B2BB-06D5470D5AD8}.Debug|x86.Build.0 = Debug|x86
+		{685E36FA-7469-4DCB-B2BB-06D5470D5AD8}.Release|x86.ActiveCfg = Release|x86
+		{685E36FA-7469-4DCB-B2BB-06D5470D5AD8}.Release|x86.Build.0 = Release|x86
+		{1CA66F92-9784-43D7-B143-828E829CA062}.Debug|x86.ActiveCfg = Debug|x86
+		{1CA66F92-9784-43D7-B143-828E829CA062}.Release|x86.ActiveCfg = Release|x86
+		{FE295AC7-3102-4265-A606-A8784B3D34D0}.Debug|x86.ActiveCfg = Debug|x86
+		{FE295AC7-3102-4265-A606-A8784B3D34D0}.Debug|x86.Build.0 = Debug|x86
+		{FE295AC7-3102-4265-A606-A8784B3D34D0}.Release|x86.ActiveCfg = Release|x86
+		{FE295AC7-3102-4265-A606-A8784B3D34D0}.Release|x86.Build.0 = Release|x86
+		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Debug|x86.ActiveCfg = Debug|x86
+		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

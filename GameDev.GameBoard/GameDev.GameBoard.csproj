@@ -1,19 +1,17 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
-    <ProjectGuid>{20E05587-688B-404C-970F-47419F11BFF8}</ProjectGuid>
+    <ProjectGuid>{FE295AC7-3102-4265-A606-A8784B3D34D0}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KlimaKonflikt</RootNamespace>
-    <AssemblyName>KlimaKonflikt</AssemblyName>
+    <RootNamespace>GameDev.GameBoard</RootNamespace>
+    <AssemblyName>GameDev.GameBoard</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
-    <XnaCrossPlatformGroupID>c30b90a7-0ba8-486d-8cad-c9b8445f6c4a</XnaCrossPlatformGroupID>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <XnaCrossPlatformGroupID>52070f80-54de-463b-a123-3c9d179555c6</XnaCrossPlatformGroupID>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -70,6 +68,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -83,17 +82,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="KlimaKonfliktGame.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
+    <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
-      <Project>6deee6f3-a628-47e0-adf5-ff0b9f490993</Project>
+      <Project>1f5c7aa3-c90d-48bd-bb43-1579ea65eac5</Project>
       <Visible>False</Visible>
     </NestedContentProject>
   </ItemGroup>
@@ -138,10 +133,6 @@
     <ProjectReference Include="..\GameDev.Core\GameDev.Core.csproj">
       <Project>{685E36FA-7469-4DCB-B2BB-06D5470D5AD8}</Project>
       <Name>GameDev.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameDev.GameBoard\GameDev.GameBoard.csproj">
-      <Project>{FE295AC7-3102-4265-A606-A8784B3D34D0}</Project>
-      <Name>GameDev.GameBoard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
