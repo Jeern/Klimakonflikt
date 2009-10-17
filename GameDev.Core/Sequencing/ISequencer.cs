@@ -5,9 +5,7 @@ using System.Text;
 
 namespace GameDev.Core.Sequencing
 {
-    public interface ISequencer
+    public interface ISequencer : IEnumerator<int>
     {
-        int Current { get; }
-        void MoveNext();
     }
 }

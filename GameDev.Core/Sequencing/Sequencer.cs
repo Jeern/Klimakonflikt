@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace GameDev.Core.Sequencing
 {
@@ -24,17 +25,45 @@ namespace GameDev.Core.Sequencing
 
         #region ISequencer Members
 
+        protected string SequencerErrorMessage()
+        {
+            return string.Format("minValue: {0} must be smaller than maxValue: {1} in {2}", MinValue, MaxValue, this.GetType().Name);
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+           //Der er intet at dispose
+        }
+
+        #endregion
+
+        #region IEnumerator Members
+
         public int Current
         {
             get;
             protected set;
         }
 
-        public abstract void MoveNext();
+        public abstract bool MoveNext();
 
-        protected string SequencerErrorMessage()
+
+        public virtual void Reset()
         {
-            return string.Format("minValue: {0} must be smaller than maxValue: {1} in {2}", MinValue, MaxValue, this.GetType().Name);
+            Current = MinValue;
+        }
+
+        #endregion
+
+        #region IEnumerator Members
+
+        object IEnumerator.Current
+        {
+            get { return Current; }
         }
 
         #endregion
