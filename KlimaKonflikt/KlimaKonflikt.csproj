@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIController.cs" />
     <Compile Include="Ejerskab.cs" />
     <Compile Include="GameImages.cs" />
     <Compile Include="KKMonster.cs" />
