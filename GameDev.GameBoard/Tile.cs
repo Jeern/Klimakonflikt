@@ -17,12 +17,17 @@ namespace GameDev.GameBoard
 {
     public class Tile : Placeable,  ICloneable
     {
-        private Rectangle _destinationRectangle;
-        public Point Center { get { return DestinationRectangle.Center; } }
-        public Rectangle DestinationRectangle { get{return _destinationRectangle;}
-            private set { _destinationRectangle = value; }
-        }
+
+
+        public bool ShouldDrawBackground { get; set; }
+        public bool ShouldDrawContents { get; set; }
+        public Point Center { get { return BackgroundDestinationRectangle.Center; } }
+
+        public Rectangle ContentDestinationRectangle { get; set; }
+        public Rectangle BackgroundDestinationRectangle { get; set; }
+        
         public GameBoard GameBoard { get; set; }
+
         public SpriteBatch SpriteBatch { get; set; }
 
         public bool HasNeighbor(Direction direction) 
@@ -37,9 +42,10 @@ namespace GameDev.GameBoard
         public int HorizontalIndex { get { return _tileIndexHorizontally; }  set { _tileIndexHorizontally = value; RecalculateLayout(); } }
         public int VerticalIndex { get { return _tileIndexVertically; }  set { _tileIndexVertically = value; RecalculateLayout(); } }
 
-        private GameImage _gameImage;
-        public GameImage BackgroundGameImage { get { return _gameImage; } set { _gameImage = value; RecalculateLayout(); } }
-        public GameImage ContentGameImage { get; set; }
+        private GameImage _backgroundImage, _contentImage;
+        public GameImage BackgroundGameImage { get { return _backgroundImage; } set { _backgroundImage = value; RecalculateLayout(); } }
+        public GameImage ContentGameImage { get { return _contentImage; } set { _contentImage = value; RecalculateContentLayout(); } }
+        
 
         public Tile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch) : this(game, board, gameImage, spriteBatch, int.MinValue, int.MinValue) { }
 
@@ -51,13 +57,22 @@ namespace GameDev.GameBoard
             this.SpriteBatch = spriteBatch;
             this.HorizontalIndex = horizontalIndex;
             this.VerticalIndex = verticalIndex;
+            this.ShouldDrawBackground = GameBoard.CompleteBackground == null;
+            this.ShouldDrawContents = true;
            
         }
 
+        internal void RecalculateContentLayout()
+        {
+            ContentDestinationRectangle = new Rectangle(this.Center.X - ContentGameImage.CurrentTexture.Width/2 ,
+                this.Center.Y - ContentGameImage.CurrentTexture.Height/2 ,
+        ContentGameImage.CurrentTexture.Width, ContentGameImage.CurrentTexture.Height);
+
+        }
 
         internal void RecalculateLayout()
         {
-            DestinationRectangle = new Rectangle(HorizontalIndex * BackgroundGameImage.CurrentTexture.Width + GameBoard.X,
+            BackgroundDestinationRectangle = new Rectangle(HorizontalIndex * BackgroundGameImage.CurrentTexture.Width + GameBoard.X,
                 VerticalIndex * BackgroundGameImage.CurrentTexture.Height + GameBoard.Y, BackgroundGameImage.CurrentTexture.Width, BackgroundGameImage.CurrentTexture.Height);
             
         }
@@ -68,7 +83,7 @@ namespace GameDev.GameBoard
         public object Clone()
         {
             Tile newTile = new Tile(Game, GameBoard, BackgroundGameImage, SpriteBatch, HorizontalIndex, VerticalIndex);
-            newTile.DestinationRectangle = this.DestinationRectangle;
+            newTile.BackgroundDestinationRectangle = this.BackgroundDestinationRectangle;
             return newTile;
         }
 
@@ -83,16 +98,29 @@ namespace GameDev.GameBoard
         }
 
         public void DrawBackGround(GameTime gameTime)
-        { 
+        {
+            SpriteBatch.Draw(BackgroundGameImage.CurrentTexture, BackgroundDestinationRectangle, Color.White);
+        }
+
+        public void DrawContents(GameTime gametime)
+        {
+            SpriteBatch.Draw(ContentGameImage.CurrentTexture,ContentDestinationRectangle , Color.White);
         }
 
         public override void Draw(GameTime gameTime)
         {
 
-            SpriteBatch.Draw(BackgroundGameImage.CurrentTexture, DestinationRectangle, Color.White);
-            if(ContentGameImage != null) SpriteBatch.Draw(ContentGameImage.CurrentTexture, DestinationRectangle, Color.White);
+            if (ShouldDrawBackground)
+            {
+                DrawBackGround(gameTime);
+            }
 
-                base.Draw(gameTime);
+            if (ShouldDrawContents && ContentGameImage != null)
+            {
+                DrawContents(gameTime);
+            }
+
+            base.Draw(gameTime);
         }
 
         public override string ToString()
