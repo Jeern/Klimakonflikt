@@ -17,7 +17,6 @@ using GameDev.Core.Graphics;
 using System.Diagnostics;
 
 
-
 namespace KlimaKonflikt
 {
     /// <summary>
@@ -30,7 +29,7 @@ namespace KlimaKonflikt
 
         GameBoard board;
 
-        GameImage oilTowerImage, wheelBarrowImage;
+        GameImage oilTowerImage, wheelBarrowImage, completeFloorGameImage;
 
         //private GameImage m_BlomstImage;
         //private GameImage m_OlieImage;
@@ -50,7 +49,7 @@ namespace KlimaKonflikt
         List<WalledTile> oilTowerTiles, wheelBarrowTiles;
 
         Texture2D tileFloor;
-
+        
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
 
         public KlimaKonfliktGame()
@@ -102,7 +101,11 @@ namespace KlimaKonflikt
             IEnumerable<GameBoard> boards = LevelLoader.GetLevels(this, staticFloor, spriteBatch, staticFloor.CurrentTexture.Width);
             //board = new GameBoard(this, staticFloor, spriteBatch, "Board", tilesAcross, tilesDown, 64);
             board = boards.ToArray ()[0];
-            board.SetPosition(new Point(100, 0));
+
+            Texture2D completeFloor = Content.Load<Texture2D>("full_level");
+            completeFloorGameImage = new GameImage(completeFloor);
+            board.CompleteBackground = completeFloorGameImage;
+            board.SetPosition(new Point(180, 50));
 
             wheelBarrowTiles = new List<WalledTile>();
             oilTowerTiles = new List<WalledTile>();
@@ -116,8 +119,6 @@ namespace KlimaKonflikt
 
             Texture2D oilTowerTexture = Content.Load<Texture2D>("oil_tower");
             Texture2D wheelBarrowTexture = Content.Load<Texture2D>("wheelbarrel");
-
-
             oilTowerImage = new GameImage(oilTowerTexture);
             oilTower1 = new Sprite(this, oilTowerImage, spriteBatch, 0, oilTowerTiles[0].Center);
             

@@ -9,7 +9,7 @@ namespace GameDev.Core
         public static Rectangle NewBoundingRectangle(Point corner1, Point corner2)
         {
             return new Rectangle(Math.Min(corner1.X, corner2.X), Math.Min(corner1.Y, corner2.Y), Math.Abs(corner1.X - corner2.X), Math.Abs(corner1.Y - corner2.Y));
-                    }
+}
 
         public static bool IsBetweenPoints(Point pointToCheck, Point a, Point b)
         {

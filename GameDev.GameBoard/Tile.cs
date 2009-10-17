@@ -82,6 +82,9 @@ namespace GameDev.GameBoard
             base.Update(gameTime);
         }
 
+        public void DrawBackGround(GameTime gameTime)
+        { 
+        }
 
         public override void Draw(GameTime gameTime)
         {
