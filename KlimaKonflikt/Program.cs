@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Forms;
 
 namespace KlimaKonflikt
 {
@@ -9,10 +10,16 @@ namespace KlimaKonflikt
         /// </summary>
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             using (KlimaKonfliktGame game = new KlimaKonfliktGame())
             {
                 game.Run();
             }
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show((e.ExceptionObject as Exception).ToString());
         }
     }
 }
