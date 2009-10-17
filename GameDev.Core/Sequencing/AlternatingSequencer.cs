@@ -5,6 +5,9 @@ using System.Text;
 
 namespace GameDev.Core.Sequencing
 {
+    /// <summary>
+    /// Alternates sequence again and again. Don't use foreach
+    /// </summary>
     public class AlternatingSequencer : Sequencer
     {
         private bool m_GoingForward = true;
@@ -17,7 +20,7 @@ namespace GameDev.Core.Sequencing
             Current = minValue;  
         }
 
-        public override void MoveNext()
+        public override bool MoveNext()
         {
             if (Current == MaxValue && m_GoingForward)
             {
@@ -36,6 +39,7 @@ namespace GameDev.Core.Sequencing
             {
                 Current--;
             }
+            return true;
         }
     }
 }

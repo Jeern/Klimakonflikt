@@ -5,6 +5,9 @@ using System.Text;
 
 namespace GameDev.Core.Sequencing
 {
+    /// <summary>
+    /// Don't use foreach the random sequence never stops
+    /// </summary>
     public class RandomSequencer : Sequencer
     {
         private RealRandom m_Random;
@@ -17,9 +20,10 @@ namespace GameDev.Core.Sequencing
             MoveNext();
         }
 
-        public override void MoveNext()
+        public override bool MoveNext()
         {
             Current = m_Random.Next();
+            return true;
         }
 
     }

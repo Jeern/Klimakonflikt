@@ -5,6 +5,9 @@ using System.Text;
 
 namespace GameDev.Core.Sequencing
 {
+    /// <summary>
+    /// Repeats sequence again and again. Don't use foreach
+    /// </summary>
     public class RepeatingSequencer : Sequencer
     {
         public RepeatingSequencer(int maxValue) : this(0, maxValue) {}
@@ -15,7 +18,7 @@ namespace GameDev.Core.Sequencing
             Current = minValue;  
         }
 
-        public override void MoveNext()
+        public override bool MoveNext()
         {
             if (Current < MaxValue)
             {
@@ -25,6 +28,7 @@ namespace GameDev.Core.Sequencing
             {
                 Current = MinValue;
             }
+            return true; 
         }
     }
 }

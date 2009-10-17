@@ -12,9 +12,9 @@ namespace GameDev.Core.Sequencing
             Current = value;
         }
 
-        public override void MoveNext()
+        public override bool MoveNext()
         {
-            //Do nothing
+            return false;
         }
     }
 }

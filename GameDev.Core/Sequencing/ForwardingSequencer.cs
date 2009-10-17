@@ -14,12 +14,14 @@ namespace GameDev.Core.Sequencing
             Current = minValue;  
         }
 
-        public override void MoveNext()
+        public override bool MoveNext()
         {
             if (Current < MaxValue)
             {
                 Current++;
+                return true;
             }
+            return false;
         }
     }
 }

@@ -90,6 +90,7 @@
     <Compile Include="Sequencing\ForwardingSequencer.cs" />
     <Compile Include="Sequencing\RandomSequencer.cs" />
     <Compile Include="Sequencing\RepeatingSequencer.cs" />
+    <Compile Include="Sequencing\SequencedIterator.cs" />
     <Compile Include="Sequencing\Sequencer.cs" />
     <Compile Include="IPlaceable.cs" />
     <Compile Include="DirectionChanger.cs" />
