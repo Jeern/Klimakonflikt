@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GameDev.Core
 {
-    public class DirectionChanger
+    public class DirectionChanger : IEquatable<DirectionChanger>
     {
         public DirectionChanger() : this(0, 0) { }
 
@@ -20,8 +20,7 @@ namespace GameDev.Core
 
         public void Offset(DirectionChanger offset)
         {
-            this.DeltaX += offset.DeltaX;
-            this.DeltaY += offset.DeltaY;
+            this.Offset(offset.DeltaX, offset.DeltaY);
         }
 
         public void Offset(int x, int y)
@@ -30,6 +29,19 @@ namespace GameDev.Core
             this.DeltaY += y;
         }
 
+        #region IEquatable<DirectionChanger> Members
+
+        public bool Equals(DirectionChanger other)
+        {
+            return (other.DeltaX == this.DeltaX && other.DeltaY == this.DeltaY);
+        }
+
+        #endregion
+
+        public override int GetHashCode()
+        {
+            return ((DeltaX % Int16.MaxValue) << 16) + (DeltaY % Int16.MaxValue);
+        }
 
     }
 }

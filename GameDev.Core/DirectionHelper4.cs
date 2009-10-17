@@ -20,7 +20,7 @@ namespace GameDev.Core
 
         public static DirectionChanger Up = new DirectionChanger(0, -1);
         public static DirectionChanger Right = new DirectionChanger(1, 0);
-        public static DirectionChanger Down = new DirectionChanger(0, -1);
+        public static DirectionChanger Down = new DirectionChanger(0, 1);
         public static DirectionChanger Left = new DirectionChanger(-1, 0);
 
         public static Dictionary<Direction, DirectionChanger> Offsets = null;
@@ -42,6 +42,7 @@ namespace GameDev.Core
             Directions.Add(Right, Direction.Right);
             Directions.Add(Down, Direction.Down);
             Directions.Add(Left, Direction.Left);
+            Directions.Add(None, Direction.None);
 
             
             KeyboardOffsets = new Dictionary<Keys, DirectionChanger>();
@@ -87,6 +88,10 @@ namespace GameDev.Core
 
         public static Direction GetDirection(int deltaX, int deltaY)
         {
+
+            //if we are moving diagonally - restrict to east-west
+            if (deltaX * deltaY != 0)
+            { deltaY = 0; }
             //TODO:
             DirectionChanger changer = new DirectionChanger(Math.Sign(deltaX), Math.Sign(deltaY));
             return Directions[changer];
