@@ -41,7 +41,7 @@ namespace KlimaKonflikt
 
         Texture2D tileFloor, player1;
 
-        
+        SoundEffect frøPlant;        
 
         public KlimaKonfliktGame()
         {
@@ -80,7 +80,9 @@ namespace KlimaKonflikt
             
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
+            frøPlant = Content.Load<SoundEffect>("froe_plantes");
+            frøPlant = Content.Load<SoundEffect>("olieplet_spildes");
             
 
             //m_BlomstImage = GameImages.GetBlomstImage(Content);
@@ -162,8 +164,12 @@ namespace KlimaKonflikt
                 player1Position.SetPosition(centerOfPlayersTile);
 
                 //****** SÆT BLOMST
-                EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
-                tile.ContentGameImage = GameImages.GetBlomstImage(Content);
+                if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Blomst)
+                {
+                    EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
+                    tile.ContentGameImage = GameImages.GetBlomstImage(Content);
+                    frøPlant.Play();
+                }
 
 
                 Console.WriteLine(tile);
