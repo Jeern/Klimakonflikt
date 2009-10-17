@@ -29,22 +29,17 @@ namespace KlimaKonflikt
 
         GameBoard board;
 
-        GameImage oilTowerImage1, oilTowerImage2, wheelBarrowImage, completeFloorGameImage;
-
-        //private GameImage m_BlomstImage;
-        //private GameImage m_OlieImage;
+        GameImage oilTowerImage1, oilTowerImage2, wheelBarrowImage, completeFloorGameImage, ildImage;
 
         KKPlayer frøPose, olieTønde;
 
+
         KeyboardState keyboardState;
-        //Placeable player1Position;
-        //float player1Speed = 0.3F;
-        //Direction player1Direction, player1WantedDirection;
 
         Ejerskab[,] EjerskabsOversigt;
         int antalEjetAfFrøpose, antalEjetAfOlietønde;
 
-        Sprite oilTower1, oilTower2, wheelBarrow1, wheelBarrow2;
+        Sprite oilTower1, oilTower2, wheelBarrow1, wheelBarrow2, ild;
 
         List<WalledTile> oilTowerTiles, wheelBarrowTiles;
 
@@ -95,6 +90,8 @@ namespace KlimaKonflikt
             tileFloor = Content.Load<Texture2D>("64x64");
 
             GameImage staticFloor = new GameImage(tileFloor);
+            
+
 
             frøPoseBillede = Content.Load<Texture2D>("flowersack");
 //            olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
@@ -114,10 +111,10 @@ namespace KlimaKonflikt
             oilTowerTiles = new List<WalledTile>();
 
             wheelBarrowTiles.Add(board.Tiles[4, 4]);
-            wheelBarrowTiles.Add(board.Tiles[0, 4]);
+            wheelBarrowTiles.Add(board.Tiles[5, 0]);
 
-            oilTowerTiles.Add( board.Tiles[0, 5]);
-            oilTowerTiles.Add( board.Tiles[5, 9]);
+            oilTowerTiles.Add(board.Tiles[5, 5]);
+            oilTowerTiles.Add(board.Tiles[5, 9]);
 
             font = Content.Load<SpriteFont>("Arial");
             //Texture2D oilTowerTexture = Content.Load<Texture2D>("oil_tower");
@@ -125,9 +122,10 @@ namespace KlimaKonflikt
             oilTowerImage1 = GameImages.GetOlieTaarnImage(Content);
             oilTowerImage2 = GameImages.GetOlieTaarnImage(Content);
             oilTower1 = new Sprite(this, oilTowerImage1, spriteBatch, 0, oilTowerTiles[0].Center);
+            oilTower1.GameImageOffset = new Point(0, -20);
 
             oilTower2 = new Sprite(this, oilTowerImage2, spriteBatch, 0, oilTowerTiles[1].Center);
-
+            oilTower2.GameImageOffset = new Point(0, -20);
             wheelBarrowImage = new GameImage(wheelBarrowTexture);
             
             
@@ -145,13 +143,6 @@ namespace KlimaKonflikt
             frøTankning = Content.Load<SoundEffect>("tankfroe");
             olieTankning = Content.Load<SoundEffect>("tankolie");
 
-
-
-            //m_BlomstImage = GameImages.GetBlomstImage(Content);
-            //m_OlieImage = GameImages.GetOlieImage(Content);
-
-            // TODO: use this.Content to load your game content here
-            
             Components.Add(board);
 
             this.Components.Add(wheelBarrow1);
@@ -160,6 +151,11 @@ namespace KlimaKonflikt
             this.Components.Add(oilTower2);
             Components.Add(frøPose);
             Components.Add(olieTønde);
+
+
+            ildImage = GameImages.GetIldImage(Content);
+            ild = new Sprite(this, ildImage, spriteBatch, .3F, board.Tiles[4,4].Center );
+            Components.Add(ild);
 
 
         }
