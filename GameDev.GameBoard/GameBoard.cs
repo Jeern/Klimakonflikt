@@ -80,7 +80,7 @@ namespace GameDev.GameBoard
         public WalledTile[,] Tiles { get; protected set; }
 
         public GameImage BaseImage{ get; set; }
-
+        public GameImage CompleteBackground { get; set; }
         private Rectangle _outerRectangle;
 
         public Rectangle OuterRectangle { get { return _outerRectangle; } }
@@ -101,7 +101,7 @@ namespace GameDev.GameBoard
             _widthInPixels = TilesHorizontally * TileSizeInPixels;
             _heightInPixels = TilesVertically * TileSizeInPixels;
 
-            this._outerRectangle = new Rectangle(X, Y, X + this.WidthInPixels, Y + this.HeightInPixels);
+            this._outerRectangle = new Rectangle(X, Y, this.WidthInPixels, this.HeightInPixels);
 
         }
 
@@ -214,31 +214,19 @@ namespace GameDev.GameBoard
 
         public override void Draw(GameTime gameTime)
         {
-            //if (!AutoUpdateTiles)
-            //{
-            //    if (!_bigImageUpdated)
-            //    {
-            //        CreateBigImage(gameTime);
-            //        _bigImageUpdated = true;
-            //    }
 
-            //    _batch.Draw(CompleteGameBoard, new Rectangle(0,0,CompleteGameBoard.Width, CompleteGameBoard.Height), Color.White);
-
-            //}
-            //else
-            //{
-                for (int x = 0; x < TilesHorizontally; x++)
-                {
-                    for (int y = 0; y < TilesVertically; y++)
-                    {
-                        //TODO: let the tiles draw themselves as they are DrawableGameComponents
-                        //must each Tile know the SpriteBatch?
-                        //what about performance?
-                        Tiles[x, y].Draw(gameTime);
-                        //_batch.Draw(tileToDraw.Texture, tileToDraw.DestinationRectangle, Color.White);
-                    }
-                }
-            //}
+            if (CompleteBackground != null)
+            {
+                SpriteBatch.Draw(CompleteBackground.CurrentTexture, OuterRectangle, Color.White);
+            }
+            for (int x = 0; x < TilesHorizontally; x++)
+            {
+               for (int y = 0; y < TilesVertically; y++)
+               {
+                   Tiles[x, y].Draw(gameTime);
+               }
+            }
+            
 
             base.Draw(gameTime);
         }
@@ -256,15 +244,15 @@ namespace GameDev.GameBoard
 
 
         Point _position;
-        public int X { get { return _position.X; } set { _position.X = value; RecalculateTileRectangles(); } }
+        public int X { get { return _position.X; } set { _position.X = value; RecalculateTileRectangles(); RecalculateDimensions(); } }
 
-        public int Y { get { return _position.Y; } set { _position.Y = value; RecalculateTileRectangles(); } }
+        public int Y { get { return _position.Y; } set { _position.Y = value; RecalculateTileRectangles(); RecalculateDimensions(); } }
+
 
         public void Move(Direction direction, float distance)
         {
-            
+            DirectionHelper4.Offset(this, direction, distance);
         }
-
         #endregion
     }
 }
