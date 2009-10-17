@@ -30,6 +30,7 @@ namespace KlimaKonflikt
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private AIController m_AIController = new AIController();
 
         GameBoard board;
 
@@ -208,7 +209,7 @@ namespace KlimaKonflikt
 
             CalculatePlayerMove(gameTime, frøPose);
             CalculatePlayerMove(gameTime, olieTønde);
-            new AIController().CalculateAIMove(gameTime, board,  m_Ild);
+            m_AIController.CalculateAIMove(gameTime, board, m_Ild);
             //m_BlomstImage.Update(gameTime);
             //m_OlieImage.Update(gameTime);
 
