@@ -56,7 +56,7 @@
     <Tile Row="5" Column="4" Top="True" Bottom="False" Left="False" Right="True" />
     <Tile Row="6" Column="4" Top="False" Bottom="True" Left="True" Right="False" />
     <Tile Row="7" Column="4" Top="True" Bottom="False" Left="False" Right="True" />
-    <Tile Row="8" Column="4" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="8" Column="4" Top="False" Bottom="False" Left="True" Right="False" />
     <Tile Row="9" Column="4" Top="False" Bottom="True" Left="False" Right="True" />
 
     <Tile Row="0" Column="5" Top="True" Bottom="False" Left="True" Right="False" />
