@@ -26,7 +26,8 @@ namespace GameDev.Core
         public SpriteBatch SpriteBatch { get; set; }
 
         // Lidt i tvivl om hvorledes Textture-sizen sættes til texturefilen's size
-        public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed) : this(game, gameImage, spriteBatch, speed, 0,0) {}
+        public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, Point startingPosition) : this(game, gameImage, spriteBatch, speed, startingPosition.X, startingPosition.Y) { }
+        public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed) : this(game, gameImage, spriteBatch, speed, 0, 0) { }
 
         public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, int x, int y)
             : base(game, x, y)
