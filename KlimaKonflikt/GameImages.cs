@@ -142,7 +142,7 @@ namespace KlimaKonflikt
         public static GameImage GetIldImage(ContentManager content)
         {
 
-                    return new GameImage(
+             return new GameImage(
                 new SequencedIterator<Texture2D>(new AlternatingSequencer(0, 9),
                     new List<Texture2D>()
                     {
@@ -156,7 +156,7 @@ namespace KlimaKonflikt
                         content.Load<Texture2D>(@"Ild\Ild0008"),
                         content.Load<Texture2D>(@"Ild\Ild0009"),
                         content.Load<Texture2D>(@"Ild\Ild0010"),
-                      }), 100);
+                      }), new MinMaxIterator(new RepeatingSequencer(0,9), 80, 89));
         }
 
 

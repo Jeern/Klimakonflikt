@@ -431,13 +431,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="full_level.png">
-      <Name>full_level</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Arial.spritefont">
       <Name>Arial</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -731,6 +724,13 @@
     </Compile>
     <Compile Include="Ild\ild0010.png">
       <Name>ild0010</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="full_level.png">
+      <Name>full_level</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
