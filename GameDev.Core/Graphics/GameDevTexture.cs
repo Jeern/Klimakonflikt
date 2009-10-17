@@ -20,5 +20,10 @@ namespace GameDev.Core.Graphics
             gdTexture.Texture = texture;
             return gdTexture;
         }
+
+        public static implicit operator Texture2D(GameDevTexture texture)
+        {
+            return texture.Texture;
+        }
     }
 }
