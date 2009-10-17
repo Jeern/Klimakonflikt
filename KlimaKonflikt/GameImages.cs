@@ -9,9 +9,9 @@ using GameDev.Core.Sequencing;
 
 namespace KlimaKonflikt
 {
-    public static class BlomstAnimator
+    public static class GameImages
     {
-        public static GameImage GetGameImage(ContentManager content)
+        public static GameImage GetBlomstImage(ContentManager content)
         {
 //            return new GameImage(content.Load <Texture2D>(@"Blomst\Blomst0020"));
             return new GameImage(
@@ -38,7 +38,7 @@ namespace KlimaKonflikt
                         content.Load<Texture2D>(@"Blomst\Blomst0018"),
                         content.Load<Texture2D>(@"Blomst\Blomst0019"),
                         content.Load<Texture2D>(@"Blomst\Blomst0020")
-                      }), 75);
+                      }), 20);
         }
     }
 }
