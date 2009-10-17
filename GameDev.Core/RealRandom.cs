@@ -12,6 +12,8 @@ namespace GameDev.Core
         public RealRandom(int min, int max)
         {
             m_Random = new Random(GetSeed());
+            m_Min = min;
+            m_Max = max;
         }
 
         public int Next()

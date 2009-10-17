@@ -13,6 +13,8 @@ using Microsoft.Xna.Framework.Storage;
 
 using GameDev.Core;
 using GameDev.GameBoard;
+using GameDev.Core.Graphics;
+using System.Diagnostics;
 
 
 
@@ -26,6 +28,8 @@ namespace KlimaKonflikt
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GameBoard board;
+
+        private GameImage m_BlomstImage;
 
         KeyboardState keyboardState;
         Placeable player1Position;
@@ -69,6 +73,8 @@ namespace KlimaKonflikt
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            m_BlomstImage = BlomstAnimator.GetGameImage(Content);
+
             // TODO: use this.Content to load your game content here
             tileFloor = Content.Load<Texture2D>("64x64");
             player1 = Content.Load<Texture2D>("crosshair");
@@ -103,6 +109,7 @@ namespace KlimaKonflikt
             player1WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirection());
             //Console.WriteLine(player1WantedDirection);
             CalculatePlayer1sMove(gameTime);
+            m_BlomstImage.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -170,6 +177,7 @@ namespace KlimaKonflikt
             spriteBatch.Begin();
             base.Draw(gameTime);
             spriteBatch.Draw(player1, new Rectangle(player1Position.X, player1Position.Y, player1.Width, player1.Height), Color.White);
+            spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White); 
             spriteBatch.End();
         }
     }
