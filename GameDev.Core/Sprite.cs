@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using GameDev.Core;
+using GameDev.Core.Graphics;
 
 namespace GameDev.Core
 {
@@ -19,21 +20,36 @@ namespace GameDev.Core
 
     public class Sprite : Placeable
     {
-        protected Direction spriteDirection;
-        protected Texture2D spriteTexture;
-        protected const float speed = 10.0F;
+        public Direction Direction { get; set; }
+        public float Speed { get; set; }
+        public GameImage GameImage { get; set; }
+        public SpriteBatch SpriteBatch { get; set; }
 
         // Lidt i tvivl om hvorledes Textture-sizen sættes til texturefilen's size
-        public Sprite(Game game, string fileSprite,float speed) : base(game)
-        {
-            this.spriteTexture = new Texture2D(Game.GraphicsDevice, 100, 100);
-            //sætter den til left for at undgå compiler never used warning
-            spriteDirection = Direction.Left;
-        }
+        public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed) : this(game, gameImage, spriteBatch, speed, 0,0) {}
 
-        public Sprite(Game game, string fileSprite, float speed, int x, int y)
+        public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, int x, int y)
             : base(game, x, y)
         {
+            this.GameImage = gameImage;
+            this.Speed = speed;
+            SpriteBatch = spriteBatch;
+
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            GameImage.Update(gameTime);
+            base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            Texture2D currentTexture = GameImage.CurrentTexture;
+
+            SpriteBatch.Draw(currentTexture, new Rectangle(X -  currentTexture.Width/2, Y - currentTexture.Height/2, currentTexture.Width, currentTexture.Height), Color.White);
+            base.Draw(gameTime);
+        }
+
     }
 }

@@ -29,15 +29,19 @@ namespace KlimaKonflikt
         SpriteBatch spriteBatch;
         GameBoard board;
 
-        private GameImage m_BlomstImage;
-        private GameImage m_OlieImage;
+        //private GameImage m_BlomstImage;
+        //private GameImage m_OlieImage;
 
         KeyboardState keyboardState;
         Placeable player1Position;
-        float player1Speed = 0.1F;
+        float player1Speed = 0.3F;
         Direction player1Direction, player1WantedDirection;
 
+        Ejerskab[,] EjerskabsOversigt;
+
         Texture2D tileFloor, player1;
+
+        
 
         public KlimaKonfliktGame()
         {
@@ -47,7 +51,7 @@ namespace KlimaKonflikt
             Content.RootDirectory = "Content";
             this.graphics.PreferredBackBufferWidth =1024;
             this.graphics.PreferredBackBufferHeight = 768;
-
+            
             //this.graphics.IsFullScreen = true;
 
             
@@ -72,16 +76,24 @@ namespace KlimaKonflikt
         /// </summary>
         protected override void LoadContent()
         {
+            
+            
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            
 
-            m_BlomstImage = GameImages.GetBlomstImage(Content);
-            m_OlieImage = GameImages.GetOlieImage(Content);
+            //m_BlomstImage = GameImages.GetBlomstImage(Content);
+            //m_OlieImage = GameImages.GetOlieImage(Content);
 
             // TODO: use this.Content to load your game content here
             tileFloor = Content.Load<Texture2D>("64x64");
+
+            GameImage staticFloor = new GameImage(tileFloor);
             player1 = Content.Load<Texture2D>("flowersack");
-            board = new GameBoard(this, tileFloor, spriteBatch, "Board", 10,10,64);
+            int tilesAcross = 10, tilesDown = 10;
+            EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown]; 
+            board = new GameBoard(this, staticFloor, spriteBatch, "Board", tilesAcross,tilesDown,64);
             Components.Add(board);
             player1Position.SetPosition(board.Tiles[0, 0].Center);
         }
@@ -117,8 +129,8 @@ namespace KlimaKonflikt
                 //Console.WriteLine(player1WantedDirection);
             }
             CalculatePlayer1sMove(gameTime);
-            m_BlomstImage.Update(gameTime);
-            m_OlieImage.Update(gameTime);
+            //m_BlomstImage.Update(gameTime);
+            //m_OlieImage.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -148,6 +160,12 @@ namespace KlimaKonflikt
                 //first move to center
                 Point tempPosition = centerOfPlayersTile;
                 player1Position.SetPosition(centerOfPlayersTile);
+
+                //****** SÆT BLOMST
+                EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
+                tile.ContentGameImage = GameImages.GetBlomstImage(Content);
+
+
                 Console.WriteLine(tile);
                 //calculate how much move we have left
                 int pixelMovesLeft = int.MinValue;
@@ -204,8 +222,8 @@ namespace KlimaKonflikt
             spriteBatch.Begin();
             base.Draw(gameTime);
             spriteBatch.Draw(player1, new Rectangle(player1Position.X - player1.Width/2, player1Position.Y - player1.Height /2, player1.Width, player1.Height), Color.White);
-            spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White);
-            spriteBatch.Draw(m_OlieImage.CurrentTexture, new Rectangle(260, 260, 40, 40), Color.White);
+            //spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White);
+            //spriteBatch.Draw(m_OlieImage.CurrentTexture, new Rectangle(260, 260, 40, 40), Color.White);
             spriteBatch.End();
         }
     }

@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using GameDev.Core;
+using GameDev.Core.Graphics;
 
 namespace GameDev.GameBoard
 {
@@ -29,23 +30,24 @@ namespace GameDev.GameBoard
             return GameBoard.ContainsTile(this.GetNewPosition(direction));
         }
 
-        public int Width { get {return this.Texture.Width; }}
-        public int Height { get { return this.Texture.Height;}}
+        public int Width { get {return this.BackgroundGameImage.CurrentTexture.Width; }}
+        public int Height { get { return this.BackgroundGameImage.CurrentTexture.Height;}}
 
         private int _tileIndexHorizontally, _tileIndexVertically;
         public int HorizontalIndex { get { return _tileIndexHorizontally; }  set { _tileIndexHorizontally = value; RecalculateLayout(); } }
         public int VerticalIndex { get { return _tileIndexVertically; }  set { _tileIndexVertically = value; RecalculateLayout(); } }
 
-        private Texture2D _texture;
-        public Texture2D Texture { get { return _texture; } set { _texture = value; RecalculateLayout(); } }
+        private GameImage _gameImage;
+        public GameImage BackgroundGameImage { get { return _gameImage; } set { _gameImage = value; RecalculateLayout(); } }
+        public GameImage ContentGameImage { get; set; }
 
-        public Tile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch) : this(game, board, texture, spriteBatch, int.MinValue, int.MinValue) { }
+        public Tile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch) : this(game, board, gameImage, spriteBatch, int.MinValue, int.MinValue) { }
 
-        public Tile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex)
-            : base(game, horizontalIndex * texture.Width, verticalIndex * texture.Height)
+        public Tile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex)
+            : base(game, horizontalIndex * gameImage.CurrentTexture.Width, verticalIndex * gameImage.CurrentTexture.Height)
         {
             this.GameBoard = board;
-            this.Texture = texture;
+            this.BackgroundGameImage = gameImage;
             this.SpriteBatch = spriteBatch;
             this.HorizontalIndex = horizontalIndex;
             this.VerticalIndex = verticalIndex;
@@ -55,7 +57,8 @@ namespace GameDev.GameBoard
 
         protected void RecalculateLayout()
         {
-            DestinationRectangle = new Rectangle(HorizontalIndex * Texture.Width, VerticalIndex * Texture.Height, Texture.Width, Texture.Height);
+            DestinationRectangle = new Rectangle(HorizontalIndex * BackgroundGameImage.CurrentTexture.Width, 
+                VerticalIndex * BackgroundGameImage.CurrentTexture.Height, BackgroundGameImage.CurrentTexture.Width, BackgroundGameImage.CurrentTexture.Height);
             
         }
 
@@ -64,7 +67,7 @@ namespace GameDev.GameBoard
 
         public object Clone()
         {
-            Tile newTile = new Tile(Game, GameBoard, Texture, SpriteBatch, HorizontalIndex, VerticalIndex);
+            Tile newTile = new Tile(Game, GameBoard, BackgroundGameImage, SpriteBatch, HorizontalIndex, VerticalIndex);
             newTile.DestinationRectangle = this.DestinationRectangle;
             return newTile;
         }
@@ -72,10 +75,20 @@ namespace GameDev.GameBoard
         #endregion
 
 
+        public override void Update(GameTime gameTime)
+        {
+            BackgroundGameImage.Update(gameTime);
+            if(ContentGameImage != null) ContentGameImage.Update(gameTime);
+            base.Update(gameTime);
+        }
+
+
         public override void Draw(GameTime gameTime)
         {
 
-            SpriteBatch.Draw(Texture, DestinationRectangle, Color.White);
+            SpriteBatch.Draw(BackgroundGameImage.CurrentTexture, DestinationRectangle, Color.White);
+            if(ContentGameImage != null) SpriteBatch.Draw(ContentGameImage.CurrentTexture, DestinationRectangle, Color.White);
+
                 base.Draw(gameTime);
         }
 

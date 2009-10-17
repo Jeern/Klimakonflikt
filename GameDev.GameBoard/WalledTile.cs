@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
 using GameDev.Core;
+using GameDev.Core.Graphics;
 
 namespace GameDev.GameBoard
 {
@@ -20,10 +21,10 @@ namespace GameDev.GameBoard
 
         public WallSet Walls { get; private set; }
 
-        public WalledTile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch) : this(game, board, texture, spriteBatch, int.MinValue, int.MinValue) { }
+        public WalledTile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch) : this(game, board, gameImage, spriteBatch, int.MinValue, int.MinValue) { }
 
-        public WalledTile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex)
-            : base(game, board , texture, spriteBatch, horizontalIndex , verticalIndex)
+        public WalledTile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex)
+            : base(game, board , gameImage, spriteBatch, horizontalIndex , verticalIndex)
         {
             this.Walls = new WallSet();
             this.Walls.HasLeftBorder = (HorizontalIndex == 0);
