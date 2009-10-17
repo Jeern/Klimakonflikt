@@ -1,0 +1,2 @@
+C:\KlimaKatastrofe\Kode2\GameDev.Core\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.Core\Content\obj\x86\Debug\ResolveAssemblyReference.cache

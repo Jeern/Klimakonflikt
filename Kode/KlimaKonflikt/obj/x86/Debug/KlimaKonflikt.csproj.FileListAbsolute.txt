@@ -1,0 +1,10 @@
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\bin\x86\Debug\KlimaKonflikt.exe
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\bin\x86\Debug\KlimaKonflikt.pdb
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\obj\x86\Debug\KlimaKonflikt.exe
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\obj\x86\Debug\KlimaKonflikt.pdb
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\bin\x86\Debug\GameDev.Core.dll
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\bin\x86\Debug\GameDev.GameBoard.dll
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\bin\x86\Debug\GameDev.GameBoard.pdb
+C:\KlimaKatastrofe\Kode\KlimaKonflikt\bin\x86\Debug\GameDev.Core.pdb

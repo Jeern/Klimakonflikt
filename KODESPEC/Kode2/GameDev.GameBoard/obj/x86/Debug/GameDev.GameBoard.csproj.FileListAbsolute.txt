@@ -1,0 +1,16 @@
+C:\KlimaKatastrofe\Kode2\GameDev.GameBoard\bin\x86\Debug\GameDev.GameBoard.dll
+C:\KlimaKatastrofe\Kode2\GameDev.GameBoard\bin\x86\Debug\GameDev.GameBoard.pdb
+C:\KlimaKatastrofe\Kode2\GameDev.GameBoard\bin\x86\Debug\GameDev.Core.dll
+C:\KlimaKatastrofe\Kode2\GameDev.GameBoard\bin\x86\Debug\GameDev.Core.pdb
+C:\KlimaKatastrofe\Kode2\GameDev.GameBoard\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\KlimaKatastrofe\Kode2\GameDev.GameBoard\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\KlimaKatastrofe\Kode2\GameDev.GameBoard\obj\x86\Debug\GameDev.GameBoard.dll
+C:\KlimaKatastrofe\Kode2\GameDev.GameBoard\obj\x86\Debug\GameDev.GameBoard.pdb
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.GameBoard\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.GameBoard\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.GameBoard\obj\x86\Debug\GameDev.GameBoard.dll
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.GameBoard\bin\x86\Debug\GameDev.GameBoard.dll
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.GameBoard\bin\x86\Debug\GameDev.GameBoard.pdb
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.GameBoard\bin\x86\Debug\GameDev.Core.dll
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.GameBoard\bin\x86\Debug\GameDev.Core.pdb
+C:\KlimaKatastrofe\KODESPEC\Kode2\GameDev.GameBoard\obj\x86\Debug\GameDev.GameBoard.pdb
