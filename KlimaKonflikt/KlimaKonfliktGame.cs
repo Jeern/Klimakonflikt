@@ -52,16 +52,17 @@ namespace KlimaKonflikt
         
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
 
+        SpriteFont font;
+
         public KlimaKonfliktGame()
         {
-
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.graphics.PreferredBackBufferWidth = 1024;
             this.graphics.PreferredBackBufferHeight = 768;
 
-            //this.graphics.IsFullScreen = true;
+            this.graphics.IsFullScreen = true;
 
 
         }
@@ -79,6 +80,8 @@ namespace KlimaKonflikt
             base.Initialize();
         }
 
+        Texture2D frøPoseBillede, olieTøndeBillede;
+
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -93,15 +96,15 @@ namespace KlimaKonflikt
 
             GameImage staticFloor = new GameImage(tileFloor);
 
-            Texture2D frøPoseBillede = Content.Load<Texture2D>("flowersack");
-            Texture2D olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
+            frøPoseBillede = Content.Load<Texture2D>("flowersack");
+            olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
 
             int tilesAcross = 10, tilesDown = 10;
             EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown];
             IEnumerable<GameBoard> boards = LevelLoader.GetLevels(this, staticFloor, spriteBatch, staticFloor.CurrentTexture.Width);
             //board = new GameBoard(this, staticFloor, spriteBatch, "Board", tilesAcross, tilesDown, 64);
             board = boards.ToArray ()[0];
-
+            
             Texture2D completeFloor = Content.Load<Texture2D>("full_level");
             completeFloorGameImage = new GameImage(completeFloor);
             board.CompleteBackground = completeFloorGameImage;
@@ -110,13 +113,13 @@ namespace KlimaKonflikt
             wheelBarrowTiles = new List<WalledTile>();
             oilTowerTiles = new List<WalledTile>();
 
-            wheelBarrowTiles.Add(board.Tiles[5, 0]);
-            wheelBarrowTiles.Add(board.Tiles[4, 9]);
+            wheelBarrowTiles.Add(board.Tiles[4, 4]);
+            wheelBarrowTiles.Add(board.Tiles[0, 4]);
 
             oilTowerTiles.Add( board.Tiles[0, 5]);
-            oilTowerTiles.Add( board.Tiles[9, 4]);
+            oilTowerTiles.Add( board.Tiles[5, 9]);
 
-
+            font = Content.Load<SpriteFont>("Arial");
             //Texture2D oilTowerTexture = Content.Load<Texture2D>("oil_tower");
             Texture2D wheelBarrowTexture = Content.Load<Texture2D>("wheelbarrel");
             oilTowerImage1 = GameImages.GetOlieTaarnImage(Content);
@@ -344,14 +347,16 @@ namespace KlimaKonflikt
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             base.Draw(gameTime);
 
 
-            //spriteBatch.DrawString(
+            spriteBatch.DrawString(font, "Points: " + antalEjetAfOlietønde, new Vector2(20,50),Color.White);
+            //spriteBatch.Draw(olieTøndeBillede, 
+            spriteBatch.DrawString(font, "Points: " + antalEjetAfFrøpose, new Vector2(870, 50), Color.White); 
             //spriteBatch.Draw(frøPose.GameImage.CurrentTexture, new Rectangle(frøPose.X - frøPose.GameImage.CurrentTexture.Width / 2, frøPose.Y - frøPose.GameImage.CurrentTexture.Height / 2, frøPose.GameImage.CurrentTexture.Width, frøPose.GameImage.CurrentTexture.Height), Color.White);
             //spriteBatch.Draw(olieTønde.GameImage.CurrentTexture, new Rectangle(olieTønde.X - olieTønde.GameImage.CurrentTexture.Width / 2, olieTønde.Y - olieTønde.GameImage.CurrentTexture.Height / 2, olieTønde.GameImage.CurrentTexture.Width, olieTønde.GameImage.CurrentTexture.Height), Color.White);
             //spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White);
