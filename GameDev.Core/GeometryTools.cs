@@ -31,5 +31,17 @@ namespace GameDev.Core
             placeable.X = newPosition.X;
             placeable.Y = newPosition.Y;
         }
+
+        public static Rectangle GetOffsetCopy(this Rectangle rectangleToOffset, int offset)
+        {
+            return GetOffsetCopy(rectangleToOffset, offset, offset);
+        }
+
+
+        public static Rectangle GetOffsetCopy(this Rectangle rectangleToOffset, int xOffset, int yOffset)
+    {
+        return new Rectangle(rectangleToOffset.X + xOffset, rectangleToOffset.Y + yOffset, rectangleToOffset.Width, rectangleToOffset.Height);
+    }
+
     }
 }
