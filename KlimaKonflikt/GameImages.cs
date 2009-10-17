@@ -138,6 +138,29 @@ namespace KlimaKonflikt
                       }), 45);
         }
 
+
+        public static GameImage GetIldImage(ContentManager content)
+        {
+
+                    return new GameImage(
+                new SequencedIterator<Texture2D>(new AlternatingSequencer(0, 9),
+                    new List<Texture2D>()
+                    {
+                        content.Load<Texture2D>(@"Ild\Ild0001"),
+                        content.Load<Texture2D>(@"Ild\Ild0002"),
+                        content.Load<Texture2D>(@"Ild\Ild0003"),
+                        content.Load<Texture2D>(@"Ild\Ild0004"),
+                        content.Load<Texture2D>(@"Ild\Ild0005"),
+                        content.Load<Texture2D>(@"Ild\Ild0006"),
+                        content.Load<Texture2D>(@"Ild\Ild0007"),
+                        content.Load<Texture2D>(@"Ild\Ild0008"),
+                        content.Load<Texture2D>(@"Ild\Ild0009"),
+                        content.Load<Texture2D>(@"Ild\Ild0010"),
+                      }), 100);
+        }
+
+
+
         public static GameImage GetOilBarrelImage(ContentManager content)
         {
             return new GameImage(
