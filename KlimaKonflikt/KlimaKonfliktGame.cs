@@ -74,7 +74,7 @@ namespace KlimaKonflikt
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            m_BlomstImage = BlomstAnimator.GetGameImage(Content);
+            m_BlomstImage = GameImages.GetBlomstImage(Content);
 
             // TODO: use this.Content to load your game content here
             tileFloor = Content.Load<Texture2D>("64x64");
