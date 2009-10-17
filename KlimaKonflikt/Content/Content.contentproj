@@ -729,13 +729,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameTunes\klimakonflikt_ingametune.wav">
-      <Name>klimakonflikt_ingametune</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="full_level.png">
       <Name>full_level</Name>
       <Importer>TextureImporter</Importer>
@@ -778,6 +771,9 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameTunes\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
