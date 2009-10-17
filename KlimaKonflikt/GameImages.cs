@@ -14,7 +14,7 @@ namespace KlimaKonflikt
         public static GameImage GetBlomstImage(ContentManager content)
         {
             return new GameImage(
-                new SequencedIterator<Texture2D>(new RepeatingSequencer(0, 29),
+                new SequencedIterator<Texture2D>(new ForwardingSequencer(0, 29),
                     new List<Texture2D>()
                     {
                         content.Load<Texture2D>(@"Blomst\Blomst0001"),
@@ -53,7 +53,7 @@ namespace KlimaKonflikt
         public static GameImage GetOlieImage(ContentManager content)
         {
             return new GameImage(
-                new SequencedIterator<Texture2D>(new RepeatingSequencer(0, 29),
+                new SequencedIterator<Texture2D>(new ForwardingSequencer(0, 29),
                     new List<Texture2D>()
                     {
                         content.Load<Texture2D>(@"Olie\ThePatch0001"),

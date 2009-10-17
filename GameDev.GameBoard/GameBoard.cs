@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
 using GameDev.Core;
+using GameDev.Core.Graphics;
 
 
 
@@ -78,7 +79,7 @@ namespace GameDev.GameBoard
         public string Name { get; set; }
         public WalledTile[,] Tiles { get; protected set; }
 
-        public Texture2D BaseTileTexture { get; set; }
+        public GameImage BaseImage{ get; set; }
 
         private Rectangle _outerRectangle;
 
@@ -121,20 +122,20 @@ namespace GameDev.GameBoard
 
         #region Constructors
 
-        public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch spriteBatch) : this(game, baseTileTexture, spriteBatch, "Unnamed", 10, 10, 64) { }
+        public GameBoard(Game game, GameImage baseGameImage, SpriteBatch spriteBatch) : this(game, baseGameImage, spriteBatch, "Unnamed", 10, 10, 64) { }
 
-        public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch spriteBatch, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels)
+        public GameBoard(Game game, GameImage baseGameImage, SpriteBatch spriteBatch, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels)
             : base(game)
         {
             Name = name;
             SpriteBatch = spriteBatch;
-            BaseTileTexture = baseTileTexture;
+            BaseImage = baseGameImage;
             Tiles = new WalledTile[tilesHorizontally, tilesVertically];
             for (int x = 0; x < TilesHorizontally; x++)
             {
                 for (int y = 0; y < TilesVertically; y++)
                 {
-                    Tiles[x, y] = new WalledTile(Game, this, BaseTileTexture, SpriteBatch, x, y);
+                    Tiles[x, y] = new WalledTile(Game, this, baseGameImage, SpriteBatch, x, y);
                 }
             }
             TileSizeInPixels = tileSizeInPixels;
