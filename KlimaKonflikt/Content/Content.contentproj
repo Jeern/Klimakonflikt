@@ -365,6 +365,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="olieplet_spildes.wav">
+      <Name>olieplet_spildes</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="OilBarrel.png">
+      <Name>OilBarrel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="froe_plantes.wav">
       <Name>froe_plantes</Name>
       <Importer>WavImporter</Importer>
@@ -372,10 +386,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="olieplet_spildes.wav">
-      <Name>olieplet_spildes</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
+    <Compile Include="WheelBarrel.png">
+      <Name>WheelBarrel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="oil tower.png">
+      <Name>oil_tower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

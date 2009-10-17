@@ -27,34 +27,41 @@ namespace KlimaKonflikt
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
         GameBoard board;
+
+        GameImage oilTowerImage, wheelBarrowImage;
 
         //private GameImage m_BlomstImage;
         //private GameImage m_OlieImage;
 
+        KKPlayer frøPose, olieTønde;
+
         KeyboardState keyboardState;
-        Placeable player1Position;
-        float player1Speed = 0.3F;
-        Direction player1Direction, player1WantedDirection;
+        //Placeable player1Position;
+        //float player1Speed = 0.3F;
+        //Direction player1Direction, player1WantedDirection;
 
         Ejerskab[,] EjerskabsOversigt;
 
-        Texture2D tileFloor, player1;
+        Sprite oilTower1, oilTower2, wheelBarrow1, wheelBarrow2;
 
-        SoundEffect frøPlant;        
+        Texture2D tileFloor;
+
+        SoundEffect plantFrø, olieDryp;
 
         public KlimaKonfliktGame()
         {
-            player1Position = new Placeable(this);
-            
+
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.graphics.PreferredBackBufferWidth =1024;
+            this.graphics.PreferredBackBufferWidth = 1024;
             this.graphics.PreferredBackBufferHeight = 768;
-            
+
             //this.graphics.IsFullScreen = true;
 
-            
+
         }
 
         /// <summary>
@@ -76,28 +83,58 @@ namespace KlimaKonflikt
         /// </summary>
         protected override void LoadContent()
         {
-            
-            
+
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            tileFloor = Content.Load<Texture2D>("64x64");
 
-            frøPlant = Content.Load<SoundEffect>("froe_plantes");
-            frøPlant = Content.Load<SoundEffect>("olieplet_spildes");
-            
+            GameImage staticFloor = new GameImage(tileFloor);
+
+            Texture2D frøPoseBillede = Content.Load<Texture2D>("flowersack");
+            Texture2D olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
+
+            int tilesAcross = 10, tilesDown = 10;
+            EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown];
+            board = new GameBoard(this, staticFloor, spriteBatch, "Board", tilesAcross, tilesDown, 64);
+
+            Texture2D oilTowerTexture = Content.Load<Texture2D>("oil_tower");
+            Texture2D wheelBarrowTexture = Content.Load<Texture2D>("wheelbarrel");
+
+            oilTower1 = new Sprite(this, oilTowerImage, spriteBatch, 0);
+            oilTower2 = new Sprite(this, oilTowerImage, spriteBatch, 0);
+
+            wheelBarrowImage = new GameImage(wheelBarrowTexture);
+            oilTowerImage = new GameImage(oilTowerTexture);
+
+
+            wheelBarrow1 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, board.Tiles[5, 0].Center);
+            wheelBarrow2 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, board.Tiles[4, 9].Center);
+
+
+
+            frøPose = new KKPlayer(this, new GameImage(frøPoseBillede), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
+            olieTønde = new KKPlayer(this, new GameImage(olieTøndeBillede), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
+
+
+            plantFrø = Content.Load<SoundEffect>("froe_plantes");
+            olieDryp = Content.Load<SoundEffect>("olieplet_spildes");
+
+
 
             //m_BlomstImage = GameImages.GetBlomstImage(Content);
             //m_OlieImage = GameImages.GetOlieImage(Content);
 
             // TODO: use this.Content to load your game content here
-            tileFloor = Content.Load<Texture2D>("64x64");
 
-            GameImage staticFloor = new GameImage(tileFloor);
-            player1 = Content.Load<Texture2D>("flowersack");
-            int tilesAcross = 10, tilesDown = 10;
-            EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown]; 
-            board = new GameBoard(this, staticFloor, spriteBatch, "Board", tilesAcross,tilesDown,64);
             Components.Add(board);
-            player1Position.SetPosition(board.Tiles[0, 0].Center);
+
+            this.Components.Add(wheelBarrow1);
+            this.Components.Add(wheelBarrow2);
+            Components.Add(frøPose);
+            Components.Add(olieTønde);
+
+
         }
 
         /// <summary>
@@ -125,35 +162,42 @@ namespace KlimaKonflikt
 
             if (keyboardState.IsArrowKeyDown())
             {
-
-
-                player1WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirection());
+                frøPose.WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirectionArrowKeys());
                 //Console.WriteLine(player1WantedDirection);
             }
-            CalculatePlayer1sMove(gameTime);
+
+            if (keyboardState.IsWASDKeyDown())
+            {
+                olieTønde.WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirectionWASDKeys());
+                //Console.WriteLine(player1WantedDirection);
+            }
+
+
+            CalculatePlayerMove(gameTime, frøPose);
+            CalculatePlayerMove(gameTime, olieTønde);
             //m_BlomstImage.Update(gameTime);
             //m_OlieImage.Update(gameTime);
 
             base.Update(gameTime);
         }
 
-        private void CalculatePlayer1sMove(GameTime gameTime)
+        private void CalculatePlayerMove(GameTime gameTime, KKPlayer player)
         {
 
-            if (player1Direction == Direction.None)
+            if (frøPose.Direction == Direction.None)
             {
-                player1Direction = player1WantedDirection;
+                frøPose.Direction = frøPose.WantedDirection;
             }
-            
+
             //player1Position.Move(player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
-            int pixelsToMove = (int)(player1Speed * gameTime.ElapsedGameTime.Milliseconds);
-            Point newPosition = player1Position.GetNewPosition( player1Direction, pixelsToMove);
-            Point oldPosition = player1Position.GetPosition();
+            int pixelsToMove = (int)(player.Speed * gameTime.ElapsedGameTime.Milliseconds);
+            Point newPosition = player.GetNewPosition(player.Direction, pixelsToMove);
+            Point oldPosition = player.GetPosition();
             //Console.WriteLine("Dir: " + player1Direction + ", wanted: " + player1WantedDirection);
-            
-            Point centerOfPlayersTile = board.GetTileFromPixelPosition(player1Position.X, player1Position.Y).Center;
-            WalledTile tile = board.GetTileFromPixelPosition(player1Position.GetPosition());
-            
+
+            Point centerOfPlayersTile = board.GetTileFromPixelPosition(player.GetPosition().X, player.GetPosition().Y).Center;
+            WalledTile tile = board.GetTileFromPixelPosition(player.GetPosition());
+
 
             if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, oldPosition))
             {
@@ -161,21 +205,41 @@ namespace KlimaKonflikt
                 //we are going to cross the center
                 //first move to center
                 Point tempPosition = centerOfPlayersTile;
-                player1Position.SetPosition(centerOfPlayersTile);
+                player.SetPosition(centerOfPlayersTile);
 
-                //****** SÆT BLOMST
-                if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Blomst)
+
+                if (player.Ammunition > 0)
                 {
-                    EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
-                    tile.ContentGameImage = GameImages.GetBlomstImage(Content);
-                    frøPlant.Play();
+                    if (player == frøPose)
+                    {
+                        //****** SÆT BLOMST
+                        if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Blomst)
+                        {
+                            EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
+                            tile.ContentGameImage = GameImages.GetBlomstImage(Content);
+                            plantFrø.Play();
+                            player.Ammunition--;
+                        }
+                    }
+                    else if (player == olieTønde)
+                    {
+                        //****** SÆT olietønde
+                        if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Olie)
+                        {
+                            EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Olie;
+                            tile.ContentGameImage = GameImages.GetOlieImage(Content);
+                            olieDryp.Play();
+                            player.Ammunition--;
+                        }
+
+                    }
                 }
 
 
-                Console.WriteLine(tile);
+                //Console.WriteLine(tile);
                 //calculate how much move we have left
                 int pixelMovesLeft = int.MinValue;
-                DirectionChanger deltaMoves = DirectionHelper4.Offsets[player1Direction];
+                DirectionChanger deltaMoves = DirectionHelper4.Offsets[player.Direction];
                 if (deltaMoves.DeltaX != 0) //we are moving horizontally
                 {
                     pixelMovesLeft = Math.Abs(newPosition.X - oldPosition.X);
@@ -188,26 +252,29 @@ namespace KlimaKonflikt
 
                 //TODO: check whether the wanteddirection is clear
                 //
-                if (player1WantedDirection != Direction.None)
+                Direction wantedDirection = player.WantedDirection;
+                Direction playerDirection = player.Direction;
+
+                if (wantedDirection != Direction.None)
                 {
-                    if (!tile.HasBorder(player1WantedDirection))
+                    if (!tile.HasBorder(wantedDirection))
                     {
-                        player1Direction = player1WantedDirection;
-                        player1Position.Move(player1Direction, pixelMovesLeft);
+                        player.Direction = wantedDirection;
+                        player.Move(player.Direction, pixelMovesLeft);
                     }
                     else
                     {
-                        if (!tile.HasBorder(player1Direction))
+                        if (!tile.HasBorder(playerDirection))
                         {
-                            player1Position.Move(player1Direction, pixelMovesLeft);
+                            player.Move(playerDirection, pixelMovesLeft);
                         }
                     }
                 }
             }
             else
             {
-                player1Position.X = newPosition.X;
-                player1Position.Y = newPosition.Y;
+                player.X = newPosition.X;
+                player.Y = newPosition.Y;
 
             }
 
@@ -227,7 +294,8 @@ namespace KlimaKonflikt
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             base.Draw(gameTime);
-            spriteBatch.Draw(player1, new Rectangle(player1Position.X - player1.Width/2, player1Position.Y - player1.Height /2, player1.Width, player1.Height), Color.White);
+            //spriteBatch.Draw(frøPose.GameImage.CurrentTexture, new Rectangle(frøPose.X - frøPose.GameImage.CurrentTexture.Width / 2, frøPose.Y - frøPose.GameImage.CurrentTexture.Height / 2, frøPose.GameImage.CurrentTexture.Width, frøPose.GameImage.CurrentTexture.Height), Color.White);
+            //spriteBatch.Draw(olieTønde.GameImage.CurrentTexture, new Rectangle(olieTønde.X - olieTønde.GameImage.CurrentTexture.Width / 2, olieTønde.Y - olieTønde.GameImage.CurrentTexture.Height / 2, olieTønde.GameImage.CurrentTexture.Width, olieTønde.GameImage.CurrentTexture.Height), Color.White);
             //spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White);
             //spriteBatch.Draw(m_OlieImage.CurrentTexture, new Rectangle(260, 260, 40, 40), Color.White);
             spriteBatch.End();

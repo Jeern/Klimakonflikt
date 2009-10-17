@@ -21,10 +21,11 @@ namespace KlimaKonflikt
     public class KKPlayer : Sprite
     {
         public Direction WantedDirection { get; set; }
-        public KKPlayer(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed):base(game, gameImage, spriteBatch, speed)
+        public KKPlayer(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, Point startingPosition, int ammo ):base(game, gameImage, spriteBatch, speed, startingPosition)
         {
-
+            this.Ammunition = ammo;
         }
-
+        
+        public int Ammunition { get; set; }
     }
 }
