@@ -30,11 +30,10 @@ namespace KlimaKonflikt
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        WalledTile[,] refuelPlacement;
 
         GameBoard board;
 
-        GameImage oilTowerImage1, oilTowerImage2, wheelBarrowImage, completeFloorGameImage, ildImage;
+        GameImage oilTowerImage1, wheelBarrowImage, completeFloorGameImage, ildImage;
 
         KKPlayer frøPose, olieTønde;
         KKMonster m_Ild;
@@ -45,9 +44,9 @@ namespace KlimaKonflikt
         Ejerskab[,] EjerskabsOversigt;
         int antalEjetAfFrøpose, antalEjetAfOlietønde;
 
-        Sprite oilTower1, oilTower2, wheelBarrow1, wheelBarrow2, ild;
+        Sprite oilTower1, wheelBarrow1, ild;
 
-        List<WalledTile> oilTowerTiles, wheelBarrowTiles;
+        WalledTile oilTowerTile, wheelBarrowTile;
 
         Texture2D tileFloor;
 
@@ -57,6 +56,7 @@ namespace KlimaKonflikt
 
         SpriteFont font;
 
+        RealRandom random = new RealRandom(1, 8);
         public KlimaKonfliktGame()
         {
 
@@ -89,6 +89,7 @@ namespace KlimaKonflikt
                 ammoPlacering[0, y] = new Rectangle(50, ammoBottomOffset - 50 * y, ammoSize, ammoSize);
                 ammoPlacering[1, y] = new Rectangle(880, ammoBottomOffset - 50 * y, ammoSize, ammoSize);
             }
+
         }
 
         Texture2D frøPoseBillede; // , olieTøndeBillede;
@@ -126,29 +127,18 @@ namespace KlimaKonflikt
             board.CompleteBackground = completeFloorGameImage;
             board.SetPosition(new Point(180, 50));
 
-            wheelBarrowTiles = new List<WalledTile>();
-            oilTowerTiles = new List<WalledTile>();
-
-            wheelBarrowTiles.Add(board.Tiles[4, 4]);
-            wheelBarrowTiles.Add(board.Tiles[8, 4]);
-
-            oilTowerTiles.Add(board.Tiles[5, 5]);
-            oilTowerTiles.Add(board.Tiles[1, 8]);
+            wheelBarrowTile = board.Tiles[5, 5]; 
+            oilTowerTile =  board.Tiles[4,4];
 
             font = Content.Load<SpriteFont>("Arial");
             Texture2D wheelBarrowTexture = Content.Load<Texture2D>("wheelbarrel");
             oilTowerImage1 = GameImages.GetOlieTaarnImage(Content);
-            oilTowerImage2 = GameImages.GetOlieTaarnImage(Content);
-            oilTower1 = new Sprite(this, oilTowerImage1, spriteBatch, 0, oilTowerTiles[0].Center);
+            oilTower1 = new Sprite(this, oilTowerImage1, spriteBatch, 0, oilTowerTile.Center);
             oilTower1.GameImageOffset = new Point(0, -20);
 
-            oilTower2 = new Sprite(this, oilTowerImage2, spriteBatch, 0, oilTowerTiles[1].Center);
-            oilTower2.GameImageOffset = new Point(0, -20);
             wheelBarrowImage = new GameImage(wheelBarrowTexture);
             
-            
-            wheelBarrow1 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTiles[0].Center);
-            wheelBarrow2 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTiles[1].Center);
+            wheelBarrow1 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTile.Center);
 
             frøPose = new KKPlayer(this, new GameImage(frøPoseBillede), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
@@ -167,9 +157,7 @@ namespace KlimaKonflikt
             Components.Add(board);
 
             this.Components.Add(wheelBarrow1);
-            this.Components.Add(wheelBarrow2);
             this.Components.Add(oilTower1);
-            this.Components.Add(oilTower2);
             Components.Add(frøPose);
             Components.Add(olieTønde);
             Components.Add(m_Ild);
@@ -253,21 +241,25 @@ namespace KlimaKonflikt
                 Point tempPosition = centerOfPlayersTile;
                 player.SetPosition(centerOfPlayersTile);
 
-                if ((player == olieTønde && oilTowerTiles.Contains(tile)) || (player == frøPose && wheelBarrowTiles.Contains(tile)))
+                if ((player == olieTønde && oilTowerTile == tile) || (player == frøPose && wheelBarrowTile == tile ))
                 {
                     if (player.Ammunition < 10)
                     {
 
                     
                     player.Ammunition = 10;
-
+                    
                     if (player == olieTønde)
                     {
                         olieTankning.Play();
+                        oilTowerTile = GetNewRefuelPosition();
+                        oilTower1.SetPosition(oilTowerTile.Center);
                     }
                     else if (player == frøPose)
                     {
                         frøTankning.Play();
+                        wheelBarrowTile = GetNewRefuelPosition();
+                        wheelBarrow1.SetPosition(wheelBarrowTile.Center);
                     }
                     }
                 }
@@ -360,6 +352,18 @@ namespace KlimaKonflikt
             //Console.WriteLine("player1Direction: " + player1Direction +  " newPosition: " + newPosition);
         }
 
+
+        private WalledTile GetNewRefuelPosition()
+        {
+
+            WalledTile newPosition = oilTowerTile;
+            do
+            {
+                newPosition = board.Tiles[random.Next(), random.Next()];
+            } while (newPosition == oilTowerTile || newPosition == wheelBarrowTile );
+
+            return newPosition;
+        }
 
 
         /// <summary>
