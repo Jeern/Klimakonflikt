@@ -4,26 +4,27 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using GameDev.Core.Sequencing;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDev.Core.Graphics
 {
     public class GameImage
     {
-        private SequencedIterator<GameDevTexture> m_ImageIterator;
+        private SequencedIterator<Texture2D> m_ImageIterator;
         private SequencedIterator<int> m_DelayMillisecondsIterator;
 
-        public GameImage(GameDevTexture texture) 
-            : this(new SequencedIterator<GameDevTexture>(new StaticSequencer(), texture), 0)
+        public GameImage(Texture2D texture)
+            : this(new SequencedIterator<Texture2D>(new StaticSequencer(), texture), 0)
         {
         }
 
-        public GameImage(SequencedIterator<GameDevTexture> imageIterator, int delayMilliseconds) 
+        public GameImage(SequencedIterator<Texture2D> imageIterator, int delayMilliseconds) 
             : this(imageIterator, new SequencedIterator<int>(new StaticSequencer(), delayMilliseconds))
         {
             
         }
 
-        public GameImage(SequencedIterator<GameDevTexture> imageIterator, SequencedIterator<int> delayMillisecondsIterator)
+        public GameImage(SequencedIterator<Texture2D> imageIterator, SequencedIterator<int> delayMillisecondsIterator)
         {
             m_ImageIterator = imageIterator;
             m_DelayMillisecondsIterator = delayMillisecondsIterator;
@@ -42,7 +43,7 @@ namespace GameDev.Core.Graphics
             }
         }
 
-        public GameDevTexture CurrentTexture
+        public Texture2D CurrentTexture
         {
             get { return m_ImageIterator.Current; }
         }        

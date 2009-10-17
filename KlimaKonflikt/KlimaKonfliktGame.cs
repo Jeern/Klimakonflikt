@@ -30,6 +30,7 @@ namespace KlimaKonflikt
         GameBoard board;
 
         private GameImage m_BlomstImage;
+        private GameImage m_OlieImage;
 
         KeyboardState keyboardState;
         Placeable player1Position;
@@ -75,6 +76,7 @@ namespace KlimaKonflikt
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             m_BlomstImage = GameImages.GetBlomstImage(Content);
+            m_OlieImage = GameImages.GetOlieImage(Content);
 
             // TODO: use this.Content to load your game content here
             tileFloor = Content.Load<Texture2D>("64x64");
@@ -116,6 +118,7 @@ namespace KlimaKonflikt
             }
             CalculatePlayer1sMove(gameTime);
             m_BlomstImage.Update(gameTime);
+            m_OlieImage.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -201,7 +204,8 @@ namespace KlimaKonflikt
             spriteBatch.Begin();
             base.Draw(gameTime);
             spriteBatch.Draw(player1, new Rectangle(player1Position.X - player1.Width/2, player1Position.Y - player1.Height /2, player1.Width, player1.Height), Color.White);
-            spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White); 
+            spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White);
+            spriteBatch.Draw(m_OlieImage.CurrentTexture, new Rectangle(260, 260, 40, 40), Color.White);
             spriteBatch.End();
         }
     }
