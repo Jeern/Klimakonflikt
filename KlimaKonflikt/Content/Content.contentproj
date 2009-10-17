@@ -729,6 +729,27 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameTunes\flipper.wav">
+      <Name>flipper</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameTunes\Cowbell.wav">
+      <Name>Cowbell</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameTunes\klimakonflikt_ingametune.wav">
+      <Name>klimakonflikt_ingametune</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="full_level.png">
       <Name>full_level</Name>
       <Importer>TextureImporter</Importer>
