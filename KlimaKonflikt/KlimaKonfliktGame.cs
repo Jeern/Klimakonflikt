@@ -15,6 +15,7 @@ using GameDev.Core;
 using GameDev.GameBoard;
 using GameDev.Core.Graphics;
 using System.Diagnostics;
+using GameDev.Core.Sequencing;
 
 
 namespace KlimaKonflikt
@@ -150,7 +151,9 @@ namespace KlimaKonflikt
 
             frøPose = new KKPlayer(this, GameImages.GetFlowersackImage(Content), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
-            m_Ild = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .2F, board.Tiles[0, 9].Center, 10);
+            m_Ild = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .2F, board.Tiles[0, 9].Center, 
+                new GameDev.Core.Sequencing.SequencedIterator<Direction>(
+                new RandomSequencer(0, 3), Direction.Down, Direction.East, Direction.Left, Direction.North), 500);
 
             SoundEffect happyGameTune = Content.Load<SoundEffect>(@"GameTunes\klimakonflikt_ingametune");
             annoyingTunePlayer = happyGameTune.CreateInstance();
