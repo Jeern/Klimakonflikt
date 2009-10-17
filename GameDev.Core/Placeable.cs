@@ -49,11 +49,13 @@ namespace GameDev.Core
         }
 
 
+     
+        #endregion
+
         public override string ToString()
         {
             return this.GetType() + " (x:" + X + ",y:" + Y + ")";
         }
 
-        #endregion
     }
 }

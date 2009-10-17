@@ -9,11 +9,13 @@ namespace GameDev.Core
         public static Rectangle NewBoundingRectangle(Point corner1, Point corner2)
         {
             return new Rectangle(Math.Min(corner1.X, corner2.X), Math.Min(corner1.Y, corner2.Y), Math.Abs(corner1.X - corner2.X), Math.Abs(corner1.Y - corner2.Y));
-        }
+                    }
 
         public static bool IsBetweenPoints(Point pointToCheck, Point a, Point b)
         {
             Rectangle border = NewBoundingRectangle(a, b);
+            //Console.WriteLine(border);
+            //Console.WriteLine("Top: " + border.Top + ", Bottom: " + border.Bottom + ", Right: " + border.Right + ", Left: " + border.Left);
             return pointToCheck.X >= border.Left 
                 && pointToCheck.X <= border.Right
                 && pointToCheck.Y >= border.Top

@@ -145,31 +145,17 @@ namespace GameDev.GameBoard
         #endregion
 
 
-        public void SetBorder(Tile borderTile)
-        {
-            WalledTile newTile = null;
-
-            for (int x = 0; x < TilesHorizontally; x++)
-            {
-                for (int y = 0; y < TilesVertically; y++)
-                {
-                    if (x == 0 || y == 0 || x == TilesHorizontally-1 || y == TilesVertically -1)
-                    {
-                        newTile = (WalledTile)borderTile.Clone();
-                        newTile.HorizontalIndex = x;
-                        newTile.VerticalIndex = y;
-                        Tiles[x, y] = newTile;
-                    }
-                }
-            }
-        }
-
         public bool ContainsPosition(int x, int y)
         {
             return x >= 0 && x < TilesHorizontally && y >= 0 && y < TilesVertically;
         }
 
-        public Tile GetTileFromPixelPosition(int x, int y)
+        public WalledTile GetTileFromPixelPosition(Point p)
+        {
+            return GetTileFromPixelPosition(p.X, p.Y);
+        }
+
+        public WalledTile GetTileFromPixelPosition(int x, int y)
         {
             int resultX = x / TileSizeInPixels;
             int resultY = y / TileSizeInPixels;
