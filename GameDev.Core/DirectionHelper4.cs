@@ -93,13 +93,30 @@ namespace GameDev.Core
             if (deltaX * deltaY != 0)
             { deltaY = 0; }
             //TODO:
-            DirectionChanger changer = new DirectionChanger(Math.Sign(deltaX), Math.Sign(deltaY));
-            return Directions[changer];
+            return DirectionHelper8.GetDirection(deltaX, deltaY);
         }
 
         public static Direction GetDirection(DirectionChanger deltaMove)
         {
             return GetDirection(deltaMove.DeltaX, deltaMove.DeltaY);
+        }
+
+        public static Direction LimitDirection(Direction direction)
+        {
+
+            switch (direction)
+            {
+                case Direction.NorthEast:
+                    return Direction.East;
+                case Direction.SouthEast:
+                    return Direction.East;
+                case Direction.SouthWest:
+                    return Direction.West;
+                case Direction.NorthWest:
+                    return Direction.West;
+                default:
+                    return direction;
+            }
         }
 
 

@@ -43,5 +43,17 @@ namespace GameDev.Core
             return ((DeltaX % Int16.MaxValue) << 16) + (DeltaY % Int16.MaxValue);
         }
 
+
+        public Direction GetDirection()
+        {
+            return DirectionHelper8.GetDirection(DeltaX, DeltaY);
+        }
+
+
+        public override string ToString()
+        {
+            return this.GetType() + "DeltaX: " + DeltaX + ", DeltaY: " + DeltaY;
+        }
+
     }
 }

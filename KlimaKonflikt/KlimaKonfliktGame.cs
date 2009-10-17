@@ -97,14 +97,8 @@ namespace KlimaKonflikt
                 this.Exit();
             }
 
-
-            player1WantedDirection = keyboardState.GetDirection();
-            //if(keyboardState.IsArrowKeyDown()) player1WantedDirection = DirectionHelper4.GetDirection(
-            //if (keyboardState.IsKeyDown(Keys.Up)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Up]; }
-            //if (keyboardState.IsKeyDown(Keys.Right)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Right]; }
-            //if (keyboardState.IsKeyDown(Keys.Down)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Down]; }
-            //if (keyboardState.IsKeyDown(Keys.Left)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Left]; }
-
+            player1WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirection());
+            //Console.WriteLine(player1WantedDirection);
             CalculatePlayer1sMove(gameTime);
 
             base.Update(gameTime);
@@ -112,9 +106,12 @@ namespace KlimaKonflikt
 
         private void CalculatePlayer1sMove(GameTime gameTime)
         {
-            player1Position.Move(player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
-            Point newPosition = DirectionHelper4.GetNewPosition(player1Position, player1Direction);
             
+            //player1Position.Move(player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
+            Point newPosition = player1Position.GetNewPosition( player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
+            player1Position.X = newPosition.X;
+            player1Position.Y = newPosition.Y;
+            Console.WriteLine(player1Position);
         }
 
         /// <summary>
