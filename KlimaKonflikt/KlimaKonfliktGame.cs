@@ -80,7 +80,7 @@ namespace KlimaKonflikt
             base.Initialize();
         }
 
-        Texture2D frøPoseBillede, olieTøndeBillede;
+        Texture2D frøPoseBillede; // , olieTøndeBillede;
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -97,7 +97,7 @@ namespace KlimaKonflikt
             GameImage staticFloor = new GameImage(tileFloor);
 
             frøPoseBillede = Content.Load<Texture2D>("flowersack");
-            olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
+//            olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
 
             int tilesAcross = 10, tilesDown = 10;
             EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown];
@@ -137,7 +137,7 @@ namespace KlimaKonflikt
 
 
             frøPose = new KKPlayer(this, new GameImage(frøPoseBillede), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
-            olieTønde = new KKPlayer(this, new GameImage(olieTøndeBillede), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
+            olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
 
 
             plantFrø = Content.Load<SoundEffect>("froe_plantes");
