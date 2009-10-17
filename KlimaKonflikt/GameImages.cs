@@ -176,5 +176,21 @@ namespace KlimaKonflikt
                         content.Load<Texture2D>(@"OilBarrel\OilBarrel007")
                       }), 45);
         }
+
+        public static GameImage GetFlowersackImage(ContentManager content)
+        {
+            return new GameImage(
+                new SequencedIterator<Texture2D>(new RepeatingSequencer(0, 6),
+                    new List<Texture2D>()
+                    {
+                        content.Load<Texture2D>(@"Flowersack\FlowerSack1"),
+                        content.Load<Texture2D>(@"Flowersack\FlowerSack2"),
+                        content.Load<Texture2D>(@"Flowersack\FlowerSack3"),
+                        content.Load<Texture2D>(@"Flowersack\FlowerSack4"),
+                        content.Load<Texture2D>(@"Flowersack\FlowerSack5"),
+                        content.Load<Texture2D>(@"Flowersack\FlowerSack6"),
+                        content.Load<Texture2D>(@"Flowersack\FlowerSack7")
+                      }), 10);
+        }
     }
 }
