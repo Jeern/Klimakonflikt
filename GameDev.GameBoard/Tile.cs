@@ -78,5 +78,11 @@ namespace GameDev.GameBoard
             SpriteBatch.Draw(Texture, DestinationRectangle, Color.White);
                 base.Draw(gameTime);
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + " Index: " + HorizontalIndex + "," + VerticalIndex;
+        }
+
     }
 }

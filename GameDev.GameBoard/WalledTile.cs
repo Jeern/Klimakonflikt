@@ -28,8 +28,8 @@ namespace GameDev.GameBoard
             this.Walls = new WallSet();
             this.Walls.HasLeftBorder = (HorizontalIndex == 0);
             this.Walls.HasTopBorder = (VerticalIndex == 0);
-            this.Walls.HasBottomBorder = (X == board.TilesHorizontally-1);
-            this.Walls.HasLeftBorder = (X == board.TilesVertically - 1);
+            this.Walls.HasBottomBorder = (verticalIndex == board.TilesVertically - 1);
+            this.Walls.HasRightBorder = (horizontalIndex == board.TilesHorizontally - 1);
         }
 
 
@@ -50,7 +50,9 @@ namespace GameDev.GameBoard
             }
         }
 
-
-	
+        public override string ToString()
+        {
+            return base.ToString() + " Top:" + Walls.HasTopBorder + ", Right:" + Walls.HasRightBorder + ", Bottom:" + Walls.HasBottomBorder + ", Left:" + Walls.HasLeftBorder;
+        }
 	}
 }

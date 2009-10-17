@@ -33,7 +33,7 @@ namespace KlimaKonflikt
 
         KeyboardState keyboardState;
         Placeable player1Position;
-        int player1Speed = 1;
+        float player1Speed = 0.1F;
         Direction player1Direction, player1WantedDirection;
 
         Texture2D tileFloor, player1;
@@ -41,6 +41,7 @@ namespace KlimaKonflikt
         public KlimaKonfliktGame()
         {
             player1Position = new Placeable(this);
+            
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.graphics.PreferredBackBufferWidth =1024;
@@ -77,9 +78,10 @@ namespace KlimaKonflikt
 
             // TODO: use this.Content to load your game content here
             tileFloor = Content.Load<Texture2D>("64x64");
-            player1 = Content.Load<Texture2D>("crosshair");
+            player1 = Content.Load<Texture2D>("flowersack");
             board = new GameBoard(this, tileFloor, spriteBatch, "Board", 10,10,64);
             Components.Add(board);
+            player1Position.SetPosition(board.Tiles[0, 0].Center);
         }
 
         /// <summary>
@@ -104,10 +106,14 @@ namespace KlimaKonflikt
             {
                 this.Exit();
             }
-            
 
-            player1WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirection());
-            //Console.WriteLine(player1WantedDirection);
+            if (keyboardState.IsArrowKeyDown())
+            {
+
+
+                player1WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirection());
+                //Console.WriteLine(player1WantedDirection);
+            }
             CalculatePlayer1sMove(gameTime);
             m_BlomstImage.Update(gameTime);
 
@@ -116,22 +122,30 @@ namespace KlimaKonflikt
 
         private void CalculatePlayer1sMove(GameTime gameTime)
         {
+
+            if (player1Direction == Direction.None)
+            {
+                player1Direction = player1WantedDirection;
+            }
             
             //player1Position.Move(player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
-            int pixelsToMove = player1Speed * gameTime.ElapsedGameTime.Milliseconds;
+            int pixelsToMove = (int)(player1Speed * gameTime.ElapsedGameTime.Milliseconds);
             Point newPosition = player1Position.GetNewPosition( player1Direction, pixelsToMove);
             Point oldPosition = player1Position.GetPosition();
-            
+            //Console.WriteLine("Dir: " + player1Direction + ", wanted: " + player1WantedDirection);
             
             Point centerOfPlayersTile = board.GetTileFromPixelPosition(player1Position.X, player1Position.Y).Center;
+            WalledTile tile = board.GetTileFromPixelPosition(player1Position.GetPosition());
+            
 
-            if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, player1Position.GetPosition()))
+            if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, oldPosition))
             {
+                //Console.WriteLine("BETWEEN");
                 //we are going to cross the center
                 //first move to center
                 Point tempPosition = centerOfPlayersTile;
                 player1Position.SetPosition(centerOfPlayersTile);
-
+                Console.WriteLine(tile);
                 //calculate how much move we have left
                 int pixelMovesLeft = int.MinValue;
                 DirectionChanger deltaMoves = DirectionHelper4.Offsets[player1Direction];
@@ -144,22 +158,32 @@ namespace KlimaKonflikt
                     pixelMovesLeft = Math.Abs(newPosition.Y - oldPosition.Y);
                 }
 
+
                 //TODO: check whether the wanteddirection is clear
                 //
                 if (player1WantedDirection != Direction.None)
                 {
-                    player1Direction = player1WantedDirection;
-                    Console.WriteLine("direction: " + player1Direction);
+                    if (!tile.HasBorder(player1WantedDirection))
+                    {
+                        player1Direction = player1WantedDirection;
+                        player1Position.Move(player1Direction, pixelMovesLeft);
+                    }
+                    else
+                    {
+                        if (!tile.HasBorder(player1Direction))
+                        {
+                            player1Position.Move(player1Direction, pixelMovesLeft);
+                        }
+                    }
                 }
             }
             else
             {
-                player1Direction = player1WantedDirection;
+                player1Position.X = newPosition.X;
+                player1Position.Y = newPosition.Y;
+
             }
 
-
-            player1Position.X = newPosition.X;
-            player1Position.Y = newPosition.Y;
 
             //Console.WriteLine("X: " + player1Position.X + ", Y: " + player1Position.Y);
             //Console.WriteLine("player1Direction: " + player1Direction +  " newPosition: " + newPosition);
@@ -176,7 +200,7 @@ namespace KlimaKonflikt
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             base.Draw(gameTime);
-            spriteBatch.Draw(player1, new Rectangle(player1Position.X, player1Position.Y, player1.Width, player1.Height), Color.White);
+            spriteBatch.Draw(player1, new Rectangle(player1Position.X - player1.Width/2, player1Position.Y - player1.Height /2, player1.Width, player1.Height), Color.White);
             spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White); 
             spriteBatch.End();
         }
