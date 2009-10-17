@@ -80,7 +80,30 @@ namespace GameDev.GameBoard
         public WalledTile[,] Tiles { get; protected set; }
 
         public GameImage BaseImage{ get; set; }
-        public GameImage CompleteBackground { get; set; }
+        private GameImage _completeBackground;
+        public GameImage CompleteBackground { get{return _completeBackground;}
+             set{_completeBackground = value;
+                SetTileBackgroundDrawing(CompleteBackground == null);
+             }
+        }
+
+ private void SetTileBackgroundDrawing(bool shouldDrawBackground)
+{
+    foreach (Tile tile in Tiles)
+    {
+        tile.ShouldDrawBackground = shouldDrawBackground;
+    }
+}
+
+ private void SetTileContentDrawing(bool shouldDrawContents)
+ {
+     foreach (Tile tile in Tiles)
+     {
+         tile.ShouldDrawContents = shouldDrawContents;
+     }
+ }
+
+
         private Rectangle _outerRectangle;
 
         public Rectangle OuterRectangle { get { return _outerRectangle; } }
