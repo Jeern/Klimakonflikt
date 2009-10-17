@@ -10,14 +10,13 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
-
 using GameDev.Core;
 
 namespace GameDev.GameBoard
 {
     public class Tile : Placeable,  ICloneable
     {
-        Rectangle _destinationRectangle;
+        private Rectangle _destinationRectangle;
         public Point Center { get { return DestinationRectangle.Center; } }
         public Rectangle DestinationRectangle { get{return _destinationRectangle;}
             private set { _destinationRectangle = value; }
@@ -30,7 +29,6 @@ namespace GameDev.GameBoard
         {
             return GameBoard.ContainsTile(this.GetNewPosition(direction));
         }
-
 
         public int Width { get {return this.Texture.Width; }}
         public int Height { get { return this.Texture.Height;}}
@@ -77,9 +75,8 @@ namespace GameDev.GameBoard
         public override void Draw(GameTime gameTime)
         {
 
-            SpriteBatch.Draw(Texture, DestinationRectangle, Color.White);
+            SpriteBatch.Draw(Texture, DestinationRectangle, Color.Purple);
                 base.Draw(gameTime);
-
         }
     }
 }
