@@ -92,7 +92,7 @@ namespace KlimaKonflikt
 
         }
 
-        Texture2D frøPoseBillede; // , olieTøndeBillede;
+        //Texture2D frøPoseBillede; // , olieTøndeBillede;
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -113,7 +113,7 @@ namespace KlimaKonflikt
             
 
 
-            frøPoseBillede = Content.Load<Texture2D>("flowersack");
+//            frøPoseBillede = Content.Load<Texture2D>("flowersack");
 //            olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
 
             int tilesAcross = 10, tilesDown = 10;
@@ -140,7 +140,7 @@ namespace KlimaKonflikt
             
             wheelBarrow1 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTile.Center);
 
-            frøPose = new KKPlayer(this, new GameImage(frøPoseBillede), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
+            frøPose = new KKPlayer(this, GameImages.GetFlowersackImage(Content), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
             m_Ild = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .2F, board.Tiles[0, 9].Center, 10);
 
@@ -397,118 +397,57 @@ namespace KlimaKonflikt
 
         private void CalculateAIMove(GameTime gameTime, KKMonster monster)
         {
-            //int pixelsToMove = (int)(monster.Speed * gameTime.ElapsedGameTime.Milliseconds);
-            //Point newPosition = monster.GetNewPosition(monster.Direction, pixelsToMove);
-            //Point oldPosition = monster.GetPosition();
+            int pixelsToMove = (int)(monster.Speed * gameTime.ElapsedGameTime.Milliseconds);
+            Point newPosition = monster.GetNewPosition(monster.Direction, pixelsToMove);
+            Point oldPosition = monster.GetPosition();
 
-            //Point centerOfPlayersTile = board.GetTileFromPixelPosition(monster.GetPosition().X, monster.GetPosition().Y).Center;
-            //WalledTile tile = board.GetTileFromPixelPosition(monster.GetPosition());
-
-
-            //if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, oldPosition))
-            //{
-            //    //we are going to cross the center
-            //    //first move to center
-            //    Point tempPosition = centerOfPlayersTile;
-            //    monster.SetPosition(centerOfPlayersTile);
-
-            //    if ((monster == olieTønde && oilTowerTiles.Contains(tile)) || (monster == frøPose && wheelBarrowTiles.Contains(tile)))
-            //    {
-            //        if (monster.Ammunition < 10)
-            //        {
+            Point centerOfPlayersTile = board.GetTileFromPixelPosition(monster.GetPosition().X, monster.GetPosition().Y).Center;
+            WalledTile tile = board.GetTileFromPixelPosition(monster.GetPosition());
 
 
-            //            monster.Ammunition = 10;
+            if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, oldPosition))
+            {
+                //we are going to cross the center
+                //first move to center
+                Point tempPosition = centerOfPlayersTile;
+                monster.SetPosition(centerOfPlayersTile);
 
-            //            if (monster == olieTønde)
-            //            {
-            //                olieTankning.Play();
-            //            }
-            //            else if (monster == frøPose)
-            //            {
-            //                frøTankning.Play();
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-
-
-            //        if (monster.Ammunition > 0)
-            //        {
-            //            if (monster == frøPose)
-            //            {
-            //                //****** SÆT BLOMST
-            //                if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Blomst)
-            //                {
-            //                    if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] == Ejerskab.Olie)
-            //                    {
-            //                        antalEjetAfOlietønde--;
-            //                    }
-            //                    EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
-            //                    tile.ContentGameImage = GameImages.GetBlomstImage(Content);
-            //                    antalEjetAfFrøpose++;
-            //                    plantFrø.Play();
-            //                    monster.Ammunition--;
-            //                }
-            //            }
-            //            else if (monster == olieTønde)
-            //            {
-            //                //****** SÆT olietønde
-            //                if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Olie)
-            //                {
-            //                    if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] == Ejerskab.Blomst)
-            //                    {
-            //                        antalEjetAfFrøpose--;
-            //                    }
-
-            //                    EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Olie;
-            //                    tile.ContentGameImage = GameImages.GetOlieImage(Content);
-            //                    olieDryp.Play();
-            //                    antalEjetAfOlietønde++;
-            //                    monster.Ammunition--;
-            //                }
-            //            }
-            //        }
-            //    }
+                int pixelMovesLeft = int.MinValue;
+                DirectionChanger deltaMoves = DirectionHelper4.Offsets[monster.Direction];
+                if (deltaMoves.DeltaX != 0) //we are moving horizontally
+                {
+                    pixelMovesLeft = Math.Abs(newPosition.X - oldPosition.X);
+                }
+                else //we are moving vertically
+                {
+                    pixelMovesLeft = Math.Abs(newPosition.Y - oldPosition.Y);
+                }
 
 
-            //    int pixelMovesLeft = int.MinValue;
-            //    DirectionChanger deltaMoves = DirectionHelper4.Offsets[monster.Direction];
-            //    if (deltaMoves.DeltaX != 0) //we are moving horizontally
-            //    {
-            //        pixelMovesLeft = Math.Abs(newPosition.X - oldPosition.X);
-            //    }
-            //    else //we are moving vertically
-            //    {
-            //        pixelMovesLeft = Math.Abs(newPosition.Y - oldPosition.Y);
-            //    }
+                Direction wantedDirection = monster.WantedDirection;
+                Direction playerDirection = monster.Direction;
 
-
-            //    Direction wantedDirection = monster.WantedDirection;
-            //    Direction playerDirection = monster.Direction;
-
-            //    if (wantedDirection != Direction.None)
-            //    {
-            //        if (!tile.HasBorder(wantedDirection))
-            //        {
-            //            monster.Direction = wantedDirection;
-            //            monster.Move(monster.Direction, pixelMovesLeft);
-            //        }
-            //        else
-            //        {
-            //            if (!tile.HasBorder(playerDirection))
-            //            {
-            //                monster.Move(playerDirection, pixelMovesLeft);
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    monster.X = newPosition.X;
-            //    monster.Y = newPosition.Y;
-            //}
+                if (wantedDirection != Direction.None)
+                {
+                    if (!tile.HasBorder(wantedDirection))
+                    {
+                        monster.Direction = wantedDirection;
+                        monster.Move(monster.Direction, pixelMovesLeft);
+                    }
+                    else
+                    {
+                        if (!tile.HasBorder(playerDirection))
+                        {
+                            monster.Move(playerDirection, pixelMovesLeft);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                monster.X = newPosition.X;
+                monster.Y = newPosition.Y;
+            }
         }
     }
 }
