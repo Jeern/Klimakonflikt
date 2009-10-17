@@ -55,10 +55,10 @@ namespace GameDev.GameBoard
         }
 
 
-        protected void RecalculateLayout()
+        internal void RecalculateLayout()
         {
-            DestinationRectangle = new Rectangle(HorizontalIndex * BackgroundGameImage.CurrentTexture.Width, 
-                VerticalIndex * BackgroundGameImage.CurrentTexture.Height, BackgroundGameImage.CurrentTexture.Width, BackgroundGameImage.CurrentTexture.Height);
+            DestinationRectangle = new Rectangle(HorizontalIndex * BackgroundGameImage.CurrentTexture.Width + GameBoard.X,
+                VerticalIndex * BackgroundGameImage.CurrentTexture.Height + GameBoard.Y, BackgroundGameImage.CurrentTexture.Width, BackgroundGameImage.CurrentTexture.Height);
             
         }
 
