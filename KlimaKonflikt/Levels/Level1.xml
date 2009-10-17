@@ -4,15 +4,15 @@
   <Columns>10</Columns>
   <Rows>10</Rows>
   <Tiles>
-    <Tile Row="0" Column="0" Top="True" Bottom="False" Left="True" Right="False" />
-    <Tile Row="1" Column="0" Top="False" Bottom="False" Left="True" Right="False" />
+    <Tile Row="0" Column="0" Top="True" Bottom="False" Left="True" Right="True" />
+    <Tile Row="1" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
     <Tile Row="2" Column="0" Top="False" Bottom="False" Left="True" Right="False" />
-    <Tile Row="3" Column="0" Top="False" Bottom="False" Left="True" Right="False" />
+    <Tile Row="3" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
     <Tile Row="4" Column="0" Top="False" Bottom="True" Left="True" Right="False" />
-    <Tile Row="5" Column="0" Top="True" Bottom="False" Left="True" Right="False" />
-    <Tile Row="6" Column="0" Top="False" Bottom="False" Left="True" Right="False" />
+    <Tile Row="5" Column="0" Top="True" Bottom="False" Left="True" Right="True" />
+    <Tile Row="6" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
     <Tile Row="7" Column="0" Top="False" Bottom="False" Left="True" Right="False" />
-    <Tile Row="8" Column="0" Top="False" Bottom="True" Left="True" Right="False" />
+    <Tile Row="8" Column="0" Top="False" Bottom="True" Left="True" Right="True" />
     <Tile Row="9" Column="0" Top="True" Bottom="True" Left="True" Right="False" />
     
     <Tile Row="0" Column="1" Top="True" Bottom="True" Left="True" Right="False" />
