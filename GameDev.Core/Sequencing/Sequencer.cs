@@ -56,6 +56,7 @@ namespace GameDev.Core.Sequencing
         public virtual void Reset()
         {
             Current = MinValue-1;
+            MoveNext();
         }
 
         #endregion
