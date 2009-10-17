@@ -99,7 +99,9 @@ namespace KlimaKonflikt
 
             int tilesAcross = 10, tilesDown = 10;
             EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown];
-            board = new GameBoard(this, staticFloor, spriteBatch, "Board", tilesAcross, tilesDown, 64);
+            IEnumerable<GameBoard> boards = LevelLoader.GetLevels(this, staticFloor, spriteBatch, staticFloor.CurrentTexture.Width);
+            //board = new GameBoard(this, staticFloor, spriteBatch, "Board", tilesAcross, tilesDown, 64);
+            board = boards.ToArray ()[0];
             board.SetPosition(new Point(100, 0));
 
             wheelBarrowTiles = new List<WalledTile>();
