@@ -85,6 +85,7 @@
     <Compile Include="Direction.cs" />
     <Compile Include="DirectionHelper8.cs" />
     <Compile Include="DirectionHelper4.cs" />
+    <Compile Include="Graphics\GameDevTexture.cs" />
     <Compile Include="Graphics\TextureClipper.cs" />
     <Compile Include="Sequencing\AlternatingSequencer.cs" />
     <Compile Include="Sequencing\ForwardingSequencer.cs" />
