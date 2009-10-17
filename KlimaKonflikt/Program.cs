@@ -9,7 +9,7 @@ namespace KlimaKonflikt
         /// </summary>
         static void Main(string[] args)
         {
-            LevelLoader.GetLevels(null, null, null, 3);
+            //LevelLoader.GetLevels(null, null, null, 3);
             using (KlimaKonfliktGame game = new KlimaKonfliktGame())
             {
                 game.Run();
