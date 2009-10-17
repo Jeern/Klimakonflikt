@@ -438,6 +438,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arial.spritefont">
+      <Name>Arial</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="OlieTaarnet\Oilie tårn0001.png">
       <Name>Oilie tårn0001</Name>
       <Importer>TextureImporter</Importer>
