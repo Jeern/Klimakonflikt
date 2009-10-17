@@ -14,6 +14,8 @@ using Microsoft.Xna.Framework.Storage;
 using GameDev.Core;
 using GameDev.GameBoard;
 
+
+
 namespace KlimaKonflikt
 {
     /// <summary>
@@ -70,7 +72,7 @@ namespace KlimaKonflikt
             // TODO: use this.Content to load your game content here
             tileFloor = Content.Load<Texture2D>("64x64");
             player1 = Content.Load<Texture2D>("crosshair");
-            board = new GameBoard(this, tileFloor, spriteBatch);
+            board = new GameBoard(this, tileFloor, spriteBatch, "Board", 10,10,64);
             Components.Add(board);
         }
 
@@ -96,6 +98,7 @@ namespace KlimaKonflikt
             {
                 this.Exit();
             }
+            
 
             player1WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirection());
             //Console.WriteLine(player1WantedDirection);
@@ -108,10 +111,48 @@ namespace KlimaKonflikt
         {
             
             //player1Position.Move(player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
-            Point newPosition = player1Position.GetNewPosition( player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
+            int pixelsToMove = player1Speed * gameTime.ElapsedGameTime.Milliseconds;
+            Point newPosition = player1Position.GetNewPosition( player1Direction, pixelsToMove);
+            Point oldPosition = player1Position.GetPosition();
+            
+            Point centerOfPlayersTile = board.GetTileFromPixelPosition(player1Position.X, player1Position.Y).Center;
+
+            if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, player1Position.GetPosition()))
+            {
+                //we are going to cross the center
+                //first move to center
+                Point tempPosition = centerOfPlayersTile;
+                player1Position.SetPosition(centerOfPlayersTile);
+
+                //calculate how much move we have left
+                int pixelMovesLeft = int.MinValue;
+                DirectionChanger deltaMoves = DirectionHelper4.Offsets[player1Direction];
+                if (deltaMoves.DeltaX != 0) //we are moving horizontally
+                {
+                    pixelMovesLeft = Math.Abs(newPosition.X - oldPosition.X);
+                }
+                else //we are moving vertically
+                {
+                    pixelMovesLeft = Math.Abs(newPosition.Y - oldPosition.Y);
+                }
+
+                //TODO: check whether the wanteddirection is clear
+                //
+                if (player1WantedDirection != Direction.None)
+                {
+                    player1Direction = player1WantedDirection;
+                    Console.WriteLine("direction: " + player1Direction);
+                }
+                
+                
+
+            }
+
             player1Position.X = newPosition.X;
             player1Position.Y = newPosition.Y;
-            Console.WriteLine(player1Position);
+
+            //Console.WriteLine("X: " + player1Position.X + ", Y: " + player1Position.Y);
+            //Console.WriteLine("player1Direction: " + player1Direction +  " newPosition: " + newPosition);
         }
 
         /// <summary>

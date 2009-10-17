@@ -98,6 +98,7 @@
     <Compile Include="Sequencing\ISequencer.cs" />
     <Compile Include="KeyboardExtensions.cs" />
     <Compile Include="Placeable.cs" />
+    <Compile Include="GeometryTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealRandom.cs" />
     <Compile Include="Sequencing\StaticSequencer.cs" />
