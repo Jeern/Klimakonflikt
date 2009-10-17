@@ -88,5 +88,55 @@ namespace KlimaKonflikt
                         content.Load<Texture2D>(@"Olie\ThePatch0030")
                       }), 20);
         }
+
+        public static GameImage GetOlieTaarnImage(ContentManager content)
+        {
+            return new GameImage(
+                new SequencedIterator<Texture2D>(new RepeatingSequencer(0, 39),
+                    new List<Texture2D>()
+                    {
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0001"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0002"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0003"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0004"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0005"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0006"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0007"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0008"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0009"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0010"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0011"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0012"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0013"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0014"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0015"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0016"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0017"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0018"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0019"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0020"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0021"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0022"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0023"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0024"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0025"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0026"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0027"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0028"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0029"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0030"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0031"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0032"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0033"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0034"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0035"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0036"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0037"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0038"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0039"),
+                        content.Load<Texture2D>(@"OlieTaarnet\Oilie tårn0040")
+                      }), 45);
+        }
+
     }
 }

@@ -29,7 +29,7 @@ namespace KlimaKonflikt
 
         GameBoard board;
 
-        GameImage oilTowerImage, wheelBarrowImage, completeFloorGameImage;
+        GameImage oilTowerImage1, oilTowerImage2, wheelBarrowImage, completeFloorGameImage;
 
         //private GameImage m_BlomstImage;
         //private GameImage m_OlieImage;
@@ -117,12 +117,13 @@ namespace KlimaKonflikt
             oilTowerTiles.Add( board.Tiles[9, 4]);
 
 
-            Texture2D oilTowerTexture = Content.Load<Texture2D>("oil_tower");
+            //Texture2D oilTowerTexture = Content.Load<Texture2D>("oil_tower");
             Texture2D wheelBarrowTexture = Content.Load<Texture2D>("wheelbarrel");
-            oilTowerImage = new GameImage(oilTowerTexture);
-            oilTower1 = new Sprite(this, oilTowerImage, spriteBatch, 0, oilTowerTiles[0].Center);
-            
-            oilTower2 = new Sprite(this, oilTowerImage, spriteBatch, 0, oilTowerTiles[1].Center);
+            oilTowerImage1 = GameImages.GetOlieTaarnImage(Content);
+            oilTowerImage2 = GameImages.GetOlieTaarnImage(Content);
+            oilTower1 = new Sprite(this, oilTowerImage1, spriteBatch, 0, oilTowerTiles[0].Center);
+
+            oilTower2 = new Sprite(this, oilTowerImage2, spriteBatch, 0, oilTowerTiles[1].Center);
 
             wheelBarrowImage = new GameImage(wheelBarrowTexture);
             
