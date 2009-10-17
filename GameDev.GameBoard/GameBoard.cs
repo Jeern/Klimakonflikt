@@ -76,7 +76,9 @@ namespace GameDev.GameBoard
         //}
 
         public string Name { get; set; }
-        public Tile[,] Tiles { get; private set; }
+        public WalledTile[,] Tiles { get; protected set; }
+
+        public Texture2D BaseTileTexture { get; set; }
 
         private Rectangle _outerRectangle;
 
@@ -88,15 +90,15 @@ namespace GameDev.GameBoard
         public int WidthInPixels { get { return _widthInPixels; } }
         public int HeightInPixels { get { return _heightInPixels; } }
 
-        public int TilesWide { get { return Tiles.GetLength(0); } }
-        public int TilesHigh { get { return Tiles.GetLength(1); } }
+        public int TilesHorizontally { get { return Tiles.GetLength(0); } }
+        public int TilesVertically { get { return Tiles.GetLength(1); } }
 
         public SpriteBatch SpriteBatch { get; set; }
         
         private void RecalculateDimensions()
         {
-            _widthInPixels = TilesWide * TileSizeInPixels;
-            _heightInPixels = TilesHigh * TileSizeInPixels;
+            _widthInPixels = TilesHorizontally * TileSizeInPixels;
+            _heightInPixels = TilesVertically * TileSizeInPixels;
 
             this._outerRectangle = new Rectangle(X, Y, X + this.WidthInPixels, Y + this.HeightInPixels);
 
@@ -126,39 +128,34 @@ namespace GameDev.GameBoard
         {
             Name = name;
             SpriteBatch = spriteBatch;
-            
-            Tiles = new Tile[tilesHorizontally, tilesVertically];
-            for (int x = 0; x < TilesWide; x++)
+            BaseTileTexture = baseTileTexture;
+            Tiles = new WalledTile[tilesHorizontally, tilesVertically];
+            for (int x = 0; x < TilesHorizontally; x++)
             {
-                for (int y = 0; y < TilesHigh; y++)
+                for (int y = 0; y < TilesVertically; y++)
                 {
-                    Tiles[x, y] = new Tile(game, this, baseTileTexture, SpriteBatch, x, y);
+                    Tiles[x, y] = new WalledTile(Game, this, BaseTileTexture, SpriteBatch, x, y);
                 }
             }
-        
             TileSizeInPixels = tileSizeInPixels;
         
         }
 
+
         #endregion
 
 
-        public void SetBorder(Texture2D borderTexture)
-        {
-            SetBorder(new Tile(Game, this, borderTexture, SpriteBatch));
-        }
-
         public void SetBorder(Tile borderTile)
         {
-            Tile newTile = null;
+            WalledTile newTile = null;
 
-            for (int x = 0; x < TilesWide; x++)
+            for (int x = 0; x < TilesHorizontally; x++)
             {
-                for (int y = 0; y < TilesHigh; y++)
+                for (int y = 0; y < TilesVertically; y++)
                 {
-                    if (x == 0 || y == 0 || x == TilesWide-1 || y == TilesHigh -1)
+                    if (x == 0 || y == 0 || x == TilesHorizontally-1 || y == TilesVertically -1)
                     {
-                        newTile = (Tile)borderTile.Clone();
+                        newTile = (WalledTile)borderTile.Clone();
                         newTile.HorizontalIndex = x;
                         newTile.VerticalIndex = y;
                         Tiles[x, y] = newTile;
@@ -169,7 +166,7 @@ namespace GameDev.GameBoard
 
         public bool ContainsPosition(int x, int y)
         {
-            return x >= 0 && x < TilesWide && y >= 0 && y < TilesHigh;
+            return x >= 0 && x < TilesHorizontally && y >= 0 && y < TilesVertically;
         }
 
         public Tile GetTileFromPixelPosition(int x, int y)
@@ -235,9 +232,9 @@ namespace GameDev.GameBoard
             //}
             //else
             //{
-                for (int x = 0; x < TilesWide; x++)
+                for (int x = 0; x < TilesHorizontally; x++)
                 {
-                    for (int y = 0; y < TilesHigh; y++)
+                    for (int y = 0; y < TilesVertically; y++)
                     {
                         //TODO: let the tiles draw themselves as they are DrawableGameComponents
                         //must each Tile know the SpriteBatch?

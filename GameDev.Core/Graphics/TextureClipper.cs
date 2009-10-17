@@ -28,10 +28,10 @@ namespace GameDev.Core.Graphics
                 throw new ArgumentException("The texture passed to the constructor is not an even split into squares of size " + tileSize + " x " + tileSize + "!");
             }
 
-            int tilesWide = bigTexture.Width / tileSize;
+            int TilesHorizontally = bigTexture.Width / tileSize;
             int tilesDown = bigTexture.Height / tileSize;
 
-            for (int x = 0; x < tilesWide; x++)
+            for (int x = 0; x < TilesHorizontally; x++)
             {
                 for (int y = 0; y < tilesDown; y++)
                 {

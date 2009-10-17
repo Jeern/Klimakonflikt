@@ -18,19 +18,18 @@ namespace GameDev.GameBoard
 	public class WalledTile : Tile
 	{
 
-
         public WallSet Walls { get; private set; }
 
         public WalledTile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch) : this(game, board, texture, spriteBatch, int.MinValue, int.MinValue) { }
 
         public WalledTile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex)
-            : base(game, board, texture, spriteBatch, horizontalIndex * texture.Width, verticalIndex * texture.Height)
+            : base(game, board , texture, spriteBatch, horizontalIndex , verticalIndex)
         {
             this.Walls = new WallSet();
             this.Walls.HasLeftBorder = (HorizontalIndex == 0);
             this.Walls.HasTopBorder = (VerticalIndex == 0);
-            this.Walls.HasBottomBorder = (X == board.TilesWide-1);
-            this.Walls.HasLeftBorder = (X == board.TilesHigh - 1);
+            this.Walls.HasBottomBorder = (X == board.TilesHorizontally-1);
+            this.Walls.HasLeftBorder = (X == board.TilesVertically - 1);
         }
 
 
