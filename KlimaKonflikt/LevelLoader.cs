@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using GameDev.Core.Graphics;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace KlimaKonflikt
 {
@@ -16,7 +17,7 @@ namespace KlimaKonflikt
         public static IEnumerable<GameBoard> GetLevels(Game game, GameImage tileImage, SpriteBatch spriteBatch, int tileSizeInPixels)
         {
             var xmlFiles =
-                from file in Directory.GetFiles(Environment.CurrentDirectory, "*.xml")
+                from file in Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "Levels"), "*.xml")
                 where new FileInfo(file).Name.StartsWith("Level")
                 select file;
 
