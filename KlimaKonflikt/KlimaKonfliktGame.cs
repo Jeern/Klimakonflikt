@@ -37,6 +37,7 @@ namespace KlimaKonflikt
         GameImage oilTowerImage1, oilTowerImage2, wheelBarrowImage, completeFloorGameImage, ildImage;
 
         KKPlayer frøPose, olieTønde;
+        KKMonster m_Ild;
 
         Color background = new Color(50, 50, 50);
         KeyboardState keyboardState;
@@ -151,6 +152,7 @@ namespace KlimaKonflikt
 
             frøPose = new KKPlayer(this, new GameImage(frøPoseBillede), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
+            m_Ild = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .2F, board.Tiles[0, 9].Center, 10);
 
             SoundEffect happyGameTune = Content.Load<SoundEffect>(@"GameTunes\klimakonflikt_ingametune");
             annoyingTunePlayer = happyGameTune.CreateInstance();
@@ -170,11 +172,12 @@ namespace KlimaKonflikt
             this.Components.Add(oilTower2);
             Components.Add(frøPose);
             Components.Add(olieTønde);
+            Components.Add(m_Ild);
 
 
-            ildImage = GameImages.GetIldImage(Content);
-            ild = new Sprite(this, ildImage, spriteBatch, .3F, board.Tiles[9,4].Center );
-            Components.Add(ild);
+            //ildImage = GameImages.GetIldImage(Content);
+            //ild = new Sprite(this, ildImage, spriteBatch, .3F, board.Tiles[4,4].Center );
+            //Components.Add(ild);
 
 
         }
@@ -217,6 +220,7 @@ namespace KlimaKonflikt
 
             CalculatePlayerMove(gameTime, frøPose);
             CalculatePlayerMove(gameTime, olieTønde);
+            CalculateAIMove(gameTime, m_Ild);
             //m_BlomstImage.Update(gameTime);
             //m_OlieImage.Update(gameTime);
 
@@ -226,10 +230,10 @@ namespace KlimaKonflikt
         private void CalculatePlayerMove(GameTime gameTime, KKPlayer player)
         {
 
-            if (frøPose.Direction == Direction.None)
-            {
-                frøPose.Direction = frøPose.WantedDirection;
-            }
+            //if (frøPose.Direction == Direction.None)
+            //{
+            //    frøPose.Direction = frøPose.WantedDirection;
+            //}
 
             //player1Position.Move(player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
             int pixelsToMove = (int)(player.Speed * gameTime.ElapsedGameTime.Milliseconds);
@@ -385,6 +389,122 @@ namespace KlimaKonflikt
                 spriteBatch.Draw(flower, ammoPlacering[1, y], Color.White);
             }
             spriteBatch.End();
+        }
+
+        private void CalculateAIMove(GameTime gameTime, KKMonster monster)
+        {
+            //int pixelsToMove = (int)(monster.Speed * gameTime.ElapsedGameTime.Milliseconds);
+            //Point newPosition = monster.GetNewPosition(monster.Direction, pixelsToMove);
+            //Point oldPosition = monster.GetPosition();
+
+            //Point centerOfPlayersTile = board.GetTileFromPixelPosition(monster.GetPosition().X, monster.GetPosition().Y).Center;
+            //WalledTile tile = board.GetTileFromPixelPosition(monster.GetPosition());
+
+
+            //if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, oldPosition))
+            //{
+            //    //we are going to cross the center
+            //    //first move to center
+            //    Point tempPosition = centerOfPlayersTile;
+            //    monster.SetPosition(centerOfPlayersTile);
+
+            //    if ((monster == olieTønde && oilTowerTiles.Contains(tile)) || (monster == frøPose && wheelBarrowTiles.Contains(tile)))
+            //    {
+            //        if (monster.Ammunition < 10)
+            //        {
+
+
+            //            monster.Ammunition = 10;
+
+            //            if (monster == olieTønde)
+            //            {
+            //                olieTankning.Play();
+            //            }
+            //            else if (monster == frøPose)
+            //            {
+            //                frøTankning.Play();
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+
+
+            //        if (monster.Ammunition > 0)
+            //        {
+            //            if (monster == frøPose)
+            //            {
+            //                //****** SÆT BLOMST
+            //                if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Blomst)
+            //                {
+            //                    if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] == Ejerskab.Olie)
+            //                    {
+            //                        antalEjetAfOlietønde--;
+            //                    }
+            //                    EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
+            //                    tile.ContentGameImage = GameImages.GetBlomstImage(Content);
+            //                    antalEjetAfFrøpose++;
+            //                    plantFrø.Play();
+            //                    monster.Ammunition--;
+            //                }
+            //            }
+            //            else if (monster == olieTønde)
+            //            {
+            //                //****** SÆT olietønde
+            //                if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Olie)
+            //                {
+            //                    if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] == Ejerskab.Blomst)
+            //                    {
+            //                        antalEjetAfFrøpose--;
+            //                    }
+
+            //                    EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Olie;
+            //                    tile.ContentGameImage = GameImages.GetOlieImage(Content);
+            //                    olieDryp.Play();
+            //                    antalEjetAfOlietønde++;
+            //                    monster.Ammunition--;
+            //                }
+            //            }
+            //        }
+            //    }
+
+
+            //    int pixelMovesLeft = int.MinValue;
+            //    DirectionChanger deltaMoves = DirectionHelper4.Offsets[monster.Direction];
+            //    if (deltaMoves.DeltaX != 0) //we are moving horizontally
+            //    {
+            //        pixelMovesLeft = Math.Abs(newPosition.X - oldPosition.X);
+            //    }
+            //    else //we are moving vertically
+            //    {
+            //        pixelMovesLeft = Math.Abs(newPosition.Y - oldPosition.Y);
+            //    }
+
+
+            //    Direction wantedDirection = monster.WantedDirection;
+            //    Direction playerDirection = monster.Direction;
+
+            //    if (wantedDirection != Direction.None)
+            //    {
+            //        if (!tile.HasBorder(wantedDirection))
+            //        {
+            //            monster.Direction = wantedDirection;
+            //            monster.Move(monster.Direction, pixelMovesLeft);
+            //        }
+            //        else
+            //        {
+            //            if (!tile.HasBorder(playerDirection))
+            //            {
+            //                monster.Move(playerDirection, pixelMovesLeft);
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    monster.X = newPosition.X;
+            //    monster.Y = newPosition.Y;
+            //}
         }
     }
 }

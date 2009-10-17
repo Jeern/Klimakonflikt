@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Ejerskab.cs" />
     <Compile Include="GameImages.cs" />
+    <Compile Include="KKMonster.cs" />
     <Compile Include="LevelLoader.cs" />
     <Compile Include="KKPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
