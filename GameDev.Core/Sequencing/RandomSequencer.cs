@@ -17,7 +17,6 @@ namespace GameDev.Core.Sequencing
             : base(minValue, maxValue)
         {
             m_Random = new RealRandom(minValue, maxValue);
-            MoveNext();
         }
 
         public override bool MoveNext()

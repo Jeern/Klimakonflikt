@@ -14,10 +14,11 @@ namespace GameDev.Core.Sequencing
         public Sequencer(int minValue, int maxValue)
         {
             if(minValue >= maxValue && maxValue > 0)
-            throw new ArgumentException(SequencerErrorMessage(), "minValue");
+                throw new ArgumentException(SequencerErrorMessage(), "minValue");
 
             MinValue = minValue;
             MaxValue = maxValue;
+            Reset();
         }
 
         public Sequencer(int maxValue) : this(0, maxValue) { }
@@ -54,7 +55,7 @@ namespace GameDev.Core.Sequencing
 
         public virtual void Reset()
         {
-            Current = MinValue;
+            Current = MinValue-1;
         }
 
         #endregion

@@ -15,11 +15,11 @@ namespace GameDev.Core.Sequencing
         public StaticSequencer(int value)
             : base(value)
         {
-            Current = value;
         }
 
         public override bool MoveNext()
         {
+            Current = MaxValue;
             return false;
         }
     }
