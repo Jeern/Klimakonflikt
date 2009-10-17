@@ -24,8 +24,11 @@ namespace KlimaKonflikt
     /// </summary>
     public class KlimaKonfliktGame : Microsoft.Xna.Framework.Game
     {
+        Rectangle[,] ammoPlacering;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        WalledTile[,] refuelPlacement;
 
         GameBoard board;
 
@@ -33,7 +36,7 @@ namespace KlimaKonflikt
 
         KKPlayer frøPose, olieTønde;
 
-
+        Color background = new Color(50, 50, 50);
         KeyboardState keyboardState;
 
         Ejerskab[,] EjerskabsOversigt;
@@ -44,6 +47,8 @@ namespace KlimaKonflikt
         List<WalledTile> oilTowerTiles, wheelBarrowTiles;
 
         Texture2D tileFloor;
+
+        Texture2D oilSpill, flower;
         
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
 
@@ -73,6 +78,14 @@ namespace KlimaKonflikt
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            ammoPlacering = new Rectangle[2, 10];
+            int ammoSize = 100;
+            int ammoBottomOffset = 600;
+            for (int y = 0; y < 10; y++)
+            {
+                ammoPlacering[0, y] = new Rectangle(50, ammoBottomOffset - 50 * y, ammoSize, ammoSize);
+                ammoPlacering[1, y] = new Rectangle(880, ammoBottomOffset - 50 * y, ammoSize, ammoSize);
+            }
         }
 
         //Texture2D frøPoseBillede; // , olieTøndeBillede;
@@ -84,6 +97,9 @@ namespace KlimaKonflikt
         protected override void LoadContent()
         {
 
+
+            oilSpill = Content.Load<Texture2D>("Olie/ThePatch0030");
+            flower = Content.Load<Texture2D>("Blomst/Blomst0030");
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -111,13 +127,12 @@ namespace KlimaKonflikt
             oilTowerTiles = new List<WalledTile>();
 
             wheelBarrowTiles.Add(board.Tiles[4, 4]);
-            wheelBarrowTiles.Add(board.Tiles[5, 0]);
+            wheelBarrowTiles.Add(board.Tiles[8, 4]);
 
             oilTowerTiles.Add(board.Tiles[5, 5]);
-            oilTowerTiles.Add(board.Tiles[5, 9]);
+            oilTowerTiles.Add(board.Tiles[1, 8]);
 
             font = Content.Load<SpriteFont>("Arial");
-            //Texture2D oilTowerTexture = Content.Load<Texture2D>("oil_tower");
             Texture2D wheelBarrowTexture = Content.Load<Texture2D>("wheelbarrel");
             oilTowerImage1 = GameImages.GetOlieTaarnImage(Content);
             oilTowerImage2 = GameImages.GetOlieTaarnImage(Content);
@@ -132,11 +147,8 @@ namespace KlimaKonflikt
             wheelBarrow1 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTiles[0].Center);
             wheelBarrow2 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTiles[1].Center);
 
-
-
             frøPose = new KKPlayer(this, GameImages.GetFlowersackImage(Content), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
-
 
             plantFrø = Content.Load<SoundEffect>("froe_plantes");
             olieDryp = Content.Load<SoundEffect>("olieplet_spildes");
@@ -154,7 +166,7 @@ namespace KlimaKonflikt
 
 
             ildImage = GameImages.GetIldImage(Content);
-            ild = new Sprite(this, ildImage, spriteBatch, .3F, board.Tiles[4,4].Center );
+            ild = new Sprite(this, ildImage, spriteBatch, .3F, board.Tiles[9,4].Center );
             Components.Add(ild);
 
 
@@ -337,13 +349,15 @@ namespace KlimaKonflikt
             //Console.WriteLine("player1Direction: " + player1Direction +  " newPosition: " + newPosition);
         }
 
+
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(background);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
@@ -351,12 +365,18 @@ namespace KlimaKonflikt
 
 
             spriteBatch.DrawString(font, "Points: " + antalEjetAfOlietønde, new Vector2(20,50),Color.White);
-            //spriteBatch.Draw(olieTøndeBillede, 
-            spriteBatch.DrawString(font, "Points: " + antalEjetAfFrøpose, new Vector2(870, 50), Color.White); 
-            //spriteBatch.Draw(frøPose.GameImage.CurrentTexture, new Rectangle(frøPose.X - frøPose.GameImage.CurrentTexture.Width / 2, frøPose.Y - frøPose.GameImage.CurrentTexture.Height / 2, frøPose.GameImage.CurrentTexture.Width, frøPose.GameImage.CurrentTexture.Height), Color.White);
-            //spriteBatch.Draw(olieTønde.GameImage.CurrentTexture, new Rectangle(olieTønde.X - olieTønde.GameImage.CurrentTexture.Width / 2, olieTønde.Y - olieTønde.GameImage.CurrentTexture.Height / 2, olieTønde.GameImage.CurrentTexture.Width, olieTønde.GameImage.CurrentTexture.Height), Color.White);
-            //spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White);
-            //spriteBatch.Draw(m_OlieImage.CurrentTexture, new Rectangle(260, 260, 40, 40), Color.White);
+            spriteBatch.DrawString(font, "Points: " + antalEjetAfFrøpose, new Vector2(870, 50), Color.White);
+
+            for (int y = olieTønde.Ammunition-1; y >= 0; y--)
+            {
+                spriteBatch.Draw(oilSpill, ammoPlacering[0, y], Color.White);
+
+
+            }
+            for (int y = frøPose.Ammunition-1; y >= 0; y--)
+            {
+                spriteBatch.Draw(flower, ammoPlacering[1, y], Color.White);
+            }
             spriteBatch.End();
         }
     }
