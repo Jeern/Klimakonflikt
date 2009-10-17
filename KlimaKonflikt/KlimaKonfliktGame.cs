@@ -31,6 +31,7 @@ namespace KlimaKonflikt
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Color[] healthColors;
+        Texture2D healtBarTexture;
 
         private AIController m_AIController = new AIController();
 
@@ -110,7 +111,7 @@ namespace KlimaKonflikt
         protected override void LoadContent()
         {
 
-
+            healtBarTexture = Content.Load<Texture2D>("bar");
             oilSpill = Content.Load<Texture2D>("Olie/ThePatch0030");
             flower = Content.Load<Texture2D>("Blomst/Blomst0030");
 
@@ -223,16 +224,16 @@ namespace KlimaKonflikt
             //m_BlomstImage.Update(gameTime);
             //m_OlieImage.Update(gameTime);
 
-            int scoreDifference = frøPose.EjedeFelter - olieTønde.EjedeFelter;
-            int scoreDifferenceFactor = Math.Abs(20 / (scoreDifference +1));
+            float scoreDifference = frøPose.EjedeFelter - olieTønde.EjedeFelter;
+            float scoreDifferenceFactor = Math.Abs(scoreDifference) / 200;
             switch (Math.Sign(scoreDifference))
         	{
-                case -1: // olietønde er foran
-                    frøPose.Health -= scoreDifference;
+                case -1: // frø er foran
+                    frøPose.Health -= scoreDifferenceFactor;
                     break;
 
                 case 1: // olietønde er foran
-                    frøPose.Health -= scoreDifference;
+                    olieTønde.Health -= scoreDifferenceFactor;
                     break;
 	        }
 
@@ -405,7 +406,10 @@ namespace KlimaKonflikt
 
             int shadowOffset = 9;
             spriteBatch.DrawString(font, olieTønde.EjedeFelter.ToString(), new Vector2(20,50),Color.White);
-            spriteBatch.DrawString(font, frøPose.EjedeFelter.ToString(), new Vector2(870, 50), Color.White);
+            spriteBatch.DrawString(font, frøPose.EjedeFelter.ToString(), new Vector2(890, 50), Color.White);
+
+            //spriteBatch.DrawString(font, olieTønde.Health.ToString(), new Vector2(20, 100), Color.White);
+            //spriteBatch.DrawString(font, frøPose.Health.ToString(), new Vector2(890, 100), Color.White);
 
             for (int y = olieTønde.Ammunition-1; y >= 0; y--)
             {
@@ -417,6 +421,21 @@ namespace KlimaKonflikt
                 spriteBatch.Draw(flower, ammoPlacering[1, y].GetOffsetCopy(shadowOffset), shadow);
                 spriteBatch.Draw(flower, ammoPlacering[1, y], Color.White);
             }
+
+            int olieBarRectangleHeight = (int)(640 * olieTønde.Health / 100);
+            int frøPoseRectangleHeight = (int)(640 * frøPose.Health / 100);
+
+            Rectangle olieBarRectangle = new Rectangle(140, 700 - olieBarRectangleHeight, healtBarTexture.Width, olieBarRectangleHeight);
+            Rectangle frøPoseBarRectangle = new Rectangle(850, 700 - frøPoseRectangleHeight, healtBarTexture.Width, frøPoseRectangleHeight);
+            
+            int frøPoseHealthBarIndex = (int)(frøPose.Health / 20);
+            int olieTøndeHealthBarIndex = (int)(olieTønde.Health / 20);
+
+            if (frøPoseHealthBarIndex > 4) frøPoseHealthBarIndex = 4;
+            if (olieTøndeHealthBarIndex > 4) olieTøndeHealthBarIndex = 4;
+
+            spriteBatch.Draw(healtBarTexture, olieBarRectangle, healthColors[olieTøndeHealthBarIndex]);
+            spriteBatch.Draw(healtBarTexture, frøPoseBarRectangle, healthColors[frøPoseHealthBarIndex]);
             spriteBatch.End();
         }
 
