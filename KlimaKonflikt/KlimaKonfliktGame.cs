@@ -75,7 +75,7 @@ namespace KlimaKonflikt
             base.Initialize();
         }
 
-        Texture2D frøPoseBillede; // , olieTøndeBillede;
+        //Texture2D frøPoseBillede; // , olieTøndeBillede;
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -93,7 +93,7 @@ namespace KlimaKonflikt
             
 
 
-            frøPoseBillede = Content.Load<Texture2D>("flowersack");
+//            frøPoseBillede = Content.Load<Texture2D>("flowersack");
 //            olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
 
             int tilesAcross = 10, tilesDown = 10;
@@ -134,7 +134,7 @@ namespace KlimaKonflikt
 
 
 
-            frøPose = new KKPlayer(this, new GameImage(frøPoseBillede), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
+            frøPose = new KKPlayer(this, GameImages.GetFlowersackImage(Content), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
 
 
