@@ -21,7 +21,6 @@ namespace GameDev.GameBoard
         public Rectangle DestinationRectangle { get{return _destinationRectangle;}
             private set { _destinationRectangle = value; }
         }
-
         public GameBoard GameBoard { get; set; }
         public SpriteBatch SpriteBatch { get; set; }
 
@@ -42,7 +41,8 @@ namespace GameDev.GameBoard
 
         public Tile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch) : this(game, board, texture, spriteBatch, int.MinValue, int.MinValue) { }
 
-        public Tile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex): base (game, horizontalIndex * texture.Width, verticalIndex * texture.Height)
+        public Tile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex)
+            : base(game, horizontalIndex * texture.Width, verticalIndex * texture.Height)
         {
             this.GameBoard = board;
             this.Texture = texture;

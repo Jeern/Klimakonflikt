@@ -115,6 +115,7 @@ namespace KlimaKonflikt
             Point newPosition = player1Position.GetNewPosition( player1Direction, pixelsToMove);
             Point oldPosition = player1Position.GetPosition();
             
+            
             Point centerOfPlayersTile = board.GetTileFromPixelPosition(player1Position.X, player1Position.Y).Center;
 
             if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, player1Position.GetPosition()))
@@ -143,10 +144,12 @@ namespace KlimaKonflikt
                     player1Direction = player1WantedDirection;
                     Console.WriteLine("direction: " + player1Direction);
                 }
-                
-                
-
             }
+            else
+            {
+                player1Direction = player1WantedDirection;
+            }
+
 
             player1Position.X = newPosition.X;
             player1Position.Y = newPosition.Y;
