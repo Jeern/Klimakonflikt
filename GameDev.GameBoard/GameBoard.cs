@@ -15,7 +15,7 @@ using GameDev.Core;
 
 namespace GameDev.GameBoard
 {
-    public class GameBoard : DrawableGameComponent
+    public class GameBoard : DrawableGameComponent, IPlaceable
     {
 
         //public Texture2D CompleteGameBoard { get; set; }
@@ -84,9 +84,8 @@ namespace GameDev.GameBoard
 
         public int TilesWide { get { return Tiles.GetLength(0); } }
         public int TilesHigh { get { return Tiles.GetLength(1); } }
-        
 
-        private SpriteBatch _batch;
+        public SpriteBatch SpriteBatch { get; set; }
         
         private void RecalculateDimensions()
         {
@@ -111,32 +110,33 @@ namespace GameDev.GameBoard
 
         #region Constructors
 
-        public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch batch) : this(game,  baseTileTexture, batch, "Unnamed", 32, 32, 64) { }
+        public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch spriteBatch) : this(game, baseTileTexture, spriteBatch, "Unnamed", 32, 32, 64) { }
 
-        public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch batch, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels )
+        public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch spriteBatch, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels)
             : base(game)
         {
             Name = name;
+            SpriteBatch = spriteBatch;
             
             Tiles = new Tile[tilesHorizontally, tilesVertically];
             for (int x = 0; x < TilesWide; x++)
             {
                 for (int y = 0; y < TilesHigh; y++)
                 {
-                    Tiles[x, y] = new Tile(game, this, baseTileTexture, x, y);
+                    Tiles[x, y] = new Tile(game, this, baseTileTexture, SpriteBatch, x, y);
                 }
             }
-
-            _batch = batch;
+        
             TileSizeInPixels = TileSizeInPixels;
+        
         }
 
         #endregion
 
 
         public void SetBorder(Texture2D borderTexture)
-        {   
-               SetBorder(new Tile(Game, this, borderTexture));
+        {
+            SetBorder(new Tile(Game, this, borderTexture, SpriteBatch));
         }
 
         public void SetBorder(Tile borderTile)
@@ -188,7 +188,6 @@ namespace GameDev.GameBoard
             //}
             //else
             //{
-                Tile tileToDraw = null;
                 for (int x = 0; x < TilesWide; x++)
                 {
                     for (int y = 0; y < TilesHigh; y++)
@@ -196,8 +195,8 @@ namespace GameDev.GameBoard
                         //TODO: let the tiles draw themselves as they are DrawableGameComponents
                         //must each Tile know the SpriteBatch?
                         //what about performance?
-                        tileToDraw = Tiles[x, y];
-                        _batch.Draw(tileToDraw.Texture, tileToDraw.DestinationRectangle, Color.White);
+                        Tiles[x, y].Draw(gameTime);
+                        //_batch.Draw(tileToDraw.Texture, tileToDraw.DestinationRectangle, Color.White);
                     }
                 }
             //}
@@ -213,5 +212,18 @@ namespace GameDev.GameBoard
                 tile.Update(gameTime);
             }
         }
+
+        #region IPlaceable Members
+
+        public int X{get; set;}
+
+        public int Y { get; set; }
+
+        public void Move(Direction direction, float distance)
+        {
+            
+        }
+
+        #endregion
     }
 }

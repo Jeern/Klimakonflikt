@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
+using GameDev.Core;
+using GameDev.GameBoard;
+
 namespace KlimaKonflikt
 {
     /// <summary>
@@ -20,11 +23,26 @@ namespace KlimaKonflikt
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        GameBoard board;
+
+        KeyboardState keyboardState;
+        Placeable player1Position;
+        Point player1Speed;
+        Direction player1Direction, player1WantedDirection;
+
+        Texture2D tileFloor, player1;
 
         public KlimaKonfliktGame()
         {
+            player1Position = new Placeable(this);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.graphics.PreferredBackBufferWidth =1024;
+            this.graphics.PreferredBackBufferHeight = 768;
+
+            this.graphics.IsFullScreen = true;
+
+            
         }
 
         /// <summary>
@@ -50,6 +68,10 @@ namespace KlimaKonflikt
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            tileFloor = Content.Load<Texture2D>("64x64");
+            player1 = Content.Load<Texture2D>("crosshair");
+            board = new GameBoard(this, tileFloor, spriteBatch);
+            Components.Add(board);
         }
 
         /// <summary>
@@ -69,12 +91,29 @@ namespace KlimaKonflikt
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Escape))
+            {
                 this.Exit();
+            }
 
-            // TODO: Add your update logic here
+
+            player1WantedDirection = keyboardState.GetDirection();
+            //if(keyboardState.IsArrowKeyDown()) player1WantedDirection = DirectionHelper4.GetDirection(
+            //if (keyboardState.IsKeyDown(Keys.Up)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Up]; }
+            //if (keyboardState.IsKeyDown(Keys.Right)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Right]; }
+            //if (keyboardState.IsKeyDown(Keys.Down)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Down]; }
+            //if (keyboardState.IsKeyDown(Keys.Left)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Left]; }
+
+            CalculatePlayer1sMove();
 
             base.Update(gameTime);
+        }
+
+        private void CalculatePlayer1sMove()
+        {
+            Point newPosition = DirectionHelper4.GetNewPosition(player1Position, player1Direction);
+            
         }
 
         /// <summary>
@@ -86,8 +125,10 @@ namespace KlimaKonflikt
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
             base.Draw(gameTime);
+            spriteBatch.Draw(player1, new Rectangle(player1Position.X, player1Position.Y, player1.Width, player1.Height), Color.White);
+            spriteBatch.End();
         }
     }
 }
