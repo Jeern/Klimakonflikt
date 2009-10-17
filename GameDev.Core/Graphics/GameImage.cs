@@ -34,11 +34,7 @@ namespace GameDev.Core.Graphics
         public void Update(GameTime time)
         {
             TimeSpan newTime = time.TotalGameTime;
-            if (m_LastChanged == TimeSpan.MinValue)
-            {
-                m_LastChanged = newTime;
-            }
-            else if (m_LastChanged.Add(new TimeSpan(0, 0, 0, 0, m_DelayMillisecondsIterator.Current)) <= newTime)
+            if (m_LastChanged.Add(new TimeSpan(0, 0, 0, 0, m_DelayMillisecondsIterator.Current)) <= newTime)
             {
                 m_LastChanged = newTime;
                 m_DelayMillisecondsIterator.MoveNext();
