@@ -236,7 +236,12 @@ namespace KlimaKonflikt
                     olieTønde.Health -= scoreDifferenceFactor;
                     break;
 	        }
-
+            float maxSpeed = .4F;
+            float lowestHealth = Math.Min(frøPose.Health, olieTønde.Health);
+            if (lowestHealth < 50)
+            {
+                annoyingTunePlayer.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
+            }
 
             base.Update(gameTime);
         }
