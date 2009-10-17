@@ -24,6 +24,8 @@ namespace KlimaKonflikt
     /// </summary>
     public class KlimaKonfliktGame : Microsoft.Xna.Framework.Game
     {
+        SoundEffectInstance annoyingTunePlayer;
+
         Rectangle[,] ammoPlacering;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -88,7 +90,7 @@ namespace KlimaKonflikt
             }
         }
 
-        //Texture2D frøPoseBillede; // , olieTøndeBillede;
+        Texture2D frøPoseBillede; // , olieTøndeBillede;
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -109,7 +111,7 @@ namespace KlimaKonflikt
             
 
 
-//            frøPoseBillede = Content.Load<Texture2D>("flowersack");
+            frøPoseBillede = Content.Load<Texture2D>("flowersack");
 //            olieTøndeBillede = Content.Load<Texture2D>("oilbarrel");
 
             int tilesAcross = 10, tilesDown = 10;
@@ -147,8 +149,13 @@ namespace KlimaKonflikt
             wheelBarrow1 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTiles[0].Center);
             wheelBarrow2 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTiles[1].Center);
 
-            frøPose = new KKPlayer(this, GameImages.GetFlowersackImage(Content), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
+            frøPose = new KKPlayer(this, new GameImage(frøPoseBillede), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
+
+            SoundEffect happyGameTune = Content.Load<SoundEffect>(@"GameTunes\klimakonflikt_ingametune");
+            annoyingTunePlayer = happyGameTune.CreateInstance();
+            annoyingTunePlayer.IsLooped = true;
+            annoyingTunePlayer.Play();
 
             plantFrø = Content.Load<SoundEffect>("froe_plantes");
             olieDryp = Content.Load<SoundEffect>("olieplet_spildes");
