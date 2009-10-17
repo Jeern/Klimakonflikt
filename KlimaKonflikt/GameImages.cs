@@ -143,7 +143,7 @@ namespace KlimaKonflikt
         {
 
              return new GameImage(
-                new SequencedIterator<Texture2D>(new AlternatingSequencer(0, 9),
+                new SequencedIterator<Texture2D>(new RepeatingSequencer(0, 9),
                     new List<Texture2D>()
                     {
                         content.Load<Texture2D>(@"Ild\Ild0001"),
@@ -156,7 +156,7 @@ namespace KlimaKonflikt
                         content.Load<Texture2D>(@"Ild\Ild0008"),
                         content.Load<Texture2D>(@"Ild\Ild0009"),
                         content.Load<Texture2D>(@"Ild\Ild0010"),
-                      }), new MinMaxIterator(new RepeatingSequencer(0,9), 80, 89));
+                      }), new MinMaxIterator(new RandomSequencer(0,40), 80, 120));
         }
 
 
