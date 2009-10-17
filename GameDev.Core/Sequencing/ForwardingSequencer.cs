@@ -11,7 +11,6 @@ namespace GameDev.Core.Sequencing
 
         public ForwardingSequencer(int minValue, int maxValue) : base(minValue, maxValue)
         {
-            Current = minValue;  
         }
 
         public override bool MoveNext()

@@ -15,7 +15,6 @@ namespace GameDev.Core.Sequencing
         public RepeatingSequencer(int minValue, int maxValue)
             : base(minValue, maxValue)
         {
-            Current = minValue;  
         }
 
         public override bool MoveNext()
