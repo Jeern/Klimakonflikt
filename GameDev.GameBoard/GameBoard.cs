@@ -13,6 +13,8 @@ using Microsoft.Xna.Framework.Storage;
 
 using GameDev.Core;
 
+
+
 namespace GameDev.GameBoard
 {
     public class GameBoard : DrawableGameComponent, IPlaceable
@@ -75,6 +77,10 @@ namespace GameDev.GameBoard
 
         public string Name { get; set; }
         public Tile[,] Tiles { get; private set; }
+
+        private Rectangle _outerRectangle;
+
+        public Rectangle OuterRectangle { get { return _outerRectangle; } }
         
         private int _widthInPixels = int.MinValue;
         private int _heightInPixels = int.MinValue;
@@ -91,6 +97,9 @@ namespace GameDev.GameBoard
         {
             _widthInPixels = TilesWide * TileSizeInPixels;
             _heightInPixels = TilesHigh * TileSizeInPixels;
+
+            this._outerRectangle = new Rectangle(X, Y, X + this.WidthInPixels, Y + this.HeightInPixels);
+
         }
 
         
@@ -110,7 +119,7 @@ namespace GameDev.GameBoard
 
         #region Constructors
 
-        public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch spriteBatch) : this(game, baseTileTexture, spriteBatch, "Unnamed", 32, 32, 64) { }
+        public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch spriteBatch) : this(game, baseTileTexture, spriteBatch, "Unnamed", 10, 10, 64) { }
 
         public GameBoard(Game game, Texture2D baseTileTexture, SpriteBatch spriteBatch, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels)
             : base(game)
@@ -127,7 +136,7 @@ namespace GameDev.GameBoard
                 }
             }
         
-            TileSizeInPixels = TileSizeInPixels;
+            TileSizeInPixels = tileSizeInPixels;
         
         }
 
@@ -163,15 +172,53 @@ namespace GameDev.GameBoard
             return x >= 0 && x < TilesWide && y >= 0 && y < TilesHigh;
         }
 
-        public bool ContainsPosition(Point point)
+        public Tile GetTileFromPixelPosition(int x, int y)
+        {
+            int resultX = x / TileSizeInPixels;
+            int resultY = y / TileSizeInPixels;
+            if (this.ContainsPosition(resultX, resultY))
+            {
+                return this.Tiles[resultX, resultY];
+            }
+            else
+            {
+                throw new ArgumentException("Pixel at (" + x + "," + y + ") is not within bounds of GameBoard");
+            }
+        }
+
+
+        public bool ContainsTile(int x, int y)
+        {
+            return ContainsPosition(x, y);
+        }
+
+        public bool ContainsTile(Point point)
         {
             return ContainsPosition(point.X, point.Y);
         }
 
-        public bool ContainsPosition(IPlaceable place)
+        public bool ContainsTile(IPlaceable place)
         {
             return ContainsPosition(place.X, place.Y);
         }
+
+
+        public bool ContainsPixel(int x, int y)
+        {
+            return this.OuterRectangle.Contains(x, y);
+        }
+
+        public bool ContainsPixel(Point position)
+        {
+            return this.OuterRectangle.Contains(position);
+        }
+
+        public bool ContainsPixel(IPlaceable place)
+        {
+            return this.OuterRectangle.Contains(place.X, place.Y);
+        }
+
+
 
         public override void Draw(GameTime gameTime)
         {

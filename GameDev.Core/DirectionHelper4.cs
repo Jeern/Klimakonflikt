@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
+
+
 namespace GameDev.Core
 {
  
@@ -69,7 +71,7 @@ namespace GameDev.Core
 
         public static Point GetNewPosition(this IPlaceable place, Direction direction, float distance)
         {
-            return new Point((int)(Offsets[direction].DeltaX * distance), (int)(Offsets[direction].DeltaY * distance));
+            return new Point(place.X + (int)(Offsets[direction].DeltaX * distance), place.Y + (int)(Offsets[direction].DeltaY * distance));
         }
 
         public static Point GetNewPosition(this IPlaceable place, Direction direction)
