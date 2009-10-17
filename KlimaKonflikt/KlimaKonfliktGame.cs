@@ -224,10 +224,15 @@ namespace KlimaKonflikt
             //m_OlieImage.Update(gameTime);
 
             int scoreDifference = frøPose.EjedeFelter - olieTønde.EjedeFelter;
-            //int scoreDifferenceFactor = Math.Abs
+            int scoreDifferenceFactor = Math.Abs(20 / (scoreDifference +1));
             switch (Math.Sign(scoreDifference))
         	{
                 case -1: // olietønde er foran
+                    frøPose.Health -= scoreDifference;
+                    break;
+
+                case 1: // olietønde er foran
+                    frøPose.Health -= scoreDifference;
                     break;
 	        }
 
@@ -399,8 +404,8 @@ namespace KlimaKonflikt
             base.Draw(gameTime);
 
             int shadowOffset = 9;
-            spriteBatch.DrawString(font, "Points: " + olieTønde.EjedeFelter, new Vector2(20,50),Color.White);
-            spriteBatch.DrawString(font, "Points: " + frøPose.EjedeFelter, new Vector2(870, 50), Color.White);
+            spriteBatch.DrawString(font, olieTønde.EjedeFelter.ToString(), new Vector2(20,50),Color.White);
+            spriteBatch.DrawString(font, frøPose.EjedeFelter.ToString(), new Vector2(870, 50), Color.White);
 
             for (int y = olieTønde.Ammunition-1; y >= 0; y--)
             {
