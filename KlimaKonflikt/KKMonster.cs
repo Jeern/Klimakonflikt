@@ -14,9 +14,14 @@ namespace KlimaKonflikt
 {
     public class KKMonster : Sprite
     {
+        private Direction m_WantedDirection;
+
         public Direction WantedDirection 
         {
-            get { return m_DirectionIterator.Current; }
+            get 
+            { 
+                return m_DirectionIterator.Current; 
+            }
         }
 
         private SequencedIterator<Direction> m_DirectionIterator;
