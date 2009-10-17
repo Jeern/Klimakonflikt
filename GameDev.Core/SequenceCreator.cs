@@ -7,24 +7,17 @@ namespace GameDev.Core
 {
     public class SequenceCreator
     {
-        private int index;
-
-        public IEnumerable<int> GetMinMax(int min, int max)
+        public List<int> GetMinMax(int min, int max)
         {
-            if (index < min)
+            return GetMinMaxInternal(min, max).ToList();
+        }
+
+        private IEnumerable<int> GetMinMaxInternal(int min, int max)
+        {
+            for (int index = min; index <= max; index++)
             {
-                index = min;
-            }
-            else if (index < max)
-            {
-                index++;
                 yield return index;
             }
-            else
-            {
-                yield break;
-            }
-
         }
 
     }

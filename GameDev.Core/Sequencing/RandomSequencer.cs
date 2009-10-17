@@ -16,11 +16,12 @@ namespace GameDev.Core.Sequencing
         public RandomSequencer(int minValue, int maxValue)
             : base(minValue, maxValue)
         {
-            m_Random = new RealRandom(minValue, maxValue);
         }
 
         public override bool MoveNext()
         {
+            if(m_Random == null)
+                m_Random = new RealRandom(MinValue, MaxValue);
             Current = m_Random.Next();
             return true;
         }
