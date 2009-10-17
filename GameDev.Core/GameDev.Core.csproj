@@ -86,11 +86,19 @@
     <Compile Include="DirectionHelper8.cs" />
     <Compile Include="DirectionHelper4.cs" />
     <Compile Include="Graphics\TextureClipper.cs" />
+    <Compile Include="Sequencing\AlternatingSequencer.cs" />
+    <Compile Include="Sequencing\ForwardingSequencer.cs" />
+    <Compile Include="Sequencing\RandomSequencer.cs" />
+    <Compile Include="Sequencing\RepeatingSequencer.cs" />
+    <Compile Include="Sequencing\Sequencer.cs" />
     <Compile Include="IPlaceable.cs" />
     <Compile Include="DirectionChanger.cs" />
+    <Compile Include="Sequencing\ISequencer.cs" />
     <Compile Include="KeyboardExtensions.cs" />
     <Compile Include="Placeable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealRandom.cs" />
+    <Compile Include="Sequencing\StaticSequencer.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">

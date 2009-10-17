@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace GameDev.Core.Sequencing
+{
+    public class AlternatingSequencer : Sequencer
+    {
+        private bool m_GoingForward = true;
+
+        public AlternatingSequencer(int maxValue) : this(0, maxValue) {}
+
+        public AlternatingSequencer(int minValue, int maxValue)
+            : base(minValue, maxValue)
+        {
+            Current = minValue;  
+        }
+
+        public override void MoveNext()
+        {
+            if (Current == MaxValue && m_GoingForward)
+            {
+                m_GoingForward = false;
+            }
+            else if (Current == MinValue && !m_GoingForward)
+            {
+                m_GoingForward = true;
+            }
+
+            if (Current < MaxValue && m_GoingForward)
+            {
+                Current++;
+            }
+            else if (Current > MinValue && !m_GoingForward)
+            {
+                Current--;
+            }
+        }
+    }
+}
