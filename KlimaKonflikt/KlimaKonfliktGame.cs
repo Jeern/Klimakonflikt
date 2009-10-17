@@ -43,12 +43,15 @@ namespace KlimaKonflikt
         //Direction player1Direction, player1WantedDirection;
 
         Ejerskab[,] EjerskabsOversigt;
+        int antalEjetAfFrøpose, antalEjetAfOlietønde;
 
         Sprite oilTower1, oilTower2, wheelBarrow1, wheelBarrow2;
 
+        List<WalledTile> oilTowerTiles, wheelBarrowTiles;
+
         Texture2D tileFloor;
 
-        SoundEffect plantFrø, olieDryp;
+        SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
 
         public KlimaKonfliktGame()
         {
@@ -97,19 +100,32 @@ namespace KlimaKonflikt
             int tilesAcross = 10, tilesDown = 10;
             EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown];
             board = new GameBoard(this, staticFloor, spriteBatch, "Board", tilesAcross, tilesDown, 64);
+            board.SetPosition(new Point(100, 0));
+
+            wheelBarrowTiles = new List<WalledTile>();
+            oilTowerTiles = new List<WalledTile>();
+
+            wheelBarrowTiles.Add(board.Tiles[5, 0]);
+            wheelBarrowTiles.Add(board.Tiles[4, 9]);
+
+            oilTowerTiles.Add( board.Tiles[0, 5]);
+            oilTowerTiles.Add( board.Tiles[9, 4]);
+
 
             Texture2D oilTowerTexture = Content.Load<Texture2D>("oil_tower");
             Texture2D wheelBarrowTexture = Content.Load<Texture2D>("wheelbarrel");
 
-            oilTower1 = new Sprite(this, oilTowerImage, spriteBatch, 0);
-            oilTower2 = new Sprite(this, oilTowerImage, spriteBatch, 0);
+
+            oilTowerImage = new GameImage(oilTowerTexture);
+            oilTower1 = new Sprite(this, oilTowerImage, spriteBatch, 0, oilTowerTiles[0].Center);
+            
+            oilTower2 = new Sprite(this, oilTowerImage, spriteBatch, 0, oilTowerTiles[1].Center);
 
             wheelBarrowImage = new GameImage(wheelBarrowTexture);
-            oilTowerImage = new GameImage(oilTowerTexture);
-
-
-            wheelBarrow1 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, board.Tiles[5, 0].Center);
-            wheelBarrow2 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, board.Tiles[4, 9].Center);
+            
+            
+            wheelBarrow1 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTiles[0].Center);
+            wheelBarrow2 = new Sprite(this, wheelBarrowImage, spriteBatch, 0, wheelBarrowTiles[1].Center);
 
 
 
@@ -119,6 +135,8 @@ namespace KlimaKonflikt
 
             plantFrø = Content.Load<SoundEffect>("froe_plantes");
             olieDryp = Content.Load<SoundEffect>("olieplet_spildes");
+            frøTankning = Content.Load<SoundEffect>("tankfroe");
+            olieTankning = Content.Load<SoundEffect>("tankolie");
 
 
 
@@ -126,11 +144,13 @@ namespace KlimaKonflikt
             //m_OlieImage = GameImages.GetOlieImage(Content);
 
             // TODO: use this.Content to load your game content here
-
+            
             Components.Add(board);
 
             this.Components.Add(wheelBarrow1);
             this.Components.Add(wheelBarrow2);
+            this.Components.Add(oilTower1);
+            this.Components.Add(oilTower2);
             Components.Add(frøPose);
             Components.Add(olieTønde);
 
@@ -207,31 +227,63 @@ namespace KlimaKonflikt
                 Point tempPosition = centerOfPlayersTile;
                 player.SetPosition(centerOfPlayersTile);
 
-
-                if (player.Ammunition > 0)
+                if ((player == olieTønde && oilTowerTiles.Contains(tile)) || (player == frøPose && wheelBarrowTiles.Contains(tile)))
                 {
-                    if (player == frøPose)
+                    if (player.Ammunition < 10)
                     {
-                        //****** SÆT BLOMST
-                        if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Blomst)
-                        {
-                            EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
-                            tile.ContentGameImage = GameImages.GetBlomstImage(Content);
-                            plantFrø.Play();
-                            player.Ammunition--;
-                        }
-                    }
-                    else if (player == olieTønde)
-                    {
-                        //****** SÆT olietønde
-                        if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Olie)
-                        {
-                            EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Olie;
-                            tile.ContentGameImage = GameImages.GetOlieImage(Content);
-                            olieDryp.Play();
-                            player.Ammunition--;
-                        }
 
+                    
+                    player.Ammunition = 10;
+
+                    if (player == olieTønde)
+                    {
+                        olieTankning.Play();
+                    }
+                    else if (player == frøPose)
+                    {
+                        frøTankning.Play();
+                    }
+                    }
+                }
+                else
+                {
+
+
+                    if (player.Ammunition > 0)
+                    {
+                        if (player == frøPose)
+                        {
+                            //****** SÆT BLOMST
+                            if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Blomst)
+                            {
+                                if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] == Ejerskab.Olie)
+                                {
+                                    antalEjetAfOlietønde--;
+                                }
+                                EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
+                                tile.ContentGameImage = GameImages.GetBlomstImage(Content);
+                                antalEjetAfFrøpose++;
+                                plantFrø.Play();
+                                player.Ammunition--;
+                            }
+                        }
+                        else if (player == olieTønde)
+                        {
+                            //****** SÆT olietønde
+                            if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] != Ejerskab.Olie)
+                            {
+                                if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] == Ejerskab.Blomst)
+                                {
+                                    antalEjetAfFrøpose--;
+                                }
+
+                                EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Olie;
+                                tile.ContentGameImage = GameImages.GetOlieImage(Content);
+                                olieDryp.Play();
+                                antalEjetAfOlietønde++;
+                                player.Ammunition--;
+                            }
+                        }
                     }
                 }
 
@@ -275,7 +327,6 @@ namespace KlimaKonflikt
             {
                 player.X = newPosition.X;
                 player.Y = newPosition.Y;
-
             }
 
 
@@ -294,6 +345,9 @@ namespace KlimaKonflikt
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             base.Draw(gameTime);
+
+
+            //spriteBatch.DrawString(
             //spriteBatch.Draw(frøPose.GameImage.CurrentTexture, new Rectangle(frøPose.X - frøPose.GameImage.CurrentTexture.Width / 2, frøPose.Y - frøPose.GameImage.CurrentTexture.Height / 2, frøPose.GameImage.CurrentTexture.Width, frøPose.GameImage.CurrentTexture.Height), Color.White);
             //spriteBatch.Draw(olieTønde.GameImage.CurrentTexture, new Rectangle(olieTønde.X - olieTønde.GameImage.CurrentTexture.Width / 2, olieTønde.Y - olieTønde.GameImage.CurrentTexture.Height / 2, olieTønde.GameImage.CurrentTexture.Width, olieTønde.GameImage.CurrentTexture.Height), Color.White);
             //spriteBatch.Draw(m_BlomstImage.CurrentTexture, new Rectangle(200, 200, 40, 40), Color.White);

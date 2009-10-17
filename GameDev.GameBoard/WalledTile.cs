@@ -46,8 +46,10 @@ namespace GameDev.GameBoard
                     return Walls.HasBottomBorder;
                 case Direction.Left:    //also West
                     return Walls.HasLeftBorder;
+                case Direction.None:    //also West
+                    return false;
                 default:
-                    throw new Exception("Direction '" + direction + "' is not valid! Only Up, Down, Left, Right, North, South, East and West are supported!");
+                    throw new Exception("Direction '" + direction + "' is not valid! Only None, Up, Down, Left, Right, North, South, East and West are supported!");
             }
         }
 

@@ -96,13 +96,21 @@ namespace GameDev.GameBoard
 
         public SpriteBatch SpriteBatch { get; set; }
         
-        private void RecalculateDimensions()
+        protected void RecalculateDimensions()
         {
             _widthInPixels = TilesHorizontally * TileSizeInPixels;
             _heightInPixels = TilesVertically * TileSizeInPixels;
 
             this._outerRectangle = new Rectangle(X, Y, X + this.WidthInPixels, Y + this.HeightInPixels);
 
+        }
+
+        protected void RecalculateTileRectangles()
+        {
+            foreach (WalledTile tile in Tiles)
+            {
+                tile.RecalculateLayout();
+            }
         }
 
         
@@ -158,15 +166,15 @@ namespace GameDev.GameBoard
 
         public WalledTile GetTileFromPixelPosition(int x, int y)
         {
-            int resultX = x / TileSizeInPixels;
-            int resultY = y / TileSizeInPixels;
+            int resultX = (x- this.X) / TileSizeInPixels;
+            int resultY = (y - this.Y) / TileSizeInPixels;
             if (this.ContainsPosition(resultX, resultY))
             {
                 return this.Tiles[resultX, resultY];
             }
             else
             {
-                throw new ArgumentException("Pixel at (" + x + "," + y + ") is not within bounds of GameBoard");
+                throw new ArgumentException("Pixel at (" + resultX + "," + resultY + ") is not within bounds of GameBoard");
             }
         }
 
@@ -246,9 +254,11 @@ namespace GameDev.GameBoard
 
         #region IPlaceable Members
 
-        public int X{get; set;}
 
-        public int Y { get; set; }
+        Point _position;
+        public int X { get { return _position.X; } set { _position.X = value; RecalculateTileRectangles(); } }
+
+        public int Y { get { return _position.Y; } set { _position.Y = value; RecalculateTileRectangles(); } }
 
         public void Move(Direction direction, float distance)
         {

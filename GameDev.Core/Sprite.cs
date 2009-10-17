@@ -22,6 +22,7 @@ namespace GameDev.Core
     {
         public Direction Direction { get; set; }
         public float Speed { get; set; }
+        public Point GameImageOffset { get; set; }
         public GameImage GameImage { get; set; }
         public SpriteBatch SpriteBatch { get; set; }
 
@@ -48,7 +49,7 @@ namespace GameDev.Core
         {
             Texture2D currentTexture = GameImage.CurrentTexture;
 
-            SpriteBatch.Draw(currentTexture, new Rectangle(X -  currentTexture.Width/2, Y - currentTexture.Height/2, currentTexture.Width, currentTexture.Height), Color.White);
+            SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), Color.White);
             base.Draw(gameTime);
         }
 
