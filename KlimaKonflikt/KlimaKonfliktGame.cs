@@ -27,7 +27,7 @@ namespace KlimaKonflikt
 
         KeyboardState keyboardState;
         Placeable player1Position;
-        Point player1Speed;
+        int player1Speed = 1;
         Direction player1Direction, player1WantedDirection;
 
         Texture2D tileFloor, player1;
@@ -40,7 +40,7 @@ namespace KlimaKonflikt
             this.graphics.PreferredBackBufferWidth =1024;
             this.graphics.PreferredBackBufferHeight = 768;
 
-            this.graphics.IsFullScreen = true;
+            //this.graphics.IsFullScreen = true;
 
             
         }
@@ -105,13 +105,14 @@ namespace KlimaKonflikt
             //if (keyboardState.IsKeyDown(Keys.Down)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Down]; }
             //if (keyboardState.IsKeyDown(Keys.Left)) { player1WantedDirection = DirectionHelper4.KeyboardDirections[Keys.Left]; }
 
-            CalculatePlayer1sMove();
+            CalculatePlayer1sMove(gameTime);
 
             base.Update(gameTime);
         }
 
-        private void CalculatePlayer1sMove()
+        private void CalculatePlayer1sMove(GameTime gameTime)
         {
+            player1Position.Move(player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
             Point newPosition = DirectionHelper4.GetNewPosition(player1Position, player1Direction);
             
         }

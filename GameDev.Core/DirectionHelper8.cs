@@ -30,6 +30,7 @@ namespace GameDev.Core
         public static Dictionary<Direction, DirectionChanger> Offsetters = null;
         public static Dictionary<Keys, DirectionChanger> KeyboardOffsetters = null;
         public static Dictionary<Keys, Direction> KeyboardDirections = null;
+        public static Dictionary<DirectionChanger, Direction> Directions = null;
 
         static DirectionHelper8()
         {
@@ -45,6 +46,18 @@ namespace GameDev.Core
             Offsetters.Add(Direction.NorthWest, NorthWest);
             Offsetters.Add(Direction.None, None);
 
+
+            Directions = new Dictionary<DirectionChanger, Direction>();
+            Directions.Add(North, Direction.North);
+            Directions.Add(NorthEast, Direction.NorthEast);
+            Directions.Add(East, Direction.East);
+            Directions.Add(SouthEast, Direction.SouthEast);
+            Directions.Add(South, Direction.South);
+            Directions.Add(SouthWest, Direction.SouthWest);
+            Directions.Add(West, Direction.West);
+            Directions.Add(NorthWest, Direction.NorthWest);
+            Directions.Add(None, Direction.None);
+
             
             KeyboardOffsetters = new Dictionary<Keys, DirectionChanger>();
             KeyboardOffsetters.Add(Keys.Up, North);
@@ -59,6 +72,13 @@ namespace GameDev.Core
             KeyboardDirections.Add(Keys.Down, Direction.South);
             KeyboardDirections.Add(Keys.Left, Direction.West);
 
+        }
+
+        public static Direction GetDirection(int deltaX, int deltaY)
+        {
+            //TODO:
+            DirectionChanger changer = new DirectionChanger(Math.Sign(deltaX), Math.Sign(deltaY));
+            return Directions[changer];
         }
 
     }
