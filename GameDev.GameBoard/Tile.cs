@@ -75,7 +75,7 @@ namespace GameDev.GameBoard
         public override void Draw(GameTime gameTime)
         {
 
-            SpriteBatch.Draw(Texture, DestinationRectangle, Color.Purple);
+            SpriteBatch.Draw(Texture, DestinationRectangle, Color.White);
                 base.Draw(gameTime);
         }
     }
