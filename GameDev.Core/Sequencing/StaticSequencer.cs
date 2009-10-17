@@ -7,7 +7,13 @@ namespace GameDev.Core.Sequencing
 {
     public class StaticSequencer : Sequencer
     {
-        public StaticSequencer(int value) : base(value)
+        public StaticSequencer()
+            : this(0)
+        {
+        }
+
+        public StaticSequencer(int value)
+            : base(value)
         {
             Current = value;
         }

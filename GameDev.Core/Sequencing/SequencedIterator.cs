@@ -11,12 +11,17 @@ namespace GameDev.Core.Sequencing
         private List<T> m_ListOfItems;
         private Sequencer m_Sequencer;
 
-        public SequencedIterator(List<T> listOfItems, Sequencer sequencer)
+        public SequencedIterator(Sequencer sequencer, List<T> listOfItems)
         {
             m_ListOfItems = listOfItems;
             m_Sequencer = sequencer;
         }
 
+        public SequencedIterator(Sequencer sequencer, params T[] items)
+        {
+            m_ListOfItems = items.ToList();
+            m_Sequencer = sequencer;
+        }
 
         #region IEnumerator<T> Members
 
