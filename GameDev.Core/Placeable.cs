@@ -49,6 +49,12 @@ namespace GameDev.Core
             DirectionHelper4.Offset(this, direction, distance);
         }
 
+
+        public override string ToString()
+        {
+            return this.GetType() + " (x:" + X + ",y:" + Y + ")";
+        }
+
         #endregion
     }
 }

@@ -30,8 +30,8 @@ namespace GameDev.Core
                 if (state.IsKeyDown(Keys.Right)) { result.Offset(DirectionHelper4.Right); }
                 if (state.IsKeyDown(Keys.Down)) { result.Offset(DirectionHelper4.Down); }   
                 if (state.IsKeyDown(Keys.Left)) { result.Offset(DirectionHelper4.Left); }
-
-                return DirectionHelper4.GetDirection(result);
+                //Console.WriteLine(result);
+                return DirectionHelper8.GetDirection(result.DeltaX, result.DeltaY);
             }
             return Direction.None;
         }
