@@ -1,6 +1,0 @@
-C:\KlimaKatastrofe\Kode\GameDev.Core\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\KlimaKatastrofe\Kode\GameDev.Core\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\KlimaKatastrofe\Kode\GameDev.Core\bin\x86\Debug\GameDev.Core.dll
-C:\KlimaKatastrofe\Kode\GameDev.Core\bin\x86\Debug\GameDev.Core.pdb
-C:\KlimaKatastrofe\Kode\GameDev.Core\obj\x86\Debug\GameDev.Core.dll
-C:\KlimaKatastrofe\Kode\GameDev.Core\obj\x86\Debug\GameDev.Core.pdb
