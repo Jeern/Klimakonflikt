@@ -29,23 +29,25 @@ namespace KlimaKonflikt
         Rectangle[,] ammoPlacering;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Color[] healthColors;
 
         private AIController m_AIController = new AIController();
 
         GameBoard board;
 
-        GameImage oilTowerImage1, wheelBarrowImage, completeFloorGameImage, ildImage;
-
+        GameImage oilTowerImage1, wheelBarrowImage, completeFloorGameImage;
+        Color shadow = new Color(0, 0, 0, .6F);
         KKPlayer frøPose, olieTønde;
         KKMonster m_Ild;
 
         Color background = new Color(50, 50, 50);
         KeyboardState keyboardState;
 
-        Ejerskab[,] EjerskabsOversigt;
-        int antalEjetAfFrøpose, antalEjetAfOlietønde;
 
-        Sprite oilTower1, wheelBarrow1, ild;
+        Ejerskab[,] EjerskabsOversigt;
+        
+
+        Sprite oilTower1, wheelBarrow1;
 
         WalledTile oilTowerTile, wheelBarrowTile;
 
@@ -67,8 +69,6 @@ namespace KlimaKonflikt
             this.graphics.PreferredBackBufferHeight = 768;
 
             this.graphics.IsFullScreen = true;
-
-
         }
 
         /// <summary>
@@ -81,14 +81,21 @@ namespace KlimaKonflikt
         {
             // TODO: Add your initialization logic here
 
+            healthColors = new Color[5];
+            healthColors[0] = Color.Red;
+            healthColors[1] = Color.Orange;
+            healthColors[2] = Color.Yellow;
+            healthColors[3] = Color.GreenYellow;
+            healthColors[4] = Color.Green;
+
             base.Initialize();
             ammoPlacering = new Rectangle[2, 10];
             int ammoSize = 100;
             int ammoBottomOffset = 600;
             for (int y = 0; y < 10; y++)
             {
-                ammoPlacering[0, y] = new Rectangle(50, ammoBottomOffset - 50 * y, ammoSize, ammoSize);
-                ammoPlacering[1, y] = new Rectangle(880, ammoBottomOffset - 50 * y, ammoSize, ammoSize);
+                ammoPlacering[0, y] = new Rectangle(20, ammoBottomOffset - 60 * y, ammoSize, ammoSize);
+                ammoPlacering[1, y] = new Rectangle(910, ammoBottomOffset - 60 * y, ammoSize, ammoSize);
             }
 
         }
@@ -126,7 +133,7 @@ namespace KlimaKonflikt
             Texture2D completeFloor = Content.Load<Texture2D>("full_level");
             completeFloorGameImage = new GameImage(completeFloor);
             board.CompleteBackground = completeFloorGameImage;
-            board.SetPosition(new Point(180, 50));
+            board.SetPosition(new Point(200, 50));
 
             wheelBarrowTile = board.Tiles[5, 5]; 
             oilTowerTile =  board.Tiles[4,4];
@@ -213,6 +220,15 @@ namespace KlimaKonflikt
             //m_BlomstImage.Update(gameTime);
             //m_OlieImage.Update(gameTime);
 
+            int scoreDifference = frøPose.EjedeFelter - olieTønde.EjedeFelter;
+            //int scoreDifferenceFactor = Math.Abs
+            switch (Math.Sign(scoreDifference))
+        	{
+                case -1: // olietønde er foran
+                    break;
+	        }
+
+
             base.Update(gameTime);
         }
 
@@ -277,11 +293,11 @@ namespace KlimaKonflikt
                             {
                                 if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] == Ejerskab.Olie)
                                 {
-                                    antalEjetAfOlietønde--;
+                                    olieTønde.EjedeFelter--;
                                 }
                                 EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Blomst;
                                 tile.ContentGameImage = GameImages.GetBlomstImage(Content);
-                                antalEjetAfFrøpose++;
+                                frøPose.EjedeFelter++;
                                 plantFrø.Play();
                                 player.Ammunition--;
                             }
@@ -293,13 +309,13 @@ namespace KlimaKonflikt
                             {
                                 if (EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] == Ejerskab.Blomst)
                                 {
-                                    antalEjetAfFrøpose--;
+                                    frøPose.EjedeFelter--;
                                 }
 
                                 EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex] = Ejerskab.Olie;
                                 tile.ContentGameImage = GameImages.GetOlieImage(Content);
                                 olieDryp.Play();
-                                antalEjetAfOlietønde++;
+                                olieTønde.EjedeFelter++;
                                 player.Ammunition--;
                             }
                         }
@@ -379,18 +395,18 @@ namespace KlimaKonflikt
             spriteBatch.Begin();
             base.Draw(gameTime);
 
-
-            spriteBatch.DrawString(font, "Points: " + antalEjetAfOlietønde, new Vector2(20,50),Color.White);
-            spriteBatch.DrawString(font, "Points: " + antalEjetAfFrøpose, new Vector2(870, 50), Color.White);
+            int shadowOffset = 9;
+            spriteBatch.DrawString(font, "Points: " + olieTønde.EjedeFelter, new Vector2(20,50),Color.White);
+            spriteBatch.DrawString(font, "Points: " + frøPose.EjedeFelter, new Vector2(870, 50), Color.White);
 
             for (int y = olieTønde.Ammunition-1; y >= 0; y--)
             {
+                spriteBatch.Draw(oilSpill, ammoPlacering[0, y].GetOffsetCopy(shadowOffset), shadow);
                 spriteBatch.Draw(oilSpill, ammoPlacering[0, y], Color.White);
-
-
             }
             for (int y = frøPose.Ammunition-1; y >= 0; y--)
             {
+                spriteBatch.Draw(flower, ammoPlacering[1, y].GetOffsetCopy(shadowOffset), shadow);
                 spriteBatch.Draw(flower, ammoPlacering[1, y], Color.White);
             }
             spriteBatch.End();
