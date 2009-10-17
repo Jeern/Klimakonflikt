@@ -17,19 +17,17 @@ namespace GameDev.Core
 {
     public class Placeable : DrawableGameComponent, IPlaceable
     {
-        private int _x, _xOffset;
-        private int _y, _yOffset;
+        private int _x;
+        private int _y;
 
-        public Placeable(Game game, int x, int y) : this (game, x, y, 0,0)
+        public Placeable(Game game) : this (game, 0,0)
         {
         }
 
-        public Placeable(Game game, int x, int y, int xOffset, int yOffset):base(game)
+        public Placeable(Game game, int x, int y):base(game)
         {
             X = x;
             Y = y;
-            XOffset = xOffset;
-            YOffset = yOffset;
         }
 
         #region IPlaceable Members
@@ -46,29 +44,10 @@ namespace GameDev.Core
             set { _y = value; }
         }
 
-        public int XOffset
-        {
-            get { return _xOffset; }
-            set { _xOffset = value; }
-        }
-
-        public int YOffset
-        {
-            get { return _yOffset; }
-            set { _yOffset = value; }
-        }
-
         public void Move(Direction direction, float distance)
         {
-            DirectionHelper.Offset(this, direction, distance);
+            DirectionHelper4.Offset(this, direction, distance);
         }
-
-        public void ChangeOffset(Direction direction, float distance)
-        {
-            this.XOffset += DirectionHelper.Offsets[direction].DeltaX;
-            this.YOffset += DirectionHelper.Offsets[direction].DeltaY;
-        }
-
 
         #endregion
     }

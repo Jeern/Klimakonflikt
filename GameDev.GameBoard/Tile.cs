@@ -24,7 +24,8 @@ namespace GameDev.GameBoard
         }
 
         public GameBoard GameBoard { get; set; }
-        
+        public SpriteBatch SpriteBatch { get; set; }
+
         public bool HasBorderTop { get; set; }
         public bool HasBorderLeft { get; set; }
         public bool HasBorderBottom { get; set; }
@@ -32,7 +33,7 @@ namespace GameDev.GameBoard
 
         public bool HasNeighbor(Direction direction) 
         {
-            return GameBoard.ContainsPosition(this.GetNewPosition(direction, 1));
+            return GameBoard.ContainsPosition(this.GetNewPosition(direction));
         }
 
 
@@ -46,12 +47,13 @@ namespace GameDev.GameBoard
         private Texture2D _texture;
         public Texture2D Texture { get { return _texture; } set { _texture = value; RecalculateDestinationRectangle(); } }
 
-        public Tile(Game game, GameBoard board, Texture2D texture) : this(game, board, texture, int.MinValue, int.MinValue) {}
+        public Tile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch) : this(game, board, texture, spriteBatch, int.MinValue, int.MinValue) { }
 
-        public Tile(Game game, GameBoard board, Texture2D texture, int horizontalIndex, int verticalIndex): base (game, horizontalIndex * texture.Width, verticalIndex * texture.Height)
+        public Tile(Game game, GameBoard board, Texture2D texture, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex): base (game, horizontalIndex * texture.Width, verticalIndex * texture.Height)
         {
             this.GameBoard = board;
             this.Texture = texture;
+            this.SpriteBatch = spriteBatch;
             this.HorizontalIndex = horizontalIndex;
             this.VerticalIndex = verticalIndex;
            
@@ -68,7 +70,7 @@ namespace GameDev.GameBoard
 
         public object Clone()
         {
-            Tile newTile = new Tile(Game, GameBoard, Texture, HorizontalIndex, VerticalIndex);
+            Tile newTile = new Tile(Game, GameBoard, Texture, SpriteBatch, HorizontalIndex, VerticalIndex);
             newTile.DestinationRectangle = this.DestinationRectangle;
             return newTile;
         }
@@ -78,6 +80,8 @@ namespace GameDev.GameBoard
 
         public override void Draw(GameTime gameTime)
         {
+
+            SpriteBatch.Draw(Texture, DestinationRectangle, Color.White);
                 base.Draw(gameTime);
 
         }
