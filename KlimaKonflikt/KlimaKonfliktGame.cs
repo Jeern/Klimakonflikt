@@ -263,17 +263,17 @@ namespace KlimaKonflikt
 
             if (ild1Tile == frøTile || ild2Tile == frøTile)
             {
-                FrøCollision();
+                Collision(frøPose);
             }
             if (ild1Tile == olieTile || ild2Tile == olieTile)
             {
-                OlieCollision();
+                Collision(olieTønde);
             }
         }
 
-        private void OlieCollision()
+        private void Collision(KKPlayer player)
         {
-            throw new NotImplementedException();
+            player.Ammunition = 0;
         }
 
         private void FrøCollision()
