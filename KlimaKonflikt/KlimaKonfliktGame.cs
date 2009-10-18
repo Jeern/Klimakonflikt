@@ -266,10 +266,12 @@ namespace KlimaKonflikt
             if (ild1Tile == frøTile || ild2Tile == frøTile)
             {
                 Collision(frøPose);
+                plantFrø.Play();
             }
             if (ild1Tile == olieTile || ild2Tile == olieTile)
             {
                 Collision(olieTønde);
+                olieDryp.Play();
             }
         }
 
