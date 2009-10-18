@@ -81,10 +81,11 @@ namespace KlimaKonflikt
             };
 
             directions.Remove(OppositeDirection(current));
+            Random r = new Random();
             while (directions.Count > 0)
             {
-                RealRandom random = new RealRandom(0, directions.Count-1);
-                Direction newDirection = directions[random.Next()];
+                //RealRandom random = new RealRandom(0, directions.Count-1);
+                Direction newDirection = directions[r.Next(0, directions.Count-1)];
                 int directionIndex = DirectionIndex(newDirection, tile);  
                 if (!tile.HasBorder(newDirection) && directionIndex > 0 && directionIndex < 9)
                     return newDirection;
