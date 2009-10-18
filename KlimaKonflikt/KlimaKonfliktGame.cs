@@ -96,8 +96,8 @@ namespace KlimaKonflikt
             int ammoBottomOffset = 600;
             for (int y = 0; y < 10; y++)
             {
-                ammoPlacering[0, y] = new Rectangle(20, ammoBottomOffset - 60 * y, ammoSize, ammoSize);
-                ammoPlacering[1, y] = new Rectangle(910, ammoBottomOffset - 60 * y, ammoSize, ammoSize);
+                ammoPlacering[0, y] = new Rectangle(20, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
+                ammoPlacering[1, y] = new Rectangle(910, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
             }
 
         }
@@ -411,10 +411,7 @@ namespace KlimaKonflikt
 
             int shadowOffset = 9;
             spriteBatch.DrawString(font, olieTønde.EjedeFelter.ToString(), new Vector2(20,50),Color.White);
-            spriteBatch.DrawString(font, frøPose.EjedeFelter.ToString(), new Vector2(890, 50), Color.White);
-
-            //spriteBatch.DrawString(font, olieTønde.Health.ToString(), new Vector2(20, 100), Color.White);
-            //spriteBatch.DrawString(font, frøPose.Health.ToString(), new Vector2(890, 100), Color.White);
+            spriteBatch.DrawString(font, frøPose.EjedeFelter.ToString(), new Vector2(910, 50), Color.White);
 
             for (int y = olieTønde.Ammunition-1; y >= 0; y--)
             {
@@ -443,6 +440,5 @@ namespace KlimaKonflikt
             spriteBatch.Draw(healtBarTexture, frøPoseBarRectangle, healthColors[frøPoseHealthBarIndex]);
             spriteBatch.End();
         }
-
     }
 }
