@@ -26,6 +26,8 @@ namespace KlimaKonflikt
     public class KlimaKonfliktGame : Microsoft.Xna.Framework.Game
     {
         SoundEffectInstance annoyingTunePlayer;
+        SoundEffectInstance endTunePlayer;
+        SoundEffectInstance startTunePlayer;
 
         Rectangle[,] ammoPlacering;
         GraphicsDeviceManager graphics;
@@ -55,7 +57,7 @@ namespace KlimaKonflikt
 
         Texture2D tileFloor;
 
-        Texture2D oilSpill, flower, m_WinFlower, m_WinOil;
+        Texture2D oilSpill, flower, m_WinFlower, m_WinOil, m_CreditSplash, m_Splash;
         
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
 
@@ -116,7 +118,9 @@ namespace KlimaKonflikt
             flower = Content.Load<Texture2D>("Blomst/Blomst0030");
             m_WinFlower = Content.Load<Texture2D>("WIN Flower");
             m_WinOil = Content.Load<Texture2D>("WIN OIL");
-
+            m_CreditSplash = Content.Load<Texture2D>("credit splash");
+            m_Splash = Content.Load<Texture2D>("splash");
+            
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             tileFloor = Content.Load<Texture2D>("64x64");
@@ -162,9 +166,16 @@ namespace KlimaKonflikt
                 new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20);
 
             SoundEffect happyGameTune = Content.Load<SoundEffect>(@"GameTunes\klimakonflikt_ingametune");
+            SoundEffect creditsGameTune = Content.Load<SoundEffect>(@"GameTunes\klimakonflikt_credits_tune");
+            SoundEffect startGameTune = Content.Load<SoundEffect>(@"GameTunes\klimakonflikt_menutune");  
             annoyingTunePlayer = happyGameTune.CreateInstance();
+            endTunePlayer = creditsGameTune.CreateInstance();
+            startTunePlayer = startGameTune.CreateInstance();
+            endTunePlayer.IsLooped = true;
             annoyingTunePlayer.IsLooped = true;
-            annoyingTunePlayer.Play();
+            startTunePlayer.IsLooped = true;
+            //annoyingTunePlayer.Play();
+            startTunePlayer.Play();
 
             plantFrø = Content.Load<SoundEffect>("froe_plantes");
             olieDryp = Content.Load<SoundEffect>("olieplet_spildes");
@@ -204,12 +215,34 @@ namespace KlimaKonflikt
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
             // Allows the game to exit
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
             }
+
+            if (m_CreditsDisplayed)
+            {
+                m_CreditsDisplayed = false;
+                endTunePlayer.Play();
+            }
+
+            if (m_StartTunePlaying && !m_GameStarting)
+            {
+                startTunePlayer.Stop();
+                annoyingTunePlayer.Play();
+                m_StartTunePlaying = false;
+            }
+
+            if (m_GameStarting && Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                m_GameStarting = false;
+            }
+
+            if (m_EndTunePlaying)
+                return;
 
             if (keyboardState.IsArrowKeyDown())
             {
@@ -248,13 +281,25 @@ namespace KlimaKonflikt
 	        }
             float maxSpeed = .4F;
             float lowestHealth = Math.Min(frøPose.Health, olieTønde.Health);
-            if (lowestHealth < 50)
+            if (lowestHealth < 50 && !m_GameOver)
             {
                 annoyingTunePlayer.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
             }
+            else if (m_GameOver)
+            {
+                annoyingTunePlayer.Stop();
+                m_EndTunePlaying = true;
+            }
+
 
             base.Update(gameTime);
         }
+
+        private bool m_GameOver = false;
+        private bool m_GameStarting = true;
+        private bool m_EndTunePlaying = false;
+        private bool m_StartTunePlaying = true;
+        private bool m_CreditsDisplayed = false;
 
         private void CollisionTest()
         {
@@ -435,6 +480,7 @@ namespace KlimaKonflikt
             return newPosition;
         }
 
+        private DateTime endTime = DateTime.MaxValue;
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -447,8 +493,28 @@ namespace KlimaKonflikt
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
+            if (m_GameStarting)
+            {
+                base.Draw(gameTime);
+                spriteBatch.Draw(m_Splash, new Rectangle(0, 0, 1024, 768), Color.White);
+                spriteBatch.End();
+                return;
+            }
+
+            if (endTime != DateTime.MaxValue &&  endTime.AddSeconds(5.0) < DateTime.Now)
+            {
+                m_CreditsDisplayed = true;
+                base.Draw(gameTime);
+                spriteBatch.Draw(m_CreditSplash, new Rectangle(0, 0, 1024, 768), Color.White);
+                spriteBatch.End();
+                return;
+            }
+
             if (frøPose.Health <= 0.5F)
             {
+                m_GameOver = true;
+                if (endTime == DateTime.MaxValue)
+                    endTime = DateTime.Now;
                 base.Draw(gameTime);
                 spriteBatch.Draw(m_WinOil, new Rectangle(0, 0, 1024, 768), Color.White);
                 spriteBatch.End();
@@ -456,6 +522,9 @@ namespace KlimaKonflikt
             }
             else if (olieTønde.Health <= 0.5F)
             {
+                m_GameOver = true;
+                if (endTime == DateTime.MaxValue)
+                    endTime = DateTime.Now;
                 base.Draw(gameTime);
                 spriteBatch.Draw(m_WinFlower, new Rectangle(0, 0, 1024, 768), Color.White);
                 spriteBatch.End();
@@ -490,6 +559,8 @@ namespace KlimaKonflikt
 
             if (frøPoseHealthBarIndex > 4) frøPoseHealthBarIndex = 4;
             if (olieTøndeHealthBarIndex > 4) olieTøndeHealthBarIndex = 4;
+            if (frøPoseHealthBarIndex <0) frøPoseHealthBarIndex = 0;
+            if (olieTøndeHealthBarIndex <0) olieTøndeHealthBarIndex = 0;
 
             spriteBatch.Draw(healtBarTexture, olieBarRectangle, healthColors[olieTøndeHealthBarIndex]);
             spriteBatch.Draw(healtBarTexture, frøPoseBarRectangle, healthColors[frøPoseHealthBarIndex]);
