@@ -152,10 +152,10 @@ namespace KlimaKonflikt
 
             frøPose = new KKPlayer(this, GameImages.GetFlowersackImage(Content), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
-            m_Ild1 = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .1F, board.Tiles[0, 9].Center, 
+            m_Ild1 = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .23F, board.Tiles[0, 9].Center, 
                 new GameDev.Core.Sequencing.SequencedIterator<Direction>(
                 new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20);
-            m_Ild2 = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .1F, board.Tiles[9, 0].Center,
+            m_Ild2 = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .25F, board.Tiles[9, 0].Center,
                 new GameDev.Core.Sequencing.SequencedIterator<Direction>(
                 new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20);
 
@@ -226,6 +226,9 @@ namespace KlimaKonflikt
             CalculatePlayerMove(gameTime, olieTønde);
             m_AIController.CalculateAIMove(gameTime, board, m_Ild1);
             m_AIController.CalculateAIMove(gameTime, board, m_Ild2);
+
+            CollisionTest();    
+
             //m_BlomstImage.Update(gameTime);
             //m_OlieImage.Update(gameTime);
 
@@ -249,6 +252,33 @@ namespace KlimaKonflikt
             }
 
             base.Update(gameTime);
+        }
+
+        private void CollisionTest()
+        {
+            Tile ild1Tile = board.GetTileFromPixelPosition(m_Ild1.GetPosition().X, m_Ild1.GetPosition().Y);
+            Tile ild2Tile = board.GetTileFromPixelPosition(m_Ild2.GetPosition().X, m_Ild2.GetPosition().Y);
+            Tile frøTile = board.GetTileFromPixelPosition(frøPose.GetPosition().X, frøPose.GetPosition().Y);
+            Tile olieTile = board.GetTileFromPixelPosition(olieTønde.GetPosition().X, olieTønde.GetPosition().Y);
+
+            if (ild1Tile == frøTile || ild2Tile == frøTile)
+            {
+                FrøCollision();
+            }
+            if (ild1Tile == olieTile || ild2Tile == olieTile)
+            {
+                OlieCollision();
+            }
+        }
+
+        private void OlieCollision()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FrøCollision()
+        {
+            throw new NotImplementedException();
         }
 
         private void CalculatePlayerMove(GameTime gameTime, KKPlayer player)
