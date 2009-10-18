@@ -55,7 +55,7 @@ namespace KlimaKonflikt
 
         Texture2D tileFloor;
 
-        Texture2D oilSpill, flower;
+        Texture2D oilSpill, flower, m_WinFlower, m_WinOil;
         
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
 
@@ -114,6 +114,8 @@ namespace KlimaKonflikt
             healtBarTexture = Content.Load<Texture2D>("bar");
             oilSpill = Content.Load<Texture2D>("Olie/ThePatch0030");
             flower = Content.Load<Texture2D>("Blomst/Blomst0030");
+            m_WinFlower = Content.Load<Texture2D>("WIN Flower");
+            m_WinOil = Content.Load<Texture2D>("WIN OIL");
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -442,6 +444,22 @@ namespace KlimaKonflikt
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+
+            if (frøPose.Health <= 0.5F)
+            {
+                base.Draw(gameTime);
+                spriteBatch.Draw(m_WinOil, new Rectangle(0, 0, 1024, 768), Color.White);
+                spriteBatch.End();
+                return;
+            }
+            else if (olieTønde.Health <= 0.5F)
+            {
+                base.Draw(gameTime);
+                spriteBatch.Draw(m_WinFlower, new Rectangle(0, 0, 1024, 768), Color.White);
+                spriteBatch.End();
+                return;
+            }
+
             base.Draw(gameTime);
 
             int shadowOffset = 9;
