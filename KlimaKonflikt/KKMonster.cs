@@ -9,19 +9,35 @@ using GameDev.Core.Graphics;
 using Microsoft.Xna.Framework;
 using GameDev.Core.Sequencing;
 using System;
+using System.Diagnostics;
+using System.Windows.Forms;
+using GameDev.GameBoard;
+using System.Collections.Generic;
 
 namespace KlimaKonflikt
 {
     public class KKMonster : Sprite
     {
-        private Direction m_WantedDirection;
+        private Direction m_WantedDirection = Direction.Right;
 
-        public Direction WantedDirection 
+        public Direction WantedDirection(WalledTile tile)
         {
-            get 
-            { 
-                return m_DirectionIterator.Current; 
-            }
+            m_WantedDirection = RandomDirection(m_WantedDirection, tile);  
+            return m_WantedDirection; 
+            //Direction m_currentDirectionChoice = m_DirectionIterator.Current;
+            //while (tile.HasBorder(m_currentDirectionChoice))
+            //{
+            //    m_DirectionIterator.MoveNext();
+            //    m_currentDirectionChoice = m_DirectionIterator.Current;  
+            //}
+
+            //if (m_WantedDirection == Direction.None)
+            //    m_WantedDirection = m_currentDirectionChoice;
+
+            //if (tile.HasBorder(m_WantedDirection))
+            //    m_WantedDirection = m_currentDirectionChoice;
+
+            //return m_WantedDirection; 
         }
 
         private SequencedIterator<Direction> m_DirectionIterator;
@@ -39,19 +55,75 @@ namespace KlimaKonflikt
         {
         }
 
-        private TimeSpan m_LastChanged = TimeSpan.MinValue;
+        //private TimeSpan m_LastChanged = TimeSpan.MinValue;
 
-        public override void Update(GameTime time)
+        //public override void Update(GameTime time)
+        //{
+        //    //TimeSpan newTime = time.TotalGameTime;
+        //    //if ((m_LastChanged == TimeSpan.MinValue || m_LastChanged.Add(new TimeSpan(0, 0, 0, 0, m_DelayMillisecondsIterator.Current)) <= newTime))
+        //    //{
+        //    //    m_DirectionChangeAllowed = false;
+        //    //    m_LastChanged = newTime;
+        //        m_DelayMillisecondsIterator.MoveNext();
+        //        m_DirectionIterator.MoveNext();
+        //    //}
+        //    base.Update(time);
+        //}
+
+        private Direction RandomDirection(Direction current, WalledTile tile)
         {
-            TimeSpan newTime = time.TotalGameTime;
-            if (m_LastChanged == TimeSpan.MinValue || m_LastChanged.Add(new TimeSpan(0, 0, 0, 0, m_DelayMillisecondsIterator.Current)) <= newTime)
+            var directions = new List<Direction>()
             {
-                m_LastChanged = newTime;
-                m_DelayMillisecondsIterator.MoveNext();
-                m_DirectionIterator.MoveNext();
+                Direction.Up,
+                Direction.Down,
+                Direction.Left,
+                Direction.Right 
+            };
+
+            directions.Remove(OppositeDirection(current));
+            while (directions.Count > 0)
+            {
+                RealRandom random = new RealRandom(0, directions.Count-1);
+                Direction newDirection = directions[random.Next()];
+                int directionIndex = DirectionIndex(newDirection, tile);  
+                if (!tile.HasBorder(newDirection) && directionIndex > 0 && directionIndex < 9)
+                    return newDirection;
+
+                directions.Remove(newDirection); 
             }
-            base.Update(time);
+            return OppositeDirection(current);                                    
         }
+
+        private Direction OppositeDirection(Direction current)
+        {
+            if (current == Direction.Left)
+                return Direction.Right;
+
+            if (current == Direction.Right)
+                return Direction.Left;
+
+            if (current == Direction.Up)
+                return Direction.Down;
+
+            if (current == Direction.Down)
+                return Direction.Up;
+
+            return Direction.None;
+        }
+
+        private int DirectionIndex(Direction current, Tile tile)
+        {
+            if (current == Direction.Down)
+                return tile.VerticalIndex + 1;
+            if (current == Direction.Up)
+                return tile.VerticalIndex - 1;
+            if (current == Direction.Right)
+                return tile.HorizontalIndex + 1;
+            if (current == Direction.Left)
+                return tile.HorizontalIndex - 1;
+            return 0;
+        }
+
 
 
     }        
