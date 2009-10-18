@@ -49,8 +49,8 @@ namespace KlimaKonflikt
                 }
 
 
-                Direction wantedDirection = monster.WantedDirection;
-                Direction playerDirection = monster.Direction;
+                Direction wantedDirection = monster.WantedDirection(tile);
+                Direction monsterDirection = monster.Direction;
 
                 if (wantedDirection != Direction.None)
                 {
@@ -61,15 +61,17 @@ namespace KlimaKonflikt
                     }
                     else
                     {
-                        if (!tile.HasBorder(playerDirection))
+                        //monster.AllowDirectionChange();
+                        if (!tile.HasBorder(monsterDirection))
                         {
-                            monster.Move(playerDirection, pixelMovesLeft);
+                            monster.Move(monsterDirection, pixelMovesLeft);
                         }
                     }
                 }
             }
             else
             {
+                //monster.WantedDirection(tile);
                 monster.X = newPosition.X;
                 monster.Y = newPosition.Y;
             }

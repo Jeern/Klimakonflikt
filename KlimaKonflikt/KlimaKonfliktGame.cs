@@ -40,7 +40,7 @@ namespace KlimaKonflikt
         GameImage oilTowerImage1, wheelBarrowImage, completeFloorGameImage;
         Color shadow = new Color(0, 0, 0, .6F);
         KKPlayer frøPose, olieTønde;
-        KKMonster m_Ild;
+        KKMonster m_Ild1, m_Ild2;
 
         Color background = new Color(50, 50, 50);
         KeyboardState keyboardState;
@@ -152,9 +152,12 @@ namespace KlimaKonflikt
 
             frøPose = new KKPlayer(this, GameImages.GetFlowersackImage(Content), spriteBatch, .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(this, GameImages.GetOilBarrelImage(Content), spriteBatch, .2F, board.Tiles[0, 0].Center, 10);
-            m_Ild = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .2F, board.Tiles[0, 9].Center, 
+            m_Ild1 = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .1F, board.Tiles[0, 9].Center, 
                 new GameDev.Core.Sequencing.SequencedIterator<Direction>(
-                new RandomSequencer(0, 3), Direction.Down, Direction.East, Direction.Left, Direction.North), 500);
+                new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20);
+            m_Ild2 = new KKMonster(this, GameImages.GetIldImage(Content), spriteBatch, .1F, board.Tiles[9, 0].Center,
+                new GameDev.Core.Sequencing.SequencedIterator<Direction>(
+                new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20);
 
             SoundEffect happyGameTune = Content.Load<SoundEffect>(@"GameTunes\klimakonflikt_ingametune");
             annoyingTunePlayer = happyGameTune.CreateInstance();
@@ -172,7 +175,8 @@ namespace KlimaKonflikt
             this.Components.Add(oilTower1);
             Components.Add(frøPose);
             Components.Add(olieTønde);
-            Components.Add(m_Ild);
+            Components.Add(m_Ild1);
+            Components.Add(m_Ild2);
 
 
             //ildImage = GameImages.GetIldImage(Content);
@@ -220,7 +224,8 @@ namespace KlimaKonflikt
 
             CalculatePlayerMove(gameTime, frøPose);
             CalculatePlayerMove(gameTime, olieTønde);
-            m_AIController.CalculateAIMove(gameTime, board, m_Ild);
+            m_AIController.CalculateAIMove(gameTime, board, m_Ild1);
+            m_AIController.CalculateAIMove(gameTime, board, m_Ild2);
             //m_BlomstImage.Update(gameTime);
             //m_OlieImage.Update(gameTime);
 
