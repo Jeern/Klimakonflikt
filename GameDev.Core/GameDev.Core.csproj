@@ -82,6 +82,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Lib\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Direction.cs" />
     <Compile Include="DirectionHelper8.cs" />
     <Compile Include="DirectionHelper4.cs" />
