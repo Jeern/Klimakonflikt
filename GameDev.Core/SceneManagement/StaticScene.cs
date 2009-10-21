@@ -33,14 +33,5 @@ namespace SceneManagementTest
                 SpriteBatch.End();
         }
 
-        public override void Initialize()
-        {
-
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-
-        }
     }
 }
