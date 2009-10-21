@@ -7,18 +7,31 @@ namespace GameDev.Core.SceneManagement
 {
     public abstract class SceneLink : ISceneLink
     {
-        public SceneLink(string targetSceneName, SceneManager sceneManager)
+        public SceneLink(IScene targetScene)
         {
-            this.TargetSceneName = targetSceneName;
-            this.SceneManager = sceneManager;
+            this.TargetScene = targetScene;
         }
-        public string TargetSceneName { get; set; }
-        public SceneManager SceneManager { get; set; }
+        public IScene TargetScene { get; set; }
+        
+        SceneManager _sceneManager;
+        public SceneManager SceneManager 
+        {
+            get
+            {
+                if (_sceneManager == null)
+                {
+                    SceneManager = TargetScene.SceneManager;
+                }
+                return _sceneManager;
+            }
+            private set { this._sceneManager = value; }
+        }
+
         public abstract void Update(GameTime gameTime);
 
         public void GoToLink()
         {
-            SceneManager.ChangeScene(TargetSceneName);
+            SceneManager.ChangeScene(TargetScene);
         }
 
     }

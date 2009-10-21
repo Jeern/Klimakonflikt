@@ -32,7 +32,7 @@ namespace GameDev.Core.SceneManagement
         {
             _scenes = new Dictionary<string, IScene>();
             this._spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
-            game.Services.AddService(typeof(ISceneManager), this);
+            game.Services.AddService(typeof(ISceneManager), this); 
         }
 
         public override void Update(GameTime gameTime) {
@@ -51,7 +51,7 @@ namespace GameDev.Core.SceneManagement
             }
         }
 
-        public void AddScene(IScene sceneToAdd)
+        public IScene AddScene(IScene sceneToAdd)
         {
             _scenes.Add(sceneToAdd.Name, sceneToAdd);
             sceneToAdd.SceneManager = this;
@@ -59,6 +59,7 @@ namespace GameDev.Core.SceneManagement
             {
                 this.CurrentScene = sceneToAdd;
             }
+            return sceneToAdd;
         }
 
         public IScene GetScene(string sceneName)
@@ -73,6 +74,13 @@ namespace GameDev.Core.SceneManagement
                 this.CurrentScene = _scenes[sceneName];
             }
         }
+
+        public void ChangeScene(IScene sceneToChangeTo)
+        {
+            ChangeScene(sceneToChangeTo.Name);
+        }
+
+
 
         public void Pause()
         {

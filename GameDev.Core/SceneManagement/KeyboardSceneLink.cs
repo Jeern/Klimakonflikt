@@ -9,7 +9,7 @@ namespace GameDev.Core.SceneManagement
     {
         public List<Keys> TriggerKeys { get; set; }
 
-        public KeyboardSceneLink(List<Keys> triggerKeys, string targetSceneName, SceneManager sceneManager): base(targetSceneName, sceneManager)
+        public KeyboardSceneLink(IScene targetScene, List<Keys> triggerKeys) : base(targetScene)
         {
             TriggerKeys = triggerKeys;
         }

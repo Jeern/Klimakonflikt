@@ -7,7 +7,7 @@ namespace GameDev.Core.SceneManagement
 {
     public class AnyKeySceneLink : SceneLink
     {
-        public AnyKeySceneLink(string targetSceneName, SceneManager sceneManager) : base(targetSceneName, sceneManager) { }
+        public AnyKeySceneLink(IScene targetScene) : base(targetScene) { }
 
         public override void Update(GameTime gameTime)
         {
