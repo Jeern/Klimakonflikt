@@ -23,6 +23,7 @@ namespace GameDev.Core.SceneManagement
     {
 
         public Scene CurrentScene { get; private set; }
+        private SpriteBatch _spriteBatch;
         
         private Dictionary<string, Scene> _scenes;
 
@@ -30,17 +31,32 @@ namespace GameDev.Core.SceneManagement
             : base(game)
         {
             _scenes = new Dictionary<string, Scene>();
-
+            this._spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
             game.Services.AddService(typeof(ISceneManager), this);
         }
 
-        public override void Update(GameTime gameTime) { this.CurrentScene.Update(gameTime); }
+        public override void Update(GameTime gameTime) {
+            if (this.CurrentScene != null) {
+                this.CurrentScene.Update(gameTime);
+        }
+        }
 
-        public override void Draw(GameTime gameTime) { this.CurrentScene.Update(gameTime); }
+        public override void Draw(GameTime gameTime) 
+        {
+            if (this.CurrentScene != null)
+            {
+                this.CurrentScene.Draw(gameTime);
+            }
+        }
 
         public void AddScene(Scene sceneToAdd)
         {
             _scenes.Add(sceneToAdd.Name, sceneToAdd);
+            sceneToAdd.SceneManager = this;
+            if (_scenes.Count == 1)
+            {
+                this.CurrentScene = sceneToAdd;
+            }
         }
 
         public Scene GetScene(string sceneName)
@@ -54,6 +70,26 @@ namespace GameDev.Core.SceneManagement
             {
                 this.CurrentScene = _scenes[sceneName];
             }
+        }
+
+        public void Pause()
+        {
+            if (this.CurrentScene != null) { this.CurrentScene.Pause(); }
+        }
+        public void Resume()
+        {
+            if (this.CurrentScene != null) { this.CurrentScene.Resume(); }
+        }
+
+
+        public override void Initialize()
+        {
+            foreach (string name in this._scenes.Keys)
+            {
+                _scenes[name].Initialize();
+            }
+
+
         }
     }
 }
