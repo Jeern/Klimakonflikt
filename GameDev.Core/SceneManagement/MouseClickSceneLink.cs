@@ -7,7 +7,7 @@ namespace GameDev.Core.SceneManagement
 {
     class MouseClickSceneLink : SceneLink
     {
-        public MouseClickSceneLink(string targetSceneName, SceneManager sceneManager) : base(targetSceneName, sceneManager) { }
+        public MouseClickSceneLink(IScene targetScene) : base(targetScene) { }
 
         public override void Update(GameTime gameTime)
         {

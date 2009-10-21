@@ -13,7 +13,7 @@ namespace GameDev.Core.SceneManagement
         int _millisecondsPause;
 
 
-        public TimedSceneLink(string targetSceneName, SceneManager sceneManager, int millisecondPause) : base(targetSceneName, sceneManager)
+        public TimedSceneLink(IScene targetScene, int millisecondPause) : base(targetScene)
         {
 
             this._millisecondsPause = millisecondPause;
