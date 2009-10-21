@@ -5,18 +5,70 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDev.Core.SceneManagement
 {
-    public abstract class Scene : DrawableGameComponent, IScene
+    public abstract class Scene :  IScene
     {
-        public SceneManager Manager { get; private set; }
-        public string Name { get; set; }
-        public List<DrawableGameComponent> DrawableGameComponents { get; set; }
-        public SpriteBatch SpriteBatch { get; private set; }
 
-        public Scene(string name, Game game) : base(game)
+        #region IScene Members
+
+        public Game Game { get; private set; }
+        public SceneManager SceneManager { get;  set; }
+        public string Name { get; set; }
+        public List<GameComponent> Components { get; set; }
+        public SpriteBatch SpriteBatch { get; private set; }
+        public bool IsPaused { get; private set; }
+
+        public virtual void Initialize() 
+        {
+            foreach (GameComponent component in Components)
+            {
+                component.Initialize();
+            }
+        }
+
+        public virtual void Update(GameTime gameTime)
+        {
+            if (!IsPaused)
+            {
+                foreach (GameComponent component in Components)
+                {
+                    component.Update(gameTime);
+                }
+            }
+        }
+
+
+        public abstract void Draw(GameTime gameTime);
+
+        public void Pause()
+        {
+            this.IsPaused = true;
+        }
+
+        public void Resume()
+        {
+            this.IsPaused = false;
+        }
+
+        #endregion
+
+
+        #region Constructors
+
+        public Scene(string name, Game game)
         {
             this.Name = name;
-            this.DrawableGameComponents = new List<DrawableGameComponent>();
+            this.Game = game;
+            this.Components = new List<GameComponent>();
             this.SpriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
         }
+
+        #endregion
+
+
+
+
+
+
+    
     }
 }
