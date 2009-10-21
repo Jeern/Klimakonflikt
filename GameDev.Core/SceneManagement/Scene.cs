@@ -16,6 +16,7 @@ namespace GameDev.Core.SceneManagement
         public List<GameComponent> Components { get; set; }
         public SpriteBatch SpriteBatch { get; private set; }
         public bool IsPaused { get; private set; }
+        public List<SceneLink> SceneLinks { get; set; }
 
         public virtual void Initialize() 
         {
@@ -32,6 +33,10 @@ namespace GameDev.Core.SceneManagement
                 foreach (GameComponent component in Components)
                 {
                     component.Update(gameTime);
+                }
+                foreach (SceneLink link in SceneLinks)
+                {
+                    link.Update(gameTime);
                 }
             }
         }
@@ -59,6 +64,7 @@ namespace GameDev.Core.SceneManagement
             this.Name = name;
             this.Game = game;
             this.Components = new List<GameComponent>();
+            SceneLinks = new List<SceneLink>();
             this.SpriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
         }
 

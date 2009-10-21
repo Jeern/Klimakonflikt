@@ -22,23 +22,25 @@ namespace GameDev.Core.SceneManagement
     public class SceneManager : DrawableGameComponent, ISceneManager
     {
 
-        public Scene CurrentScene { get; private set; }
+        public IScene CurrentScene { get; private set; }
         private SpriteBatch _spriteBatch;
+                
+        private Dictionary<string, IScene> _scenes;
         
-        private Dictionary<string, Scene> _scenes;
-
         public SceneManager(Game game)
             : base(game)
         {
-            _scenes = new Dictionary<string, Scene>();
+            _scenes = new Dictionary<string, IScene>();
             this._spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
             game.Services.AddService(typeof(ISceneManager), this);
         }
 
         public override void Update(GameTime gameTime) {
-            if (this.CurrentScene != null) {
+            if (this.CurrentScene != null) 
+            {
                 this.CurrentScene.Update(gameTime);
-        }
+            }
+           
         }
 
         public override void Draw(GameTime gameTime) 
@@ -49,7 +51,7 @@ namespace GameDev.Core.SceneManagement
             }
         }
 
-        public void AddScene(Scene sceneToAdd)
+        public void AddScene(IScene sceneToAdd)
         {
             _scenes.Add(sceneToAdd.Name, sceneToAdd);
             sceneToAdd.SceneManager = this;
@@ -59,7 +61,7 @@ namespace GameDev.Core.SceneManagement
             }
         }
 
-        public Scene GetScene(string sceneName)
+        public IScene GetScene(string sceneName)
         {
             return _scenes[sceneName];
         }
