@@ -14,7 +14,7 @@ namespace GameDev.Core.SceneManagement
         public IScene TargetScene { get; set; }
         
         ISceneManager _sceneManager;
-        public ISceneManager SceneManager 
+        protected ISceneManager SceneManager 
         {
             get
             {

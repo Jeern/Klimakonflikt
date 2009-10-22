@@ -92,6 +92,7 @@
     <Compile Include="Graphics\GameImage.cs" />
     <Compile Include="Graphics\TextureClipper.cs" />
     <Compile Include="SceneManagement\AnyKeySceneLink.cs" />
+    <Compile Include="SceneManagement\ClassDiagram - SceneManagement.cd" />
     <Compile Include="SceneManagement\IScene.cs" />
     <Compile Include="SceneManagement\ISceneLink.cs" />
     <Compile Include="SceneManagement\ISceneManager.cs" />
