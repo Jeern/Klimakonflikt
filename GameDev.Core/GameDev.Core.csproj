@@ -92,7 +92,6 @@
     <Compile Include="Graphics\GameImage.cs" />
     <Compile Include="Graphics\TextureClipper.cs" />
     <Compile Include="SceneManagement\AnyKeySceneLink.cs" />
-    <Compile Include="SceneManagement\ClassDiagram - SceneManagement.cd" />
     <Compile Include="SceneManagement\IScene.cs" />
     <Compile Include="SceneManagement\ISceneLink.cs" />
     <Compile Include="SceneManagement\ISceneManager.cs" />
@@ -164,9 +163,6 @@
       <ProductName>Microsoft XNA Framework Redistributable 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
