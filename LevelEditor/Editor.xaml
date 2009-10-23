@@ -1,0 +1,36 @@
+﻿<Window x:Class="LevelEditor.Editor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Level Editor" Height="700" Width="800" Background="Black" WindowStartupLocation="CenterScreen">
+    <Canvas x:Name="MazeCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" Width="640" Height="640">
+        <Canvas.Background>
+            <ImageBrush AlignmentX="Center" AlignmentY="Center" ImageSource="DefaultBackground.png"/>
+        </Canvas.Background>
+        <Grid Name="MazeGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Width="640" Height="640" ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+        </Grid>
+    </Canvas>
+</Window>
