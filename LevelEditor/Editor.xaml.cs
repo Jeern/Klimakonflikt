@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.IO;
 
 namespace LevelEditor
 {
@@ -24,6 +25,12 @@ namespace LevelEditor
         {
             InitializeComponent();
             InitializeImages();
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            TestSaveToPng();
         }
 
         private Image CreateHorizontalImage(int x, int y)
@@ -136,6 +143,34 @@ namespace LevelEditor
                 return 0.1;
             else
                 return 1.0;
+        }
+
+        private void TestSaveToPng()
+        {
+            //Cool code borrowed from
+            //http://dvuyka.spaces.live.com/blog/cns!305B02907E9BE19A!240.entry
+            //Thank you...
+            Transform transform = MazeCanvas.LayoutTransform;
+            MazeCanvas.LayoutTransform = null;
+            Size size = new Size(MazeCanvas.Width, MazeCanvas.Height);
+            MazeCanvas.Measure(size);
+            MazeCanvas.Arrange(new Rect(size));
+            RenderTargetBitmap renderBitmap =
+              new RenderTargetBitmap(
+                (int)size.Width,
+                (int)size.Height,
+                96d,
+                96d,
+                PixelFormats.Pbgra32);
+            renderBitmap.Render(MazeCanvas);
+
+            using (FileStream fs = new FileStream(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "test.png"), FileMode.Create))
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+                encoder.Save(fs);
+            }
+            MazeCanvas.LayoutTransform = transform;
         }
     }
 }
