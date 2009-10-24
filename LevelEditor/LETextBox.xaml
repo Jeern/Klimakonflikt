@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="LevelEditor.LETextBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="Auto" Width="Auto">
+    <Grid Height="30">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+        <Label Name="LELabel" Grid.Column="0" Foreground="White">Hej</Label>
+        <Border Grid.Column="1" BorderBrush="Blue" BorderThickness="2" CornerRadius="10" Background="White">
+            <TextBox Name="LEText" BorderThickness="0" BorderBrush="Transparent" Margin="3,3,3,3"></TextBox>
+        </Border>
+    </Grid>
+</UserControl>

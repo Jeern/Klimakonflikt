@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Gameboard>
-  <LevelInfo Name="Level 1" />
+  <LevelInfo Number="1" Name="Indie9000" />
   <Columns>10</Columns>
   <Rows>10</Rows>
+  <Image>Indie9000Level.png</Image>
   <Tiles>
     <Tile Row="0" Column="0" Top="True" Bottom="False" Left="True" Right="True" />
     <Tile Row="1" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
