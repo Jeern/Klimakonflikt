@@ -67,7 +67,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MazeEditor.xaml">
+    <Page Include="LETextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LevelInfoEditorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MazeEditorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -81,8 +89,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MazeEditor.xaml.cs">
-      <DependentUpon>MazeEditor.xaml</DependentUpon>
+    <Compile Include="LETextBox.xaml.cs">
+      <DependentUpon>LETextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LevelInfoEditorPage.xaml.cs">
+      <DependentUpon>LevelInfoEditorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MazeEditorPage.xaml.cs">
+      <DependentUpon>MazeEditorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -118,6 +132,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="mur-afrunding.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FlowerSack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="OilBarrel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Fire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Oiltower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WheelBarrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
