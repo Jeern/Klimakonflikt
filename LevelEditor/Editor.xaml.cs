@@ -25,23 +25,62 @@ namespace LevelEditor
         {
             InitializeComponent();
             InitializeImages();
+            UpdateRoundedImages();
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             base.OnClosing(e);
-            TestSaveToPng();
+            Save();
+        }
+
+        private Image CreateRoundedImage(int x, int y)
+        {
+            Image image = CreateImage("mur-afrunding.png", false);
+            image.Width = 4.0 * XMargin;
+            image.Height = 4.0 * YMargin;
+
+            double xOffset = 0.0;
+            double yOffset = 0.0;
+
+            if (y == (int)VerticalTiles)
+            {
+                Grid.SetRow(image, y - 1);
+                image.VerticalAlignment = VerticalAlignment.Bottom;
+                yOffset = 2.0 * YMargin;
+            }
+            else
+            {
+                Grid.SetRow(image, y);
+                image.VerticalAlignment = VerticalAlignment.Top;
+                yOffset = -2.0 * YMargin;
+            }
+
+            if (x == (int)HorizontalTiles)
+            {
+                Grid.SetColumn(image, x - 1);
+                image.HorizontalAlignment = HorizontalAlignment.Right;
+                xOffset = 2.0 * YMargin;
+            }
+            else
+            {
+                Grid.SetColumn(image, x);
+                image.HorizontalAlignment = HorizontalAlignment.Left;
+                xOffset = -2.0 * YMargin;
+            }
+            image.RenderTransform = new TranslateTransform(xOffset, yOffset);
+            return image;
         }
 
         private Image CreateHorizontalImage(int x, int y)
         {
-            Image image = CreateImage("Mur horizontal.png");
+            Image image = CreateImage("Mur horizontal.png", true);
             image.HorizontalAlignment = HorizontalAlignment.Left;
             Grid.SetColumn(image, x);
 
             if (y == (int)VerticalTiles)
             {
-                Grid.SetRow(image, y-1);
+                Grid.SetRow(image, y - 1);
                 image.VerticalAlignment = VerticalAlignment.Bottom;
                 image.RenderTransform = new TranslateTransform(0.0, 2.0 * YMargin);
             }
@@ -56,13 +95,13 @@ namespace LevelEditor
 
         private Image CreateVerticalImage(int x, int y)
         {
-            Image image = CreateImage("Mur vertical.png");
+            Image image = CreateImage("Mur vertical.png", true);
             image.VerticalAlignment = VerticalAlignment.Top;
             Grid.SetRow(image, y);
 
             if (x == (int)HorizontalTiles)
             {
-                Grid.SetColumn(image, x-1);
+                Grid.SetColumn(image, x - 1);
                 image.HorizontalAlignment = HorizontalAlignment.Right;
                 image.RenderTransform = new TranslateTransform(2.0 * XMargin, 0.0);
             }
@@ -75,7 +114,7 @@ namespace LevelEditor
             return image;
         }
 
-        private Image CreateImage(string name)
+        private Image CreateImage(string name, bool checkMouseButton)
         {
             Image image = new Image();
             BitmapImage src = new BitmapImage();
@@ -85,9 +124,12 @@ namespace LevelEditor
             image.Source = src;
             image.Stretch = Stretch.Uniform;
             image.Visibility = Visibility.Visible;
-            image.Opacity = 0.1;
+            image.Opacity = Transparent;
             image.IsHitTestVisible = true;
-            image.MouseLeftButtonDown += ImageMouseLeftButtonDown;
+            if (checkMouseButton)
+            {
+                image.MouseLeftButtonDown += ImageMouseLeftButtonDown;
+            }
             MazeGrid.Children.Add(image);
             return image;
         }
@@ -98,28 +140,47 @@ namespace LevelEditor
             if (image != null)
             {
                 image.Opacity = ReverseVisibility(image.Opacity);
+                UpdateRoundedImages();
             }
         }
-        
+
         private const double XMargin = 3.0;
         private const double YMargin = 3.0;
         private const double VerticalTiles = 10.0;
         private const double HorizontalTiles = 10.0;
+        private const double Invisible = 0.0;
+        private const double Transparent = 0.1;
+        private const double Visible = 1.0;
 
         private Image[,] m_VerticalImages = new Image[(int)HorizontalTiles + 1, (int)VerticalTiles];
         private Image[,] m_HorizontalImages = new Image[(int)HorizontalTiles, (int)VerticalTiles + 1];
+        private Image[,] m_RoundedImages = new Image[(int)HorizontalTiles + 1, (int)VerticalTiles + 1];
 
         private void InitializeImages()
         {
+            InitializeRoundedImages();
             InitializeHorizontalImages();
             InitializeVerticalImages();
         }
+
+        private void InitializeRoundedImages()
+        {
+            for (int x = 0; x <= (int)HorizontalTiles; x++)
+            {
+                for (int y = 0; y <= (int)VerticalTiles; y++)
+                {
+                    m_RoundedImages[x, y] = CreateRoundedImage(x, y);
+                }
+            }
+        }
+
+
 
         private void InitializeVerticalImages()
         {
             for (int x = 0; x <= (int)HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)VerticalTiles-1; y++)
+                for (int y = 0; y <= (int)VerticalTiles - 1; y++)
                 {
                     m_VerticalImages[x, y] = CreateVerticalImage(x, y);
                 }
@@ -128,7 +189,7 @@ namespace LevelEditor
 
         private void InitializeHorizontalImages()
         {
-            for (int x = 0; x <= (int)HorizontalTiles-1; x++)
+            for (int x = 0; x <= (int)HorizontalTiles - 1; x++)
             {
                 for (int y = 0; y <= (int)VerticalTiles; y++)
                 {
@@ -136,25 +197,25 @@ namespace LevelEditor
                 }
             }
         }
-        
+
         private double ReverseVisibility(double opacity)
         {
-            if (opacity == 1.0)
-                return 0.1;
+            if (opacity == Visible)
+                return Transparent;
             else
-                return 1.0;
+                return Visible;
         }
 
-        private void TestSaveToPng()
+        private void SaveToPng(Canvas maze)
         {
             //Cool code borrowed from
             //http://dvuyka.spaces.live.com/blog/cns!305B02907E9BE19A!240.entry
             //Thank you...
-            Transform transform = MazeCanvas.LayoutTransform;
-            MazeCanvas.LayoutTransform = null;
-            Size size = new Size(MazeCanvas.Width, MazeCanvas.Height);
-            MazeCanvas.Measure(size);
-            MazeCanvas.Arrange(new Rect(size));
+            Transform transform = maze.LayoutTransform;
+            maze.LayoutTransform = null;
+            Size size = new Size(maze.Width, maze.Height);
+            maze.Measure(size);
+            maze.Arrange(new Rect(size));
             RenderTargetBitmap renderBitmap =
               new RenderTargetBitmap(
                 (int)size.Width,
@@ -162,7 +223,7 @@ namespace LevelEditor
                 96d,
                 96d,
                 PixelFormats.Pbgra32);
-            renderBitmap.Render(MazeCanvas);
+            renderBitmap.Render(maze);
 
             using (FileStream fs = new FileStream(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "test.png"), FileMode.Create))
             {
@@ -170,7 +231,104 @@ namespace LevelEditor
                 encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
                 encoder.Save(fs);
             }
-            MazeCanvas.LayoutTransform = transform;
+            maze.LayoutTransform = transform;
         }
+
+        private void Save()
+        {
+            BeforeSave();
+            SaveToPng(MazeCanvas);
+            AfterSave();
+        }
+
+        private void UpdateRoundedImages()
+        {
+            //Make all transparent
+            for (int x = 0; x <= (int)HorizontalTiles; x++)
+            {
+                for (int y = 0; y <= (int)VerticalTiles; y++)
+                {
+                    m_RoundedImages[x, y].Opacity = Transparent;
+                }
+            }
+
+            //Make all adjacent to Horizontal Visible
+            for (int x = 0; x <= (int)HorizontalTiles - 1; x++)
+            {
+                for (int y = 0; y <= (int)VerticalTiles; y++)
+                {
+                    if (m_HorizontalImages[x, y].Opacity == Visible)
+                    {
+                        m_RoundedImages[x, y].Opacity = Visible;
+                        m_RoundedImages[x + 1, y].Opacity = Visible;
+                    }
+                }
+            }
+
+            //Make all adjacent to Vertical Visible
+            for (int x = 0; x <= (int)HorizontalTiles; x++)
+            {
+                for (int y = 0; y <= (int)VerticalTiles - 1; y++)
+                {
+                    if (m_VerticalImages[x, y].Opacity == Visible)
+                    {
+                        m_RoundedImages[x, y].Opacity = Visible;
+                        m_RoundedImages[x, y + 1].Opacity = Visible;
+                    }
+                }
+            }
+        }
+
+        private void AfterSave()
+        {
+            foreach (Image image in m_HorizontalImages)
+            {
+                AfterSaveImage(image);
+            }
+            foreach (Image image in m_VerticalImages)
+            {
+                AfterSaveImage(image);
+            }
+            foreach (Image image in m_RoundedImages)
+            {
+                AfterSaveImage(image);
+            }
+            MazeGrid.ShowGridLines = true;
+        }
+
+        private void BeforeSave()
+        {
+            foreach (Image image in m_HorizontalImages)
+            {
+                BeforeSaveImage(image);
+            }
+            foreach (Image image in m_VerticalImages)
+            {
+                BeforeSaveImage(image);
+            }
+            foreach (Image image in m_RoundedImages)
+            {
+                BeforeSaveImage(image);
+            }
+            MazeGrid.ShowGridLines = false;
+        }
+
+        private static void BeforeSaveImage(Image image)
+        {
+            if (image.Opacity == Transparent)
+            {
+                image.Opacity = Invisible;
+            }
+        }
+
+        private static void AfterSaveImage(Image image)
+        {
+            if (image.Opacity == Invisible)
+            {
+                image.Opacity = Transparent;
+            }
+        }
+
+
     }
 }
