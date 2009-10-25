@@ -89,6 +89,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FlowerSackImage.cs" />
+    <Compile Include="HorizontalWallImage.cs" />
     <Compile Include="LEConstants.cs" />
     <Compile Include="LETextBox.xaml.cs">
       <DependentUpon>LETextBox.xaml</DependentUpon>
@@ -113,7 +115,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RoundSpotImage.cs" />
     <Compile Include="StaticImage.cs" />
+    <Compile Include="VerticalWallImage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
