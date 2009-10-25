@@ -144,34 +144,43 @@ namespace LevelEditor
             src.EndInit();
             image.Source = src;
             image.Stretch = Stretch.Uniform;
+            image.Width = 60.0;
+            image.Height = 60.0;
             image.Visibility = Visibility.Visible;
             image.Opacity = Visible;
             image.IsHitTestVisible = true;
-//            image.MouseMove += MoveImage;
-            image.MouseLeftButtonDown += new MouseButtonEventHandler(image_MouseLeftButtonDown);
+            image.MouseLeftButtonDown += new MouseButtonEventHandler(MoveableImageLeftButtonDown);
+            image.MouseLeftButtonUp += new MouseButtonEventHandler(MoveableImageLeftButtonUp);
+            MazeCanvas.MouseMove += MoveImage;
             MazeCanvas.Children.Add(image);
             return image;
         }
 
-        void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void MoveableImageLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var image = sender as Image;
-            if (image != null && e.LeftButton == MouseButtonState.Pressed)
+            m_MoveableImage = null;
+        }
+
+        private void MoveableImageLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            m_MoveableImage = sender as Image;
+            if (m_MoveableImage != null)
             {
-                Point p = e.GetPosition(MazeCanvas);
-                Canvas.SetLeft(image, p.X);
-                Canvas.SetTop(image, p.Y);
+                m_MoveableImageMovePoint = e.GetPosition(m_MoveableImage);
             }
         }
 
+        private Image m_MoveableImage;
+        private Point m_MoveableImageMovePoint;
+
         private void MoveImage(object sender, MouseEventArgs e)
         {
-            var image = sender as Image;
-            if (image != null && e.LeftButton == MouseButtonState.Pressed)
+            if (m_MoveableImage != null && e.LeftButton == MouseButtonState.Pressed)
             {
-                Point p = e.GetPosition(MazeCanvas);
-                Canvas.SetLeft(image, p.X);
-                Canvas.SetTop(image, p.Y);
+                Point mazePoint = e.GetPosition(MazeCanvas);
+                Point newPoint = new Point(mazePoint.X - m_MoveableImageMovePoint.X, mazePoint.Y - m_MoveableImageMovePoint.Y);
+                Canvas.SetLeft(m_MoveableImage, newPoint.X);
+                Canvas.SetTop(m_MoveableImage, newPoint.Y);
             }
         }
 
