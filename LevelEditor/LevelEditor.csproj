@@ -89,6 +89,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LEConstants.cs" />
     <Compile Include="LETextBox.xaml.cs">
       <DependentUpon>LETextBox.xaml</DependentUpon>
     </Compile>
@@ -98,6 +99,7 @@
     <Compile Include="MazeEditorPage.xaml.cs">
       <DependentUpon>MazeEditorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MoveableImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -111,6 +113,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="StaticImage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

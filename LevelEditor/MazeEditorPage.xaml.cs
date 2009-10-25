@@ -25,42 +25,42 @@ namespace LevelEditor
             InitializeComponent();
             InitializeImages();
             UpdateRoundedImages();
-            CreateMovableImage("FlowerSack.png");
+            var image = new MoveableImage(MazeCanvas, "FlowerSack.png");
         }
 
         private Image CreateRoundedImage(int x, int y)
         {
             Image image = CreateImage("mur-afrunding.png", false, false);
-            image.Width = 4.0 * XMargin;
-            image.Height = 4.0 * YMargin;
+            image.Width = 4.0 * LEConstants.XMargin;
+            image.Height = 4.0 * LEConstants.YMargin;
 
             double xOffset = 0.0;
             double yOffset = 0.0;
 
-            if (y == (int)VerticalTiles)
+            if (y == (int)LEConstants.VerticalTiles)
             {
                 Grid.SetRow(image, y - 1);
                 image.VerticalAlignment = VerticalAlignment.Bottom;
-                yOffset = 2.0 * YMargin;
+                yOffset = 2.0 * LEConstants.YMargin;
             }
             else
             {
                 Grid.SetRow(image, y);
                 image.VerticalAlignment = VerticalAlignment.Top;
-                yOffset = -2.0 * YMargin;
+                yOffset = -2.0 * LEConstants.YMargin;
             }
 
-            if (x == (int)HorizontalTiles)
+            if (x == (int)LEConstants.HorizontalTiles)
             {
                 Grid.SetColumn(image, x - 1);
                 image.HorizontalAlignment = HorizontalAlignment.Right;
-                xOffset = 2.0 * YMargin;
+                xOffset = 2.0 * LEConstants.YMargin;
             }
             else
             {
                 Grid.SetColumn(image, x);
                 image.HorizontalAlignment = HorizontalAlignment.Left;
-                xOffset = -2.0 * YMargin;
+                xOffset = -2.0 * LEConstants.YMargin;
             }
             image.RenderTransform = new TranslateTransform(xOffset, yOffset);
             return image;
@@ -68,42 +68,42 @@ namespace LevelEditor
 
         private Image CreateHorizontalImage(int x, int y)
         {
-            Image image = CreateImage("Mur horizontal.png", true, (y == 0 | y == VerticalTiles));
+            Image image = CreateImage("Mur horizontal.png", true, (y == 0 | y == LEConstants.VerticalTiles));
             image.HorizontalAlignment = HorizontalAlignment.Left;
             Grid.SetColumn(image, x);
 
-            if (y == (int)VerticalTiles)
+            if (y == (int)LEConstants.VerticalTiles)
             {
                 Grid.SetRow(image, y - 1);
                 image.VerticalAlignment = VerticalAlignment.Bottom;
-                image.RenderTransform = new TranslateTransform(0.0, 2.0 * YMargin);
+                image.RenderTransform = new TranslateTransform(0.0, 2.0 * LEConstants.YMargin);
             }
             else
             {
                 Grid.SetRow(image, y);
                 image.VerticalAlignment = VerticalAlignment.Top;
-                image.RenderTransform = new TranslateTransform(0.0, -2.0 * YMargin);
+                image.RenderTransform = new TranslateTransform(0.0, -2.0 * LEConstants.YMargin);
             }
             return image;
         }
 
         private Image CreateVerticalImage(int x, int y)
         {
-            Image image = CreateImage("Mur vertical.png", true, (x == 0 | x == HorizontalTiles));
+            Image image = CreateImage("Mur vertical.png", true, (x == 0 | x == LEConstants.HorizontalTiles));
             image.VerticalAlignment = VerticalAlignment.Top;
             Grid.SetRow(image, y);
 
-            if (x == (int)HorizontalTiles)
+            if (x == (int)LEConstants.HorizontalTiles)
             {
                 Grid.SetColumn(image, x - 1);
                 image.HorizontalAlignment = HorizontalAlignment.Right;
-                image.RenderTransform = new TranslateTransform(2.0 * XMargin, 0.0);
+                image.RenderTransform = new TranslateTransform(2.0 * LEConstants.XMargin, 0.0);
             }
             else
             {
                 Grid.SetColumn(image, x);
                 image.HorizontalAlignment = HorizontalAlignment.Left;
-                image.RenderTransform = new TranslateTransform(-2.0 * XMargin, 0.0);
+                image.RenderTransform = new TranslateTransform(-2.0 * LEConstants.XMargin, 0.0);
             }
             return image;
         }
@@ -120,11 +120,11 @@ namespace LevelEditor
             image.Visibility = Visibility.Visible;
             if (visible)
             {
-                image.Opacity = Visible;
+                image.Opacity = LEConstants.Visible;
             }
             else
             {
-                image.Opacity = Transparent;
+                image.Opacity = LEConstants.Transparent;
             }
             image.IsHitTestVisible = true;
             if (checkMouseButton)
@@ -133,55 +133,6 @@ namespace LevelEditor
             }
             MazeGrid.Children.Add(image);
             return image;
-        }
-
-        private Image CreateMovableImage(string name)
-        {
-            Image image = new Image();
-            BitmapImage src = new BitmapImage();
-            src.BeginInit();
-            src.UriSource = new Uri(name, UriKind.Relative);
-            src.EndInit();
-            image.Source = src;
-            image.Stretch = Stretch.Uniform;
-            image.Width = 60.0;
-            image.Height = 60.0;
-            image.Visibility = Visibility.Visible;
-            image.Opacity = Visible;
-            image.IsHitTestVisible = true;
-            image.MouseLeftButtonDown += new MouseButtonEventHandler(MoveableImageLeftButtonDown);
-            image.MouseLeftButtonUp += new MouseButtonEventHandler(MoveableImageLeftButtonUp);
-            MazeCanvas.MouseMove += MoveImage;
-            MazeCanvas.Children.Add(image);
-            return image;
-        }
-
-        private void MoveableImageLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            m_MoveableImage = null;
-        }
-
-        private void MoveableImageLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            m_MoveableImage = sender as Image;
-            if (m_MoveableImage != null)
-            {
-                m_MoveableImageMovePoint = e.GetPosition(m_MoveableImage);
-            }
-        }
-
-        private Image m_MoveableImage;
-        private Point m_MoveableImageMovePoint;
-
-        private void MoveImage(object sender, MouseEventArgs e)
-        {
-            if (m_MoveableImage != null && e.LeftButton == MouseButtonState.Pressed)
-            {
-                Point mazePoint = e.GetPosition(MazeCanvas);
-                Point newPoint = new Point(mazePoint.X - m_MoveableImageMovePoint.X, mazePoint.Y - m_MoveableImageMovePoint.Y);
-                Canvas.SetLeft(m_MoveableImage, newPoint.X);
-                Canvas.SetTop(m_MoveableImage, newPoint.Y);
-            }
         }
 
         private void ImageMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -194,17 +145,9 @@ namespace LevelEditor
             }
         }
 
-        private const double XMargin = 3.0;
-        private const double YMargin = 3.0;
-        private const double VerticalTiles = 10.0;
-        private const double HorizontalTiles = 10.0;
-        private const double Invisible = 0.0;
-        private const double Transparent = 0.1;
-        private const double Visible = 1.0;
-
-        private Image[,] m_VerticalImages = new Image[(int)HorizontalTiles + 1, (int)VerticalTiles];
-        private Image[,] m_HorizontalImages = new Image[(int)HorizontalTiles, (int)VerticalTiles + 1];
-        private Image[,] m_RoundedImages = new Image[(int)HorizontalTiles + 1, (int)VerticalTiles + 1];
+        private Image[,] m_VerticalImages = new Image[(int)LEConstants.HorizontalTiles + 1, (int)LEConstants.VerticalTiles];
+        private Image[,] m_HorizontalImages = new Image[(int)LEConstants.HorizontalTiles, (int)LEConstants.VerticalTiles + 1];
+        private Image[,] m_RoundedImages = new Image[(int)LEConstants.HorizontalTiles + 1, (int)LEConstants.VerticalTiles + 1];
 
         private void InitializeImages()
         {
@@ -215,9 +158,9 @@ namespace LevelEditor
 
         private void InitializeRoundedImages()
         {
-            for (int x = 0; x <= (int)HorizontalTiles; x++)
+            for (int x = 0; x <= (int)LEConstants.HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)VerticalTiles; y++)
+                for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
                 {
                     m_RoundedImages[x, y] = CreateRoundedImage(x, y);
                 }
@@ -228,9 +171,9 @@ namespace LevelEditor
 
         private void InitializeVerticalImages()
         {
-            for (int x = 0; x <= (int)HorizontalTiles; x++)
+            for (int x = 0; x <= (int)LEConstants.HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)VerticalTiles - 1; y++)
+                for (int y = 0; y <= (int)LEConstants.VerticalTiles - 1; y++)
                 {
                     m_VerticalImages[x, y] = CreateVerticalImage(x, y);
                 }
@@ -239,9 +182,9 @@ namespace LevelEditor
 
         private void InitializeHorizontalImages()
         {
-            for (int x = 0; x <= (int)HorizontalTiles - 1; x++)
+            for (int x = 0; x <= (int)LEConstants.HorizontalTiles - 1; x++)
             {
-                for (int y = 0; y <= (int)VerticalTiles; y++)
+                for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
                 {
                     m_HorizontalImages[x, y] = CreateHorizontalImage(x, y);
                 }
@@ -250,10 +193,10 @@ namespace LevelEditor
 
         private double ReverseVisibility(double opacity)
         {
-            if (opacity == Visible)
-                return Transparent;
+            if (opacity == LEConstants.Visible)
+                return LEConstants.Transparent;
             else
-                return Visible;
+                return LEConstants.Visible;
         }
 
         private void SaveToPng(Canvas maze)
@@ -298,36 +241,36 @@ namespace LevelEditor
         private void UpdateRoundedImages()
         {
             //Make all transparent
-            for (int x = 0; x <= (int)HorizontalTiles; x++)
+            for (int x = 0; x <= (int)LEConstants.HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)VerticalTiles; y++)
+                for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
                 {
-                    m_RoundedImages[x, y].Opacity = Transparent;
+                    m_RoundedImages[x, y].Opacity = LEConstants.Transparent;
                 }
             }
 
             //Make all adjacent to Horizontal Visible
-            for (int x = 0; x <= (int)HorizontalTiles - 1; x++)
+            for (int x = 0; x <= (int)LEConstants.HorizontalTiles - 1; x++)
             {
-                for (int y = 0; y <= (int)VerticalTiles; y++)
+                for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
                 {
-                    if (m_HorizontalImages[x, y].Opacity == Visible)
+                    if (m_HorizontalImages[x, y].Opacity == LEConstants.Visible)
                     {
-                        m_RoundedImages[x, y].Opacity = Visible;
-                        m_RoundedImages[x + 1, y].Opacity = Visible;
+                        m_RoundedImages[x, y].Opacity = LEConstants.Visible;
+                        m_RoundedImages[x + 1, y].Opacity = LEConstants.Visible;
                     }
                 }
             }
 
             //Make all adjacent to Vertical Visible
-            for (int x = 0; x <= (int)HorizontalTiles; x++)
+            for (int x = 0; x <= (int)LEConstants.HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)VerticalTiles - 1; y++)
+                for (int y = 0; y <= (int)LEConstants.VerticalTiles - 1; y++)
                 {
-                    if (m_VerticalImages[x, y].Opacity == Visible)
+                    if (m_VerticalImages[x, y].Opacity == LEConstants.Visible)
                     {
-                        m_RoundedImages[x, y].Opacity = Visible;
-                        m_RoundedImages[x, y + 1].Opacity = Visible;
+                        m_RoundedImages[x, y].Opacity = LEConstants.Visible;
+                        m_RoundedImages[x, y + 1].Opacity = LEConstants.Visible;
                     }
                 }
             }
@@ -369,17 +312,17 @@ namespace LevelEditor
 
         private static void BeforeSaveImage(Image image)
         {
-            if (image.Opacity == Transparent)
+            if (image.Opacity == LEConstants.Transparent)
             {
-                image.Opacity = Invisible;
+                image.Opacity = LEConstants.Invisible;
             }
         }
 
         private static void AfterSaveImage(Image image)
         {
-            if (image.Opacity == Invisible)
+            if (image.Opacity == LEConstants.Invisible)
             {
-                image.Opacity = Transparent;
+                image.Opacity = LEConstants.Transparent;
             }
         }
 
