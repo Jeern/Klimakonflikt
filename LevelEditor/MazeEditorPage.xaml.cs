@@ -25,124 +25,7 @@ namespace LevelEditor
             InitializeComponent();
             InitializeImages();
             UpdateRoundedImages();
-            var image = new MoveableImage(MazeCanvas, "FlowerSack.png");
-        }
-
-        private Image CreateRoundedImage(int x, int y)
-        {
-            Image image = CreateImage("mur-afrunding.png", false, false);
-            image.Width = 4.0 * LEConstants.XMargin;
-            image.Height = 4.0 * LEConstants.YMargin;
-
-            double xOffset = 0.0;
-            double yOffset = 0.0;
-
-            if (y == (int)LEConstants.VerticalTiles)
-            {
-                Grid.SetRow(image, y - 1);
-                image.VerticalAlignment = VerticalAlignment.Bottom;
-                yOffset = 2.0 * LEConstants.YMargin;
-            }
-            else
-            {
-                Grid.SetRow(image, y);
-                image.VerticalAlignment = VerticalAlignment.Top;
-                yOffset = -2.0 * LEConstants.YMargin;
-            }
-
-            if (x == (int)LEConstants.HorizontalTiles)
-            {
-                Grid.SetColumn(image, x - 1);
-                image.HorizontalAlignment = HorizontalAlignment.Right;
-                xOffset = 2.0 * LEConstants.YMargin;
-            }
-            else
-            {
-                Grid.SetColumn(image, x);
-                image.HorizontalAlignment = HorizontalAlignment.Left;
-                xOffset = -2.0 * LEConstants.YMargin;
-            }
-            image.RenderTransform = new TranslateTransform(xOffset, yOffset);
-            return image;
-        }
-
-        private Image CreateHorizontalImage(int x, int y)
-        {
-            Image image = CreateImage("Mur horizontal.png", true, (y == 0 | y == LEConstants.VerticalTiles));
-            image.HorizontalAlignment = HorizontalAlignment.Left;
-            Grid.SetColumn(image, x);
-
-            if (y == (int)LEConstants.VerticalTiles)
-            {
-                Grid.SetRow(image, y - 1);
-                image.VerticalAlignment = VerticalAlignment.Bottom;
-                image.RenderTransform = new TranslateTransform(0.0, 2.0 * LEConstants.YMargin);
-            }
-            else
-            {
-                Grid.SetRow(image, y);
-                image.VerticalAlignment = VerticalAlignment.Top;
-                image.RenderTransform = new TranslateTransform(0.0, -2.0 * LEConstants.YMargin);
-            }
-            return image;
-        }
-
-        private Image CreateVerticalImage(int x, int y)
-        {
-            Image image = CreateImage("Mur vertical.png", true, (x == 0 | x == LEConstants.HorizontalTiles));
-            image.VerticalAlignment = VerticalAlignment.Top;
-            Grid.SetRow(image, y);
-
-            if (x == (int)LEConstants.HorizontalTiles)
-            {
-                Grid.SetColumn(image, x - 1);
-                image.HorizontalAlignment = HorizontalAlignment.Right;
-                image.RenderTransform = new TranslateTransform(2.0 * LEConstants.XMargin, 0.0);
-            }
-            else
-            {
-                Grid.SetColumn(image, x);
-                image.HorizontalAlignment = HorizontalAlignment.Left;
-                image.RenderTransform = new TranslateTransform(-2.0 * LEConstants.XMargin, 0.0);
-            }
-            return image;
-        }
-
-        private Image CreateImage(string name, bool checkMouseButton, bool visible)
-        {
-            Image image = new Image();
-            BitmapImage src = new BitmapImage();
-            src.BeginInit();
-            src.UriSource = new Uri(name, UriKind.Relative);
-            src.EndInit();
-            image.Source = src;
-            image.Stretch = Stretch.Uniform;
-            image.Visibility = Visibility.Visible;
-            if (visible)
-            {
-                image.Opacity = LEConstants.Visible;
-            }
-            else
-            {
-                image.Opacity = LEConstants.Transparent;
-            }
-            image.IsHitTestVisible = true;
-            if (checkMouseButton)
-            {
-                image.MouseLeftButtonDown += ImageMouseLeftButtonDown;
-            }
-            MazeGrid.Children.Add(image);
-            return image;
-        }
-
-        private void ImageMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var image = sender as Image;
-            if (image != null)
-            {
-                image.Opacity = ReverseVisibility(image.Opacity);
-                UpdateRoundedImages();
-            }
+            var image = new FlowerSackImage(MazeCanvas);
         }
 
         private Image[,] m_VerticalImages = new Image[(int)LEConstants.HorizontalTiles + 1, (int)LEConstants.VerticalTiles];
@@ -162,7 +45,7 @@ namespace LevelEditor
             {
                 for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
                 {
-                    m_RoundedImages[x, y] = CreateRoundedImage(x, y);
+                    m_RoundedImages[x, y] = new RoundSpotImage(MazeCanvas, MazeGrid, x, y);
                 }
             }
         }
@@ -175,7 +58,9 @@ namespace LevelEditor
             {
                 for (int y = 0; y <= (int)LEConstants.VerticalTiles - 1; y++)
                 {
-                    m_VerticalImages[x, y] = CreateVerticalImage(x, y);
+                    var verticalImage = new VerticalWallImage(MazeCanvas, MazeGrid, x, y);
+                    verticalImage.Changed += StaticImageChanged;
+                    m_VerticalImages[x, y] = verticalImage;
                 }
             }
         }
@@ -186,17 +71,16 @@ namespace LevelEditor
             {
                 for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
                 {
-                    m_HorizontalImages[x, y] = CreateHorizontalImage(x, y);
+                    var horizontalImage = new HorizontalWallImage(MazeCanvas, MazeGrid, x, y);
+                    horizontalImage.Changed += StaticImageChanged;
+                    m_HorizontalImages[x, y] = horizontalImage;
                 }
             }
         }
 
-        private double ReverseVisibility(double opacity)
+        private void StaticImageChanged(object sender, EventArgs e)
         {
-            if (opacity == LEConstants.Visible)
-                return LEConstants.Transparent;
-            else
-                return LEConstants.Visible;
+            UpdateRoundedImages();
         }
 
         private void SaveToPng(Canvas maze)
