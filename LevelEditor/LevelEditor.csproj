@@ -89,6 +89,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FireImage.cs" />
     <Compile Include="FlowerSackImage.cs" />
     <Compile Include="HorizontalWallImage.cs" />
     <Compile Include="LEConstants.cs" />
@@ -102,6 +103,8 @@
       <DependentUpon>MazeEditorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MoveableImage.cs" />
+    <Compile Include="OilBarrelImage.cs" />
+    <Compile Include="OilTowerImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -118,6 +121,7 @@
     <Compile Include="RoundSpotImage.cs" />
     <Compile Include="StaticImage.cs" />
     <Compile Include="VerticalWallImage.cs" />
+    <Compile Include="WheelBarrowImage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -26,6 +26,10 @@ namespace LevelEditor
             InitializeImages();
             UpdateRoundedImages();
             var image = new FlowerSackImage(MazeCanvas);
+            var image1 = new OilBarrelImage(MazeCanvas);
+            var image2 = new OilTowerImage(MazeCanvas);
+            var image3 = new WheelBarrowImage(MazeCanvas);
+            var image4 = new FireImage(MazeCanvas);
         }
 
         private Image[,] m_VerticalImages = new Image[(int)LEConstants.HorizontalTiles + 1, (int)LEConstants.VerticalTiles];
