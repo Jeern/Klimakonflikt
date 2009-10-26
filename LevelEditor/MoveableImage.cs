@@ -52,13 +52,27 @@ namespace LevelEditor
             m_CurrentScreenPosition = coordinate;
             SetToCenter();
             canvas.MouseMove += MoveImage;
+            canvas.MouseLeftButtonUp += CanvasMouseLeftButtonUp;
             canvas.Children.Add(this);
+        }
+
+        private void CanvasMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            StopMovingImage();
+        }
+
+        private void StopMovingImage()
+        {
+            if (m_IsMoving)
+            {
+                m_IsMoving = false;
+                SetToCenter();
+            }
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            m_IsMoving = false;
-            SetToCenter();
+            StopMovingImage();
             base.OnMouseLeftButtonUp(e);
         }
 
