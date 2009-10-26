@@ -18,6 +18,8 @@ namespace GameDev.Core
     {
         public static DirectionChanger None = new DirectionChanger(0, 0);
 
+        static Random m_random;
+
         public static DirectionChanger North = new DirectionChanger(0, -1);
         public static DirectionChanger NorthEast = new DirectionChanger(1, -1);
         public static DirectionChanger East = new DirectionChanger(1, 0);
@@ -34,6 +36,8 @@ namespace GameDev.Core
 
         static DirectionHelper8()
         {
+            m_random = new Random();
+
             Offsetters = new Dictionary<Direction, DirectionChanger>();
 
             Offsetters.Add(Direction.North, North);
@@ -118,5 +122,22 @@ namespace GameDev.Core
                     return Direction.None;
             }
         }
+
+         public static List<Direction> AllDirections
+         {
+             get
+             {
+                 return
+                     new List<Direction> { Direction.North, Direction.NorthEast, Direction.East, Direction.SouthEast, Direction.South, Direction.SouthWest, Direction.West, Direction.NorthWest };
+             }
+         }
+
+         public static Direction GetRandomDirection()
+         {
+             return AllDirections[m_random.Next(8)];
+
+         }
+
+
     }
 }

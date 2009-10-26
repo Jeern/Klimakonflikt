@@ -31,10 +31,6 @@ namespace KlimaKonflikt.Scenes
 
         private AIController m_AIController = new AIController();
         private bool m_GameOver = false;
-        private bool m_GameStarting = true;
-        private bool m_EndTunePlaying = false;
-        private bool m_StartTunePlaying = true;
-        private bool m_CreditsDisplayed = false;
 
         int tilesAcross = 10, tilesDown = 10;
 
@@ -271,26 +267,29 @@ namespace KlimaKonflikt.Scenes
                     pixelMovesLeft = Math.Abs(newPosition.Y - oldPosition.Y);
                 }
 
+                 monster.WantedDirection = GetWantedDirection(monster);
+                
+                   
+                    
+                   // monster.WantedDirection(tile);
+                //Direction monsterDirection = monster.Direction;
 
-                Direction wantedDirection = monster.WantedDirection(tile);
-                Direction monsterDirection = monster.Direction;
-
-                if (wantedDirection != Direction.None)
-                {
-                    if (!tile.HasBorder(wantedDirection))
-                    {
-                        monster.Direction = wantedDirection;
+                //if (wantedDirection != Direction.None)
+                //{
+                //    if (!tile.HasBorder(wantedDirection))
+                    //{
+                 monster.Direction = monster.WantedDirection;
                         monster.Move(monster.Direction, pixelMovesLeft);
-                    }
-                    else
-                    {
+                    //}
+                    //else
+                    //{
                         //monster.AllowDirectionChange();
-                        if (!tile.HasBorder(monsterDirection))
-                        {
-                            monster.Move(monsterDirection, pixelMovesLeft);
-                        }
-                    }
-                }
+                        //if (!tile.HasBorder(monsterDirection))
+                        //{
+                        //    monster.Move(monsterDirection, pixelMovesLeft);
+                        //}
+                //    }
+                //}
             }
             else
             {
@@ -298,6 +297,49 @@ namespace KlimaKonflikt.Scenes
                 monster.X = newPosition.X;
                 monster.Y = newPosition.Y;
             }
+        }
+
+        private Direction GetWantedDirection(KKMonster monster)
+        {
+            Direction wantedDirection = monster.WantedDirection;
+            WalledTile tile = board.GetTileFromPixelPosition(monster.GetPosition());
+
+            List<Direction> possibleDirections = tile.Exits;
+            //first check if we can exit right or left from this tile
+            List<Direction> rightAndLeft = DirectionHelper4.GetRightAndLeftTurns(monster.Direction);
+            if ((possibleDirections.Contains(rightAndLeft[0]) || possibleDirections.Contains(rightAndLeft[1])) && monster.Random.Next(10) < 5)
+            {
+                //it's possible to turn!
+
+                //do we want to?  (50 % chance)
+                foreach (Direction  dir in rightAndLeft)
+                {
+                    if (possibleDirections.Contains(dir))
+                    {
+                        return dir;
+                       // rightAndLeft.Remove(dir);
+                    }
+                }
+
+                return rightAndLeft[monster.Random.Next(rightAndLeft.Count - 1)];
+                
+            }
+            else
+            {
+                //we can't turn right or left!
+                //if we can't go forward either - then try to turn back
+                if (!possibleDirections.Contains(monster.Direction))
+                {
+                    wantedDirection = DirectionHelper4.GetReverseDirection(monster.Direction);
+                    if (!possibleDirections.Contains(wantedDirection))
+                    {
+                        wantedDirection = wantedDirection = rightAndLeft[monster.Random.Next(rightAndLeft.Count - 1)];
+                    }
+                }
+                //can we turn back?
+          
+            }
+            return wantedDirection;
         }
 
 
@@ -412,7 +454,6 @@ namespace KlimaKonflikt.Scenes
         {
             player.Ammunition = 0;
         }
-
 
         private void CalculatePlayerMove(GameTime gameTime, KKPlayer player)
         {
@@ -597,8 +638,15 @@ namespace KlimaKonflikt.Scenes
             oilTower1.SetPosition(oilTowerTile.Center);
 
             frøPose.Reset();
-            olieTønde.Reset();
+              olieTønde.Reset();
+              m_Ild2.WantedDirection = Direction.Left; //DirectionHelper4.GetRandomDirection();
+              m_Ild1.WantedDirection = Direction.Right;// DirectionHelper4.GetRandomDirection();
+              m_Ild2.Direction = Direction.Left;// DirectionHelper4.GetRandomDirection();
+              m_Ild1.Direction = Direction.Right;// DirectionHelper4.GetRandomDirection
+            
             board.Reset();
+
+
         }
 
 

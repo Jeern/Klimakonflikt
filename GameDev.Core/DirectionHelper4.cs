@@ -25,13 +25,19 @@ namespace GameDev.Core
         public static DirectionChanger Down = new DirectionChanger(0, 1);
         public static DirectionChanger Left = new DirectionChanger(-1, 0);
 
+        static Random m_random;
+
         public static Dictionary<Direction, DirectionChanger> Offsets = null;
         public static Dictionary<Keys, DirectionChanger> KeyboardOffsets = null;
         public static Dictionary<Keys, Direction> KeyboardDirections = null;
         public static Dictionary<DirectionChanger, Direction> Directions = null;
+        
 
         static DirectionHelper4()
         {
+
+            m_random = new Random();
+
             Offsets = new Dictionary<Direction, DirectionChanger>();
             Offsets.Add(Direction.Up, Up);
             Offsets.Add(Direction.Right, Right);
@@ -59,7 +65,6 @@ namespace GameDev.Core
             KeyboardDirections.Add(Keys.Right, Direction.Right);
             KeyboardDirections.Add(Keys.Down, Direction.Down);
             KeyboardDirections.Add(Keys.Left, Direction.Left);
-
         }
 
         #region ExtensionMethods
@@ -126,6 +131,37 @@ namespace GameDev.Core
             }
         }
 
+        public static List<Direction> AllDirections
+        {
+            get
+            {
+                return
+                    new List<Direction> { Direction.Up,Direction.Right,Direction.Down, Direction.Left};
+            }
+        }
+
+        public static List<Direction> GetRightAndLeftTurns(Direction forward)
+        {
+            switch (forward)
+            {
+                case Direction.Up:
+                    return new List<Direction>() {Direction.Right, Direction.Left };
+                case Direction.Right:
+                    return new List<Direction>() { Direction.Up, Direction.Down};
+                case Direction.Down:
+                    return new List<Direction>() { Direction.Right, Direction.Left };
+                case Direction.Left:
+                    return new List<Direction>() { Direction.Up, Direction.Down };
+                default:
+                    throw new Exception("Must use Up, Down, Right or Left!");
+            }
+        }
+
+        public static Direction GetRandomDirection()
+        {
+            return AllDirections[m_random.Next(4)];
+
+        }
 
     }
 }

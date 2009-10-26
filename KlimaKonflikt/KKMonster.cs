@@ -18,27 +18,13 @@ namespace KlimaKonflikt
 {
     public class KKMonster : Sprite
     {
-        private Direction m_WantedDirection = Direction.Right;
-
-        public Direction WantedDirection(WalledTile tile)
-        {
-            m_WantedDirection = RandomDirection(m_WantedDirection, tile);  
-            return m_WantedDirection; 
-            //Direction m_currentDirectionChoice = m_DirectionIterator.Current;
-            //while (tile.HasBorder(m_currentDirectionChoice))
-            //{
-            //    m_DirectionIterator.MoveNext();
-            //    m_currentDirectionChoice = m_DirectionIterator.Current;  
-            //}
-
-            //if (m_WantedDirection == Direction.None)
-            //    m_WantedDirection = m_currentDirectionChoice;
-
-            //if (tile.HasBorder(m_WantedDirection))
-            //    m_WantedDirection = m_currentDirectionChoice;
-
-            //return m_WantedDirection; 
-        }
+        public Direction WantedDirection = Direction.None;
+        public Random Random = new Random();
+        //public Direction WantedDirection(WalledTile tile)
+        //{
+        //    m_WantedDirection = RandomDirection(m_WantedDirection, tile);  
+        //    return m_WantedDirection; 
+        //}
 
         private SequencedIterator<Direction> m_DirectionIterator;
         private SequencedIterator<int> m_DelayMillisecondsIterator;
@@ -55,22 +41,7 @@ namespace KlimaKonflikt
         {
         }
 
-        //private TimeSpan m_LastChanged = TimeSpan.MinValue;
-
-        //public override void Update(GameTime time)
-        //{
-        //    //TimeSpan newTime = time.TotalGameTime;
-        //    //if ((m_LastChanged == TimeSpan.MinValue || m_LastChanged.Add(new TimeSpan(0, 0, 0, 0, m_DelayMillisecondsIterator.Current)) <= newTime))
-        //    //{
-        //    //    m_DirectionChangeAllowed = false;
-        //    //    m_LastChanged = newTime;
-        //        m_DelayMillisecondsIterator.MoveNext();
-        //        m_DirectionIterator.MoveNext();
-        //    //}
-        //    base.Update(time);
-        //}
-
-        private Direction RandomDirection(Direction current, WalledTile tile)
+          private Direction RandomDirection(Direction current, WalledTile tile)
         {
             var directions = new List<Direction>()
             {
@@ -81,11 +52,12 @@ namespace KlimaKonflikt
             };
 
             directions.Remove(OppositeDirection(current));
-            Random r = new Random();
+            
             while (directions.Count > 0)
             {
                 //RealRandom random = new RealRandom(0, directions.Count-1);
-                Direction newDirection = directions[r.Next(0, directions.Count-1)];
+                Direction newDirection = directions[Random.Next(0, directions.Count-1)];
+                Console.WriteLine("NewDirection: " + newDirection);
                 int directionIndex = DirectionIndex(newDirection, tile);  
                 if (!tile.HasBorder(newDirection) && directionIndex > 0 && directionIndex < 9)
                     return newDirection;
