@@ -81,5 +81,42 @@ namespace GameDev.Core
             return Directions[changer];
         }
 
+
+        
+         public static Direction GetReverseDirection(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.None:
+                    return Direction.None;
+
+                case Direction.Up:
+                    return Direction.Down;
+
+                case Direction.Right:
+                    return Direction.Left;
+
+                case Direction.Down:
+                    return Direction.Up;
+
+                case Direction.Left:
+                    return Direction.Right;
+
+                case Direction.NorthEast:
+                    return Direction.SouthWest;
+
+                case Direction.SouthEast:
+                    return Direction.NorthWest;
+
+                case Direction.SouthWest:
+                    return Direction.NorthEast;
+
+                case Direction.NorthWest:
+                    return Direction.SouthEast;
+                
+                default: 
+                    return Direction.None;
+            }
+        }
     }
 }

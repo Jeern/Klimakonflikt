@@ -20,7 +20,7 @@ using GameDev.Core.Graphics;
 using GameDev.Core.SceneManagement;
 using GameDev.Core.Sequencing;
 
-	#endregion
+#endregion
 
 
 namespace KlimaKonflikt.Scenes
@@ -28,7 +28,7 @@ namespace KlimaKonflikt.Scenes
     public class MainScene : Scene
     {
 
-        
+
         private AIController m_AIController = new AIController();
         private bool m_GameOver = false;
         private bool m_GameStarting = true;
@@ -37,17 +37,17 @@ namespace KlimaKonflikt.Scenes
         private bool m_CreditsDisplayed = false;
 
         int tilesAcross = 10, tilesDown = 10;
-        
+
 
         private DateTime endTime = DateTime.MaxValue;
-        
+
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
         SoundEffectInstance m_mainGameTune;
 
         Point m_oilTowerBeginTilePosition, m_wheelbarrowBeginTilePosition;
 
         GameBoard board;
-        
+
         KKPlayer frøPose, olieTønde;
         KKMonster m_Ild1, m_Ild2;
 
@@ -73,13 +73,14 @@ namespace KlimaKonflikt.Scenes
         #endregion
 
 
-        public MainScene() : base(SceneNames.MAINSCENE)
+        public MainScene()
+            : base(SceneNames.MAINSCENE)
         {
             tileFloor = Game.Content.Load<Texture2D>("64x64");
 
             GameImage staticFloor = new GameImage(tileFloor);
-        SoundEffect effect = Game.Content.Load<SoundEffect>(@"GameTunes\MainGameTune");
-        m_mainGameTune = effect.CreateInstance();
+            SoundEffect effect = Game.Content.Load<SoundEffect>(@"GameTunes\MainGameTune");
+            m_mainGameTune = effect.CreateInstance();
             m_mainGameTune.IsLooped = true;
 
             plantFrø = Game.Content.Load<SoundEffect>("froe_plantes");
@@ -101,7 +102,7 @@ namespace KlimaKonflikt.Scenes
             board.CompleteBackground = completeFloorGameImage;
             board.SetPosition(new Point(200, 50));
 
-            m_oilTowerBeginTilePosition = new Point(4,4);
+            m_oilTowerBeginTilePosition = new Point(4, 4);
 
             m_wheelbarrowBeginTilePosition = new Point(5, 5);
 
@@ -116,7 +117,7 @@ namespace KlimaKonflikt.Scenes
             wheelBarrow1 = new Sprite(wheelBarrowImage, 0, board.Tiles[m_wheelbarrowBeginTilePosition.X, m_wheelbarrowBeginTilePosition.Y].Center);
 
             oilTower1.GameImageOffset = new Point(0, -20);
-            frøPose = new KKPlayer(GameImages.GetFlowersackImage(Game.Content),.2F, board.Tiles[9, 9].Center, 10);
+            frøPose = new KKPlayer(GameImages.GetFlowersackImage(Game.Content), .2F, board.Tiles[9, 9].Center, 10);
             olieTønde = new KKPlayer(GameImages.GetOilBarrelImage(Game.Content), .2F, board.Tiles[0, 0].Center, 10);
             m_Ild1 = new KKMonster(GameImages.GetIldImage(Game.Content), .23F, board.Tiles[0, 9].Center,
                 new GameDev.Core.Sequencing.SequencedIterator<Direction>(
@@ -173,37 +174,15 @@ namespace KlimaKonflikt.Scenes
             {
                 SceneManager.ChangeScene(SceneNames.CREDITSSCENE);
             }
-            //if (m_CreditsDisplayed)
-            //{
-            //    m_CreditsDisplayed = false;
-            //    //endTunePlayer.Play();
-            //}
-
-            //if (m_StartTunePlaying && !m_GameStarting)
-            //{
-            //    //startTunePlayer.Stop();
-            //    //annoyingTunePlayer.Play();
-            //    m_StartTunePlaying = false;
-            //}
-
-            //if (m_GameStarting && Keyboard.GetState().IsKeyDown(Keys.Enter))
-            //{
-            //    m_GameStarting = false;
-            //}
-
-            //if (m_EndTunePlaying)
-            //    return;
 
             if (keyboardState.IsArrowKeyDown())
             {
                 frøPose.WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirectionArrowKeys());
-                //Console.WriteLine(player1WantedDirection);
             }
 
             if (keyboardState.IsWASDKeyDown())
             {
                 olieTønde.WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirectionWASDKeys());
-                //Console.WriteLine(player1WantedDirection);
             }
 
             if (keyboardState.IsKeyDown(Keys.D1))
@@ -232,7 +211,7 @@ namespace KlimaKonflikt.Scenes
             CalculateAIMove(gameTime, board, m_Ild1);
             CalculateAIMove(gameTime, board, m_Ild2);
 
-            CollisionTest();    
+            CollisionTest();
 
             //m_BlomstImage.Update(gameTime);
             //m_OlieImage.Update(gameTime);
@@ -240,7 +219,7 @@ namespace KlimaKonflikt.Scenes
             float scoreDifference = frøPose.EjedeFelter - olieTønde.EjedeFelter;
             float scoreDifferenceFactor = Math.Abs(scoreDifference) / 200;
             switch (Math.Sign(scoreDifference))
-        	{
+            {
                 case -1: // frø er foran
                     frøPose.Health -= scoreDifferenceFactor;
                     break;
@@ -248,7 +227,7 @@ namespace KlimaKonflikt.Scenes
                 case 1: // olietønde er foran
                     olieTønde.Health -= scoreDifferenceFactor;
                     break;
-	        }
+            }
             float maxSpeed = .4F;
             float lowestHealth = Math.Min(frøPose.Health, olieTønde.Health);
             if (lowestHealth < 50 && !m_GameOver)
@@ -345,7 +324,7 @@ namespace KlimaKonflikt.Scenes
             //    SceneManager.ChangeScene("Splash");
             //    //base.Draw(gameTime);
             //    //SpriteBatch.Draw(m_CreditSplash, new Rectangle(0, 0, 1024, 768), Color.White);
-                
+
             //    return;
             //}
 
@@ -410,7 +389,7 @@ namespace KlimaKonflikt.Scenes
 
         }
 
-            private void CollisionTest()
+        private void CollisionTest()
         {
             Tile ild1Tile = board.GetTileFromPixelPosition(m_Ild1.GetPosition().X, m_Ild1.GetPosition().Y);
             Tile ild2Tile = board.GetTileFromPixelPosition(m_Ild2.GetPosition().X, m_Ild2.GetPosition().Y);
@@ -438,55 +417,73 @@ namespace KlimaKonflikt.Scenes
         private void CalculatePlayerMove(GameTime gameTime, KKPlayer player)
         {
 
-            //if (frøPose.Direction == Direction.None)
-            //{
-            //    frøPose.Direction = frøPose.WantedDirection;
-            //}
-
-            //player1Position.Move(player1WantedDirection, player1Speed * gameTime.ElapsedGameTime.Milliseconds);
             int pixelsToMove = (int)(player.Speed * gameTime.ElapsedGameTime.Milliseconds * m_speedFactor);
             Point newPosition = player.GetNewPosition(player.Direction, pixelsToMove);
             Point oldPosition = player.GetPosition();
-            //Console.WriteLine("Dir: " + player1Direction + ", wanted: " + player1WantedDirection);
 
             Point centerOfPlayersTile = board.GetTileFromPixelPosition(player.GetPosition().X, player.GetPosition().Y).Center;
             WalledTile tile = board.GetTileFromPixelPosition(player.GetPosition());
+            WalledTile newTile = board.GetTileFromPixelPosition(newPosition);
 
+            #region Movement aid for people not so skilled at keyboard navigation
 
+            //the following code checks to see whether the player is past the center of the square, 
+            //but could leave by the wanted direction if he/she first backed up
+            //in which case it reverses direction for the player
+            
+            //first check to see whether the player is going to stay on the same tile in this movement
+            //otherwise the player may mean to change direction in the square he/she is entering
+            if (tile == newTile)
+            {
+                //find out whether the player has already crossed the center of the board and is now leaving the tile
+                //because that's the only reason for reversing direction
+                bool playerIsLeavingTile = GeometryTools.IsBetweenPoints(oldPosition, centerOfPlayersTile, newPosition);
+                
+                //if we are leaving the tile and want to change direction
+                if (playerIsLeavingTile && player.Direction != player.WantedDirection)
+                {
+                    Direction wantedDirection = player.WantedDirection;
+                    if (wantedDirection != Direction.None)
+                    {
+                        //if the tile is open in that direction...
+                        if (!tile.HasBorder(wantedDirection))
+                        {
+                            //turn back :)
+                            player.Direction = DirectionHelper4.GetReverseDirection(player.Direction);
+                        }
+                    }
+                } 
+            } 
+            #endregion
             if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, oldPosition))
             {
-                //Console.WriteLine("BETWEEN");
                 //we are going to cross the center
                 //first move to center
                 Point tempPosition = centerOfPlayersTile;
                 player.SetPosition(centerOfPlayersTile);
 
-                if ((player == olieTønde && oilTowerTile == tile) || (player == frøPose && wheelBarrowTile == tile ))
+                if ((player == olieTønde && oilTowerTile == tile) || (player == frøPose && wheelBarrowTile == tile))
                 {
                     if (player.Ammunition < 10)
                     {
+                        player.Ammunition = 10;
 
-                    
-                    player.Ammunition = 10;
-                    
-                    if (player == olieTønde)
-                    {
-                        olieTankning.Play();
-                        oilTowerTile = GetNewRefuelPosition();
-                        oilTower1.SetPosition(oilTowerTile.Center);
-                    }
-                    else if (player == frøPose)
-                    {
-                        frøTankning.Play();
-                        wheelBarrowTile = GetNewRefuelPosition();
-                        wheelBarrow1.SetPosition(wheelBarrowTile.Center);
-                    }
+                        if (player == olieTønde)
+                        {
+                            olieTankning.Play();
+                            oilTowerTile = GetNewRefuelPosition();
+                            oilTower1.SetPosition(oilTowerTile.Center);
+                        }
+                        else if (player == frøPose)
+                        {
+                            frøTankning.Play();
+                            wheelBarrowTile = GetNewRefuelPosition();
+                            wheelBarrow1.SetPosition(wheelBarrowTile.Center);
+                        }
                     }
                 }
                 else
                 {
-
-
                     if (player.Ammunition > 0)
                     {
                         if (player == frøPose)
@@ -566,11 +563,6 @@ namespace KlimaKonflikt.Scenes
                 player.X = newPosition.X;
                 player.Y = newPosition.Y;
             }
-
-
-            //Console.WriteLine("X: " + player1Position.X + ", Y: " + player1Position.Y);
-            //Console.WriteLine("player1Direction: " + player1Direction +  " newPosition: " + newPosition);
-
         }
 
         private WalledTile GetNewRefuelPosition()
@@ -585,13 +577,14 @@ namespace KlimaKonflikt.Scenes
             return newPosition;
         }
 
-        public override void OnEntered() 
+        public override void OnEntered()
         {
             Reset();
             m_mainGameTune.Play();
 
         }
-        public override void OnLeft() {
+        public override void OnLeft()
+        {
             m_mainGameTune.Stop();
 
         }

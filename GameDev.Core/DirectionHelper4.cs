@@ -103,6 +103,11 @@ namespace GameDev.Core
             return GetDirection(deltaMove.DeltaX, deltaMove.DeltaY);
         }
 
+        public static Direction GetReverseDirection(Direction direction)
+        {
+            return DirectionHelper8.GetReverseDirection(direction);
+        }
+
         public static Direction LimitDirection(Direction direction)
         {
 
