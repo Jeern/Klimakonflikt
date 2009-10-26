@@ -17,7 +17,7 @@ namespace LevelEditor
             if (m_HasEgg && IsMoving)
             {
                 m_HasEgg = false;
-                new FireImage(MazeCanvas, new Coordinate(CurrentCoordinate.X, CurrentCoordinate.Y));
+                MoveableImageController.Images.Add(new FireImage(MazeCanvas, new Coordinate(CurrentCoordinate.X, CurrentCoordinate.Y)));
             }
             base.OnMouseMove(e);
         }

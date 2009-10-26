@@ -105,6 +105,7 @@
       <DependentUpon>MazeEditorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MoveableImage.cs" />
+    <Compile Include="MoveableImageController.cs" />
     <Compile Include="OilBarrelImage.cs" />
     <Compile Include="OilTowerImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
