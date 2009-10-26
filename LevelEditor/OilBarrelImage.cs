@@ -8,6 +8,6 @@ namespace LevelEditor
 {
     public class OilBarrelImage: MoveableImage
     {
-        public OilBarrelImage(Canvas maze) : base(maze, "OilBarrel.png") { }
+        public OilBarrelImage(Canvas maze, Coordinate coordinate) : base(maze, "OilBarrel.png", coordinate) { }
     }
 }

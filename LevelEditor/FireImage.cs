@@ -8,6 +8,18 @@ namespace LevelEditor
 {
     public class FireImage : MoveableImage
     {
-        public FireImage(Canvas maze) : base(maze, "Fire.png") { }
+        public FireImage(Canvas maze, Coordinate coordinate) : base(maze, "Fire.png", coordinate) { }
+
+        private bool m_HasEgg = true;
+
+        protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
+        {
+            if (m_HasEgg && IsMoving)
+            {
+                m_HasEgg = false;
+                new FireImage(MazeCanvas, new Coordinate(CurrentCoordinate.X, CurrentCoordinate.Y));
+            }
+            base.OnMouseMove(e);
+        }
     }
 }

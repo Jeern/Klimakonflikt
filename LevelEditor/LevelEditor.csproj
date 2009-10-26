@@ -89,6 +89,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinate.cs" />
     <Compile Include="FireImage.cs" />
     <Compile Include="FlowerSackImage.cs" />
     <Compile Include="HorizontalWallImage.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="LevelInfoEditorPage.xaml.cs">
       <DependentUpon>LevelInfoEditorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Maze.cs" />
     <Compile Include="MazeEditorPage.xaml.cs">
       <DependentUpon>MazeEditorPage.xaml</DependentUpon>
     </Compile>

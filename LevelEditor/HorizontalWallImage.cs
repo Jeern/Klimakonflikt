@@ -32,7 +32,7 @@ namespace LevelEditor
 
         protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e)
         {
-            Opacity = ReverseVisibility(Opacity);
+            ReverseVisibility();
             base.OnMouseLeftButtonDown(e);
         }
     }

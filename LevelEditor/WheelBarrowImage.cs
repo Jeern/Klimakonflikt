@@ -8,6 +8,6 @@ namespace LevelEditor
 {
     public class WheelBarrowImage : MoveableImage
     {
-        public WheelBarrowImage(Canvas maze) : base(maze, "WheelBarrow.png") { }
+        public WheelBarrowImage(Canvas maze, Coordinate coordinate) : base(maze, "WheelBarrow.png", coordinate) { }
     }
 }

@@ -51,15 +51,17 @@ namespace LevelEditor
             m_Changed(this, new EventArgs());
         }
 
-        protected double ReverseVisibility(double opacity)
+        protected void ReverseVisibility()
         {
-            OnChanged();
-            if (opacity == LEConstants.Visible)
-                return LEConstants.Transparent;
+            if (Opacity == LEConstants.Visible)
+            {
+                Opacity = LEConstants.Transparent;
+            }
             else
-                return LEConstants.Visible;
+            {
+                Opacity = LEConstants.Visible;
+            }
+            OnChanged();
         }
-
-
     }
 }
