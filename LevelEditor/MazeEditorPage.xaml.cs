@@ -20,16 +20,23 @@ namespace LevelEditor
     /// </summary>
     public partial class MazeEditorPage : Page
     {
+        private FlowerSackImage m_FlowerSack;
+        private OilBarrelImage m_OilBarrel;
+        private OilTowerImage m_OilTower;
+        private WheelBarrowImage m_WheelBarrow;
+        private List<FireImage> m_FireImages = new List<FireImage>();
+
         public MazeEditorPage()
         {
             InitializeComponent();
+            Maze.Initialize((int)MazeCanvas.Width, (int)MazeCanvas.Height, (int)LEConstants.HorizontalTiles, (int)LEConstants.VerticalTiles);
             InitializeImages();
             UpdateRoundedImages();
-            var image = new FlowerSackImage(MazeCanvas);
-            var image1 = new OilBarrelImage(MazeCanvas);
-            var image2 = new OilTowerImage(MazeCanvas);
-            var image3 = new WheelBarrowImage(MazeCanvas);
-            var image4 = new FireImage(MazeCanvas);
+            m_FlowerSack = new FlowerSackImage(MazeCanvas, new Coordinate(9, 9));
+            m_OilBarrel = new OilBarrelImage(MazeCanvas, new Coordinate(0,0));
+            m_OilTower = new OilTowerImage(MazeCanvas, new Coordinate(4,4));
+            m_WheelBarrow = new WheelBarrowImage(MazeCanvas, new Coordinate(5,5));
+            m_FireImages.Add(new FireImage(MazeCanvas, new Coordinate(-1,4)));
         }
 
         private Image[,] m_VerticalImages = new Image[(int)LEConstants.HorizontalTiles + 1, (int)LEConstants.VerticalTiles];

@@ -8,6 +8,6 @@ namespace LevelEditor
 {
     public class FlowerSackImage : MoveableImage
     {
-        public FlowerSackImage(Canvas maze) : base(maze, "FlowerSack.png") {}
+        public FlowerSackImage(Canvas maze, Coordinate coordinate) : base(maze, "FlowerSack.png", coordinate) { }
     }
 }
