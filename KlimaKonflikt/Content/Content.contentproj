@@ -785,11 +785,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Flower_win.png">
-      <Name>Flower_win</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="SceneBackdrops\Flower_win.png">
       <Name>Flower_win</Name>
       <Importer>TextureImporter</Importer>

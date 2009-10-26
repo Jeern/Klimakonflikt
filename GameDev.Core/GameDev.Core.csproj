@@ -134,7 +134,6 @@
     <Compile Include="SceneManagement\MouseClickSceneChangeLink.cs" />
     <Compile Include="SceneManagement\Scene.cs" />
     <Compile Include="SceneManagement\SceneChangeReaction.cs" />
-    <Compile Include="SceneManagement\SceneLink.cs" />
     <Compile Include="SceneManagement\SceneManager.cs" />
     <Compile Include="SceneManagement\StaticImageScene.cs" />
     <Compile Include="SceneManagement\TimerSceneChangeLink.cs" />
