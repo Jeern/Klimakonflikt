@@ -43,15 +43,15 @@ namespace KlimaKonflikt
         private SequencedIterator<Direction> m_DirectionIterator;
         private SequencedIterator<int> m_DelayMillisecondsIterator;
 
-        public KKMonster(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, Point startingPosition, SequencedIterator<Direction> directionIterator, SequencedIterator<int> delayMillisecondsIterator)
-            : base(game, gameImage, spriteBatch, speed, startingPosition)
+        public KKMonster(GameImage gameImage, float speed, Point startingPosition, SequencedIterator<Direction> directionIterator, SequencedIterator<int> delayMillisecondsIterator)
+            : base(gameImage, speed, startingPosition)
         {
             m_DirectionIterator = directionIterator;
             m_DelayMillisecondsIterator = delayMillisecondsIterator;
         }
 
-        public KKMonster(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, Point startingPosition, SequencedIterator<Direction> directionIterator, int delayMilliseconds)
-            : this(game, gameImage, spriteBatch, speed, startingPosition, directionIterator, new SequencedIterator<int>(new StaticSequencer(), delayMilliseconds))
+        public KKMonster(GameImage gameImage, float speed, Point startingPosition, SequencedIterator<Direction> directionIterator, int delayMilliseconds)
+            : this(gameImage, speed, startingPosition, directionIterator, new SequencedIterator<int>(new StaticSequencer(), delayMilliseconds))
         {
         }
 

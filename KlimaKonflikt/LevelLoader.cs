@@ -52,7 +52,7 @@ namespace KlimaKonflikt
                     Right = Convert.ToBoolean(e.Attribute("Right").Value)
                 };
 
-            var gameBoard = new GameBoard(game, tileImage, spriteBatch, name, tilesHorizontally, tilesVertically, tileSizeInPixels);
+            var gameBoard = new GameBoard( tileImage, name, tilesHorizontally, tilesVertically, tileSizeInPixels);
             foreach (var tile in tiles)
             {
                 var gameTile = gameBoard.Tiles[tile.Column, tile.Row];

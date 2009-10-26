@@ -16,7 +16,7 @@ namespace SceneManagementTest
         Texture2D indie;
         Vector2 position;
 
-        public MainScene(Game game) : base("Main", game)
+        public MainScene() : base("Main")
         {
             
             position = new Vector2(200, 200);
@@ -53,6 +53,20 @@ namespace SceneManagementTest
             }
 
             // TODO: Add your update logic here
+        }
+
+        public override void OnEntered()
+        {
+            throw new NotImplementedException();
+        }
+        public override void OnLeft()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Reset()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -15,6 +15,8 @@ using Microsoft.Xna.Framework.Storage;
 using GameDev.Core;
 using GameDev.Core.SceneManagement;
 
+using GameDev.Core.Events;
+
 namespace SceneManagementTest
 {
     /// <summary>
@@ -52,15 +54,15 @@ namespace SceneManagementTest
 
             sceneManager = new SceneManager(this);
 
-            IScene intro = sceneManager.AddScene(new StaticImageScene(this, "Intro", introTex));
-            IScene main = sceneManager.AddScene(new MainScene(this));
-            IScene credits = sceneManager.AddScene(new StaticImageScene(this, "Credits", creditsTex));
-            //sceneManager.ChangeScene("IntroScene");
+            Scene intro = sceneManager.AddScene(new StaticImageScene("Intro", introTex));
+            Scene main = sceneManager.AddScene(new MainScene());
+            Scene credits = sceneManager.AddScene(new StaticImageScene("Credits", creditsTex));
 
-            intro.SceneLinks.Add(new AnyKeySceneLink(main));
-            intro.SceneLinks.Add(new TimedSceneLink(main, 5000));
-            main.SceneLinks.Add(new KeyboardSceneLink(credits, new List<Keys> { Keys.Escape }));
-
+            //SceneLink introTo
+            
+            //intro.SceneLinks.Add((ManyConditionsToOneReactionLink) new AnyKeySceneLink(main));
+            //intro.SceneLinks.Add(new TimerSceneChangeLink(5000, main));
+            //main.SceneLinks.Add( new KeyboardSceneChangeLink(credits, Keys.Escape));
 
             Components.Add(sceneManager);
         }

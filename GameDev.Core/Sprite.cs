@@ -24,18 +24,16 @@ namespace GameDev.Core
         public float Speed { get; set; }
         public Point GameImageOffset { get; set; }
         public GameImage GameImage { get; set; }
-        public SpriteBatch SpriteBatch { get; set; }
 
         // Lidt i tvivl om hvorledes Textture-sizen sættes til texturefilen's size
-        public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, Point startingPosition) : this(game, gameImage, spriteBatch, speed, startingPosition.X, startingPosition.Y) { }
-        public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed) : this(game, gameImage, spriteBatch, speed, 0, 0) { }
+        public Sprite(GameImage gameImage, float speed, Point startingPosition) : this(gameImage, speed, startingPosition.X, startingPosition.Y) { }
+        public Sprite(GameImage gameImage, float speed) : this(gameImage, speed, 0, 0) { }
 
-        public Sprite(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, int x, int y)
-            : base(game, x, y)
+        public Sprite(GameImage gameImage, float speed, int x, int y)
+            : base(x, y)
         {
             this.GameImage = gameImage;
             this.Speed = speed;
-            SpriteBatch = spriteBatch;
 
         }
 
@@ -49,7 +47,7 @@ namespace GameDev.Core
         {
             Texture2D currentTexture = GameImage.CurrentTexture;
 
-            SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), Color.White);
+            GameDevGame.Current.SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), Color.White);
             base.Draw(gameTime);
         }
 

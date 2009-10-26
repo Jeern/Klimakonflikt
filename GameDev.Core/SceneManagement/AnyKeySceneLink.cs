@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+using GameDev.Core.Events;
+
 namespace GameDev.Core.SceneManagement
 {
-    public class AnyKeySceneLink : SceneLink
+    public class AnyKeySceneLink : ManyConditionsToOneReactionLink
     {
-        public AnyKeySceneLink(IScene targetScene) : base(targetScene) { }
+        public AnyKeySceneLink(Scene targetScene)
+            : base(new AnyKeyCondition(), new SceneChangeReaction(targetScene))
+        { }
 
-        public override void Update(GameTime gameTime)
-        {
-            if (Keyboard.GetState().GetPressedKeys().Length > 0)
-            {
-                GoToLink();
-            }
-        }
     }
 }
