@@ -67,6 +67,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="LEComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LETextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,10 +93,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundImages.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="FireImage.cs" />
     <Compile Include="FlowerSackImage.cs" />
     <Compile Include="HorizontalWallImage.cs" />
+    <Compile Include="LEComboBox.xaml.cs">
+      <DependentUpon>LEComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LEConstants.cs" />
     <Compile Include="LETextBox.xaml.cs">
       <DependentUpon>LETextBox.xaml</DependentUpon>
@@ -136,7 +144,12 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="DefaultBackground.png" />
+    <Content Include="Backgrounds\TestBackground.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Backgrounds\DefaultBackground.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Mur horizontal.png" />

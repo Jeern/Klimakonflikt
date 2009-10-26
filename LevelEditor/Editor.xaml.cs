@@ -55,7 +55,7 @@ namespace LevelEditor
             Maze.Initialize((int)(LEConstants.DefaultTileSize * m_LevelInfoEditor.Columns),
                 (int)(LEConstants.DefaultTileSize * m_LevelInfoEditor.Rows),
                 m_LevelInfoEditor.Columns,
-                m_LevelInfoEditor.Rows);
+                m_LevelInfoEditor.Rows, m_LevelInfoEditor.BackgroundImageFullName);
 
             m_MazeEditor = new MazeEditorPage();
             EditorFrame.Navigate(m_MazeEditor);

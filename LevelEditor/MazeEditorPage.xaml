@@ -1,10 +1,14 @@
 ﻿<Page x:Class="LevelEditor.MazeEditorPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:LevelEditor"
     Title="MazeEditorPage">
     <Canvas x:Name="MazeCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" Width="640" Height="640">
+        <Canvas.Resources>
+            <local:Maze x:Key="maze" />
+        </Canvas.Resources>
         <Canvas.Background>
-            <ImageBrush AlignmentX="Center" AlignmentY="Center" ImageSource="DefaultBackground.png"/>
+            <ImageBrush AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Source={StaticResource maze}, Path=BackgroundImage}"/>
         </Canvas.Background>
         <Grid Name="MazeGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Width="640" Height="640" ShowGridLines="True">
         </Grid>
