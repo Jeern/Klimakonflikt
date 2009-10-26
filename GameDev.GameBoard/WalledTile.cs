@@ -59,5 +59,27 @@ namespace GameDev.GameBoard
         {
             return base.ToString() + " Top:" + Walls.HasTopBorder + ", Right:" + Walls.HasRightBorder + ", Bottom:" + Walls.HasBottomBorder + ", Left:" + Walls.HasLeftBorder;
         }
+        List<Direction> m_exits;
+        public List<Direction> Exits
+        {
+            
+            get 
+            {
+                if (m_exits == null)
+                {
+                    m_exits = new List<Direction>();
+                    foreach (Direction dir in DirectionHelper4.AllDirections)
+                    {
+                        if (!this.HasBorder(dir))
+                        {
+                            m_exits.Add(dir);
+                        }
+                    }
+                }
+                return m_exits;
+            }
+
+ 
+        }
 	}
 }
