@@ -22,14 +22,27 @@ namespace KlimaKonflikt
     {
         public Direction WantedDirection { get; set; }
         public int EjedeFelter { get; set; }
-        public KKPlayer(Game game, GameImage gameImage, SpriteBatch spriteBatch, float speed, Point startingPosition, int ammo ):base(game, gameImage, spriteBatch, speed, startingPosition)
+        protected Point m_startingPosition;
+        protected int m_startingAmmo;
+
+        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo ):base(gameImage, speed, startingPosition)
         {
-            this.Ammunition = ammo;
-            this.Health = 100;
+            m_startingPosition = startingPosition;
+            m_startingAmmo = ammo;
+            Reset();
         }
 
         public float Health { get; set; }
 
         public int Ammunition { get; set; }
+
+        public void Reset()
+        {
+            this.Ammunition = m_startingAmmo;
+            this.Health = 100;
+            this.SetPosition(m_startingPosition);
+            this.WantedDirection = Direction.None;
+            this.EjedeFelter = 0;
+        }
     }
 }

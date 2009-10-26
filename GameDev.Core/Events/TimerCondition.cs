@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
-namespace GameDev.Core.SceneManagement
+namespace GameDev.Core.Events
 {
-    public class TimedSceneLink : SceneLink
+    public class TimerCondition : Condition
     {
-
         DateTime begin = DateTime.MinValue;
         TimeSpan elapsedTime;
         int _millisecondsPause;
 
 
-        public TimedSceneLink(IScene targetScene, int millisecondPause) : base(targetScene)
+        public TimerCondition(int millisecondPause)
         {
-
             this._millisecondsPause = millisecondPause;
         }
 
         public override void Update(GameTime gameTime)
         {
-
             if (begin == DateTime.MinValue)
             {
                 begin = DateTime.Now;
@@ -29,14 +26,18 @@ namespace GameDev.Core.SceneManagement
             else
             {
                 elapsedTime += gameTime.ElapsedGameTime;
-
-                if (elapsedTime.TotalMilliseconds > this._millisecondsPause)
-                {
-                    this.begin = DateTime.MinValue;
-                    GoToLink();
-                }
-                
             }
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            this.begin = DateTime.MinValue;
+        }
+
+        public override bool IsCurrentlyFulfilled()
+        {
+            return (elapsedTime.TotalMilliseconds > this._millisecondsPause);
         }
     }
 }

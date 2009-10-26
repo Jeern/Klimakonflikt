@@ -19,12 +19,14 @@ namespace GameDev.GameBoard
 	public class WalledTile : Tile
 	{
 
+        public SpriteBatch SpriteBatch { get { return GameDevGame.Current.SpriteBatch; } }
+
         public WallSet Walls { get; private set; }
 
-        public WalledTile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch) : this(game, board, gameImage, spriteBatch, int.MinValue, int.MinValue) { }
+        public WalledTile(GameBoard board, GameImage gameImage) : this(board, gameImage, int.MinValue, int.MinValue) { }
 
-        public WalledTile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex)
-            : base(game, board , gameImage, spriteBatch, horizontalIndex , verticalIndex)
+        public WalledTile(GameBoard board, GameImage gameImage, int horizontalIndex, int verticalIndex)
+            : base(board , gameImage, horizontalIndex , verticalIndex)
         {
             this.Walls = new WallSet();
             this.Walls.HasLeftBorder = (HorizontalIndex == 0);

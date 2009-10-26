@@ -28,7 +28,8 @@ namespace GameDev.GameBoard
         
         public GameBoard GameBoard { get; set; }
 
-        public SpriteBatch SpriteBatch { get; set; }
+        public SpriteBatch SpriteBatch { get { return GameDevGame.Current.SpriteBatch; } }
+
 
         public bool HasNeighbor(Direction direction) 
         {
@@ -42,19 +43,26 @@ namespace GameDev.GameBoard
         public int HorizontalIndex { get { return _tileIndexHorizontally; }  set { _tileIndexHorizontally = value; RecalculateLayout(); } }
         public int VerticalIndex { get { return _tileIndexVertically; }  set { _tileIndexVertically = value; RecalculateLayout(); } }
 
-        private GameImage _backgroundImage, _contentImage;
+        private GameImage _backgroundImage, _originalBackgroundImage, _contentImage;
         public GameImage BackgroundGameImage { get { return _backgroundImage; } set { _backgroundImage = value; RecalculateLayout(); } }
-        public GameImage ContentGameImage { get { return _contentImage; } set { _contentImage = value; RecalculateContentLayout(); } }
+        public GameImage ContentGameImage { get { return _contentImage; } set { 
+            
+            _contentImage = value;
+            if (_contentImage != null)
+            {
+                RecalculateContentLayout();
+            }
+            
+        } }
         
 
-        public Tile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch) : this(game, board, gameImage, spriteBatch, int.MinValue, int.MinValue) { }
+        public Tile(GameBoard board, GameImage gameImage) : this(board, gameImage, int.MinValue, int.MinValue) { }
 
-        public Tile(Game game, GameBoard board, GameImage gameImage, SpriteBatch spriteBatch, int horizontalIndex, int verticalIndex)
-            : base(game, horizontalIndex * gameImage.CurrentTexture.Width, verticalIndex * gameImage.CurrentTexture.Height)
+        public Tile(GameBoard board, GameImage gameImage, int horizontalIndex, int verticalIndex)
+            : base(horizontalIndex * gameImage.CurrentTexture.Width, verticalIndex * gameImage.CurrentTexture.Height)
         {
             this.GameBoard = board;
-            this.BackgroundGameImage = gameImage;
-            this.SpriteBatch = spriteBatch;
+            this._originalBackgroundImage = this.BackgroundGameImage = gameImage;
             this.HorizontalIndex = horizontalIndex;
             this.VerticalIndex = verticalIndex;
             this.ShouldDrawBackground = GameBoard.CompleteBackground == null;
@@ -82,7 +90,7 @@ namespace GameDev.GameBoard
 
         public object Clone()
         {
-            Tile newTile = new Tile(Game, GameBoard, BackgroundGameImage, SpriteBatch, HorizontalIndex, VerticalIndex);
+            Tile newTile = new Tile(GameBoard, BackgroundGameImage, HorizontalIndex, VerticalIndex);
             newTile.BackgroundDestinationRectangle = this.BackgroundDestinationRectangle;
             return newTile;
         }
@@ -128,5 +136,11 @@ namespace GameDev.GameBoard
             return base.ToString() + " Index: " + HorizontalIndex + "," + VerticalIndex;
         }
 
+
+        internal void Reset()
+        {
+            this.BackgroundGameImage = _originalBackgroundImage;
+            this.ContentGameImage = null;
+        }
     }
 }

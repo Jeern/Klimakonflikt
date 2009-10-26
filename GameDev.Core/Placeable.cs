@@ -18,12 +18,12 @@ namespace GameDev.Core
     {
         private int _x;
         private int _y;
-
-        public Placeable(Game game) : this (game, 0,0)
+        public Placeable() : this(0,0)
         {
+
         }
 
-        public Placeable(Game game, int x, int y):base(game)
+        public Placeable(int x, int y):base(GameDevGame.Current)
         {
             X = x;
             Y = y;

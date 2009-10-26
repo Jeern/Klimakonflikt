@@ -3,20 +3,26 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using GameDev.Core.Events;
+
 namespace GameDev.Core.SceneManagement
 {
-    public abstract class Scene :  IScene
+    public abstract class Scene 
     {
 
-        #region IScene Members
+        #region Scene Members
 
-        public Game Game { get; private set; }
+        public GameDevGame Game { get; private set; }
         public SceneManager SceneManager { get;  set; }
         public string Name { get; set; }
         public List<GameComponent> Components { get; set; }
-        public SpriteBatch SpriteBatch { get; private set; }
         public bool IsPaused { get; private set; }
-        public List<SceneLink> SceneLinks { get; set; }
+        public SpriteBatch SpriteBatch { get { return Game.SpriteBatch; } }
+        //public List<ManyConditionsToOneReactionLink> SceneLinks { get; set; }
+
+        public abstract void OnEntered();
+        public abstract void OnLeft();
+        public abstract void Reset();
 
         public virtual void Initialize() 
         {
@@ -34,15 +40,22 @@ namespace GameDev.Core.SceneManagement
                 {
                     component.Update(gameTime);
                 }
-                foreach (SceneLink link in SceneLinks)
-                {
-                    link.Update(gameTime);
-                }
+                //foreach (ManyConditionsToOneReactionLink  mctorl in SceneLinks)
+                //{
+                //    mctorl.Update(gameTime);
+                //}
+                
             }
         }
 
 
-        public abstract void Draw(GameTime gameTime);
+        public virtual void Draw(GameTime gameTime)
+        {
+            foreach (DrawableGameComponent comp in Components)
+            {
+                comp.Draw(gameTime);
+            }
+        }
 
         public void Pause()
         {
@@ -59,13 +72,12 @@ namespace GameDev.Core.SceneManagement
 
         #region Constructors
 
-        public Scene(string name, Game game)
+        public Scene(string name)
         {
             this.Name = name;
-            this.Game = game;
+            this.Game = GameDevGame.Current;
             this.Components = new List<GameComponent>();
-            SceneLinks = new List<SceneLink>();
-            this.SpriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
+            //SceneLinks = new List<ManyConditionsToOneReactionLink>();
         }
 
         #endregion
@@ -75,6 +87,8 @@ namespace GameDev.Core.SceneManagement
 
 
 
-    
+
+
+        
     }
 }

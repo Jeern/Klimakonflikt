@@ -771,8 +771,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="GameTunes\klimakonflikt_ingametune.wav">
-      <Name>klimakonflikt_ingametune</Name>
+    <Compile Include="GameTunes\MainGameTune.wav">
+      <Name>MainGameTune</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -785,41 +785,46 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WIN Flower.png">
-      <Name>WIN Flower</Name>
+    <Compile Include="Flower_win.png">
+      <Name>Flower_win</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="WIN OIL.png">
-      <Name>WIN OIL</Name>
+    <Compile Include="SceneBackdrops\Flower_win.png">
+      <Name>Flower_win</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="SceneBackdrops\Oil_win.png">
+      <Name>Oil_win</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="credit splash.png">
-      <Name>credit splash</Name>
+    <Compile Include="SceneBackdrops\Credits.png">
+      <Name>Credits</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameTunes\klimakonflikt_credits_tune.wav">
-      <Name>klimakonflikt_credits_tune</Name>
+    <Compile Include="GameTunes\CreditsTune.wav">
+      <Name>CreditsTune</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="splash.png">
-      <Name>splash</Name>
+    <Compile Include="SceneBackdrops\Intro.png">
+      <Name>Intro</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameTunes\klimakonflikt_menutune.wav">
-      <Name>klimakonflikt_menutune</Name>
+    <Compile Include="GameTunes\IntroTune.wav">
+      <Name>IntroTune</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>

@@ -117,7 +117,7 @@ namespace GameDev.GameBoard
         public int TilesHorizontally { get { return Tiles.GetLength(0); } }
         public int TilesVertically { get { return Tiles.GetLength(1); } }
 
-        public SpriteBatch SpriteBatch { get; set; }
+        public SpriteBatch SpriteBatch { get { return GameDevGame.Current.SpriteBatch; } }
         
         protected void RecalculateDimensions()
         {
@@ -153,20 +153,19 @@ namespace GameDev.GameBoard
 
         #region Constructors
 
-        public GameBoard(Game game, GameImage baseGameImage, SpriteBatch spriteBatch) : this(game, baseGameImage, spriteBatch, "Unnamed", 10, 10, 64) { }
+        public GameBoard(GameImage baseGameImage) : this(baseGameImage, "Unnamed", 10, 10, 64) { }
 
-        public GameBoard(Game game, GameImage baseGameImage, SpriteBatch spriteBatch, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels)
-            : base(game)
+        public GameBoard(GameImage baseGameImage, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels)
+            : base(GameDevGame.Current)
         {
             Name = name;
-            SpriteBatch = spriteBatch;
             BaseImage = baseGameImage;
             Tiles = new WalledTile[tilesHorizontally, tilesVertically];
             for (int x = 0; x < TilesHorizontally; x++)
             {
                 for (int y = 0; y < TilesVertically; y++)
                 {
-                    Tiles[x, y] = new WalledTile(Game, this, baseGameImage, SpriteBatch, x, y);
+                    Tiles[x, y] = new WalledTile(this, baseGameImage, x, y);
                 }
             }
             TileSizeInPixels = tileSizeInPixels;
@@ -277,5 +276,14 @@ namespace GameDev.GameBoard
             DirectionHelper4.Offset(this, direction, distance);
         }
         #endregion
+
+
+        public void Reset()
+        {
+            foreach (Tile tile in Tiles)
+            {
+                tile.Reset();
+            }
+        }
     }
 }
