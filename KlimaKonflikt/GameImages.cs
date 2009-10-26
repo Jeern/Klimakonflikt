@@ -205,5 +205,16 @@ namespace KlimaKonflikt
                         Content.Load<Texture2D>(@"Flowersack\FlowerSack7")
                       }), 10);
         }
+
+        public static GameImage GetPulsatingCircleImage(ContentManager Content)
+        {
+            return new GameImage(
+                new SequencedIterator<Texture2D>(new AlternatingSequencer(1),
+                    new List<Texture2D>()
+                    {
+                        Content.Load<Texture2D>(@"AnimatedCircle\Circle_large"),
+                        Content.Load<Texture2D>(@"AnimatedCircle\Circle_small"),
+                      }), 250);
+        }
     }
 }

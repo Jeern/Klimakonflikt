@@ -25,10 +25,13 @@ namespace KlimaKonflikt
         protected Point m_startingPosition;
         protected int m_startingAmmo;
 
-        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo ):base(gameImage, speed, startingPosition)
+        public GameImage OutOfAmmoEffect { get; set; }
+
+        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo, GameImage outOfAmmoEffect):base(gameImage, speed, startingPosition)
         {
             m_startingPosition = startingPosition;
             m_startingAmmo = ammo;
+            this.OutOfAmmoEffect = outOfAmmoEffect;
             Reset();
         }
 
@@ -44,5 +47,28 @@ namespace KlimaKonflikt
             this.WantedDirection = Direction.None;
             this.EjedeFelter = 0;
         }
+        public override void Update(GameTime gameTime)
+        {
+            OutOfAmmoEffect.Update(gameTime);
+            base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            Color colorEffect = Color.White;
+            Texture2D currentTexture = null;
+            if (Ammunition == 0)
+            {
+                //currentTexture = OutOfAmmoEffect.CurrentTexture;
+                //GameDevGame.Current.SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), Color.White);
+                colorEffect = Color.Red;
+            }
+             currentTexture = GameImage.CurrentTexture;
+            GameDevGame.Current.SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), colorEffect);
+
+
+            //base.Draw(gameTime);
+        }
+
     }
 }
