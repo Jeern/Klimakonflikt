@@ -23,7 +23,8 @@ namespace LevelEditor
         public MazeEditorPage()
         {
             InitializeComponent();
-            Maze.Initialize((int)MazeCanvas.Width, (int)MazeCanvas.Height, (int)LEConstants.HorizontalTiles, (int)LEConstants.VerticalTiles);
+            InitializeCanvas(); 
+            InitializeGrid();
             InitializeImages();
             UpdateRoundedImages();
             MoveableImageController.Images.Add(new FlowerSackImage(MazeCanvas, new Coordinate(9, 9)));
@@ -33,9 +34,43 @@ namespace LevelEditor
             MoveableImageController.Images.Add((new FireImage(MazeCanvas, new Coordinate(-1,4))));
         }
 
-        private Image[,] m_VerticalImages = new Image[(int)LEConstants.HorizontalTiles + 1, (int)LEConstants.VerticalTiles];
-        private Image[,] m_HorizontalImages = new Image[(int)LEConstants.HorizontalTiles, (int)LEConstants.VerticalTiles + 1];
-        private Image[,] m_RoundedImages = new Image[(int)LEConstants.HorizontalTiles + 1, (int)LEConstants.VerticalTiles + 1];
+        private void InitializeCanvas()
+        {
+            MazeCanvas.Width = Maze.Width;
+            MazeCanvas.Height = Maze.Height;
+        }
+
+        private void InitializeGrid()
+        {
+            MazeGrid.Width = Maze.Width;
+            MazeGrid.Height = Maze.Height;
+            CreateRowDefinitions(MazeGrid);
+            CreateColumnDefinitions(MazeGrid);
+        }
+
+        private static void CreateRowDefinitions(Grid grid)
+        {
+            for (int row = 0; row < Maze.VerticalTiles; row++)
+            {
+                var rowDef = new RowDefinition();
+                rowDef.Height = new GridLength(Maze.TileHeight);
+                grid.RowDefinitions.Add(rowDef);
+            }
+        }
+
+        private static void CreateColumnDefinitions(Grid grid)
+        {
+            for (int col = 0; col < Maze.HorizontalTiles; col++)
+            {
+                var colDef = new ColumnDefinition();
+                colDef.Width = new GridLength(Maze.TileWidth);
+                grid.ColumnDefinitions.Add(colDef);
+            }
+        }
+
+        private Image[,] m_VerticalImages = new Image[(int)Maze.HorizontalTiles + 1, (int)Maze.VerticalTiles];
+        private Image[,] m_HorizontalImages = new Image[(int)Maze.HorizontalTiles, (int)Maze.VerticalTiles + 1];
+        private Image[,] m_RoundedImages = new Image[(int)Maze.HorizontalTiles + 1, (int)Maze.VerticalTiles + 1];
 
         private void InitializeImages()
         {
@@ -46,9 +81,9 @@ namespace LevelEditor
 
         private void InitializeRoundedImages()
         {
-            for (int x = 0; x <= (int)LEConstants.HorizontalTiles; x++)
+            for (int x = 0; x <= (int)Maze.HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
+                for (int y = 0; y <= (int)Maze.VerticalTiles; y++)
                 {
                     m_RoundedImages[x, y] = new RoundSpotImage(MazeCanvas, MazeGrid, x, y);
                 }
@@ -59,9 +94,9 @@ namespace LevelEditor
 
         private void InitializeVerticalImages()
         {
-            for (int x = 0; x <= (int)LEConstants.HorizontalTiles; x++)
+            for (int x = 0; x <= (int)Maze.HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)LEConstants.VerticalTiles - 1; y++)
+                for (int y = 0; y <= (int)Maze.VerticalTiles - 1; y++)
                 {
                     var verticalImage = new VerticalWallImage(MazeCanvas, MazeGrid, x, y);
                     verticalImage.Changed += StaticImageChanged;
@@ -72,9 +107,9 @@ namespace LevelEditor
 
         private void InitializeHorizontalImages()
         {
-            for (int x = 0; x <= (int)LEConstants.HorizontalTiles - 1; x++)
+            for (int x = 0; x <= (int)Maze.HorizontalTiles - 1; x++)
             {
-                for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
+                for (int y = 0; y <= (int)Maze.VerticalTiles; y++)
                 {
                     var horizontalImage = new HorizontalWallImage(MazeCanvas, MazeGrid, x, y);
                     horizontalImage.Changed += StaticImageChanged;
@@ -130,18 +165,18 @@ namespace LevelEditor
         private void UpdateRoundedImages()
         {
             //Make all transparent
-            for (int x = 0; x <= (int)LEConstants.HorizontalTiles; x++)
+            for (int x = 0; x <= (int)Maze.HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
+                for (int y = 0; y <= (int)Maze.VerticalTiles; y++)
                 {
                     m_RoundedImages[x, y].Opacity = LEConstants.Transparent;
                 }
             }
 
             //Make all adjacent to Horizontal Visible
-            for (int x = 0; x <= (int)LEConstants.HorizontalTiles - 1; x++)
+            for (int x = 0; x <= (int)Maze.HorizontalTiles - 1; x++)
             {
-                for (int y = 0; y <= (int)LEConstants.VerticalTiles; y++)
+                for (int y = 0; y <= (int)Maze.VerticalTiles; y++)
                 {
                     if (m_HorizontalImages[x, y].Opacity == LEConstants.Visible)
                     {
@@ -152,9 +187,9 @@ namespace LevelEditor
             }
 
             //Make all adjacent to Vertical Visible
-            for (int x = 0; x <= (int)LEConstants.HorizontalTiles; x++)
+            for (int x = 0; x <= (int)Maze.HorizontalTiles; x++)
             {
-                for (int y = 0; y <= (int)LEConstants.VerticalTiles - 1; y++)
+                for (int y = 0; y <= (int)Maze.VerticalTiles - 1; y++)
                 {
                     if (m_VerticalImages[x, y].Opacity == LEConstants.Visible)
                     {

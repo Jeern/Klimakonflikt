@@ -24,7 +24,8 @@ namespace LevelEditor
         public Editor()
         {
             InitializeComponent();
-            EditorFrame.Content = new LevelInfoEditorPage();
+            m_LevelInfoEditor = new LevelInfoEditorPage();
+            EditorFrame.Content = m_LevelInfoEditor;
         }
 
         private void CancelButtonClick(object sender, RoutedEventArgs e)
@@ -44,21 +45,20 @@ namespace LevelEditor
         }
 
         private MazeEditorPage m_MazeEditor;
+        private LevelInfoEditorPage m_LevelInfoEditor;
 
         private void NextButtonClick(object sender, RoutedEventArgs e)
         {
             NextButton.IsEnabled = false;
             BackButton.IsEnabled = true;
             SaveButton.IsEnabled = true;
-            if (EditorFrame.NavigationService.CanGoForward)
-            {
-                EditorFrame.GoForward(); 
-            }
-            else
-            {
-                m_MazeEditor = new MazeEditorPage();
-                EditorFrame.Navigate(m_MazeEditor);
-            }
+            Maze.Initialize((int)(LEConstants.DefaultTileSize * m_LevelInfoEditor.Columns),
+                (int)(LEConstants.DefaultTileSize * m_LevelInfoEditor.Rows),
+                m_LevelInfoEditor.Columns,
+                m_LevelInfoEditor.Rows);
+
+            m_MazeEditor = new MazeEditorPage();
+            EditorFrame.Navigate(m_MazeEditor);
         }
 
         private void SaveButtonClick(object sender, RoutedEventArgs e)
