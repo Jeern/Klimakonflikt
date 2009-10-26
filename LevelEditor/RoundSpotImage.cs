@@ -19,7 +19,7 @@ namespace LevelEditor
             double xOffset = 0.0;
             double yOffset = 0.0;
 
-            if (y == (int)LEConstants.VerticalTiles)
+            if (y == (int)Maze.VerticalTiles)
             {
                 Grid.SetRow(this, y - 1);
                 VerticalAlignment = VerticalAlignment.Bottom;
@@ -32,7 +32,7 @@ namespace LevelEditor
                 yOffset = -2.0 * LEConstants.YMargin;
             }
 
-            if (x == (int)LEConstants.HorizontalTiles)
+            if (x == (int)Maze.HorizontalTiles)
             {
                 Grid.SetColumn(this, x - 1);
                 HorizontalAlignment = HorizontalAlignment.Right;

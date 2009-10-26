@@ -23,5 +23,31 @@ namespace LevelEditor
         {
             InitializeComponent();
         }
+
+        public int LevelNumber
+        {
+            get { return Convert.ToInt32(NumberTextbox.Text); }
+        }
+
+        public string LevelName
+        {
+            get { return NameTextbox.Text; }
+        }
+
+        public int Columns
+        {
+            get { return Convert.ToInt32(ColumnsTextbox.Text); }
+        }
+
+        public int Rows
+        {
+            get { return Convert.ToInt32(RowsTextbox.Text); }
+        }
+
+        public double SpeedFactor
+        {
+            get { return Convert.ToDouble(SpeedFactorTextbox.Text); }
+        }
+
     }
 }

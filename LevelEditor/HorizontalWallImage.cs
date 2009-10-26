@@ -11,12 +11,12 @@ namespace LevelEditor
     public class HorizontalWallImage : StaticImage
     {
         public HorizontalWallImage(Canvas maze, Grid grid, int x, int y)
-            : base(maze, grid, (y == 0 | y == LEConstants.VerticalTiles), "Mur horizontal.png")
+            : base(maze, grid, (y == 0 | y == Maze.VerticalTiles), "Mur horizontal.png")
         {
             HorizontalAlignment = HorizontalAlignment.Left;
             Grid.SetColumn(this, x);
 
-            if (y == (int)LEConstants.VerticalTiles)
+            if (y == (int)Maze.VerticalTiles)
             {
                 Grid.SetRow(this, y - 1);
                 VerticalAlignment = VerticalAlignment.Bottom;
