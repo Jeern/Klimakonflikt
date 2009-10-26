@@ -38,22 +38,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="64x64.jpg">
-      <Name>64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="crosshair.png">
       <Name>crosshair</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="FlowerSack.png">
-      <Name>FlowerSack</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -372,13 +358,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OilBarrel.png">
-      <Name>OilBarrel</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="froe_plantes.wav">
       <Name>froe_plantes</Name>
       <Importer>WavImporter</Importer>
@@ -388,13 +367,6 @@
   <ItemGroup>
     <Compile Include="WheelBarrel.png">
       <Name>WheelBarrel</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="oil tower.png">
-      <Name>oil_tower</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -827,6 +799,25 @@
   <ItemGroup>
     <Compile Include="DefaultBackground.png">
       <Name>DefaultBackground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="64x64.jpg">
+      <Name>64x64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimatedCircle\Circle_large.png">
+      <Name>Circle_large</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="AnimatedCircle\Circle_small.png">
+      <Name>Circle_small</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
