@@ -49,5 +49,10 @@ namespace LevelEditor
             get { return Convert.ToDouble(SpeedFactorTextbox.Text); }
         }
 
+        public string BackgroundImageFullName
+        {
+            get { return BackgroundCombobox.SelectedValue; }
+        }
+
     }
 }

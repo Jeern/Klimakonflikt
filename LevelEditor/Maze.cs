@@ -5,14 +5,15 @@ using System.Text;
 
 namespace LevelEditor
 {
-    public static class Maze
+    public class Maze
     {
-        public static void Initialize(int width, int height, int horizontalTiles, int verticalTiles)
+        public static void Initialize(int width, int height, int horizontalTiles, int verticalTiles, string backgroundImageFullName)
         {
             m_Width = width;
             m_Height = height;
             m_HorizontalTiles = horizontalTiles;
             m_VerticalTiles = verticalTiles;
+            m_BackgroundImageFullName = backgroundImageFullName;
         }
        
         private static int m_HorizontalTiles;
@@ -37,6 +38,17 @@ namespace LevelEditor
         public static int Height
         {
             get { return m_Height; }
+        }
+
+        private static string m_BackgroundImageFullName;
+        public static string BackgroundImageFullName
+        {
+            get { return m_BackgroundImageFullName; }
+        }
+
+        public string BackgroundImage
+        {
+            get { return m_BackgroundImageFullName; }
         }
 
         public static double TileWidth

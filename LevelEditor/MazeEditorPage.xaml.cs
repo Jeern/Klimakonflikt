@@ -27,11 +27,11 @@ namespace LevelEditor
             InitializeGrid();
             InitializeImages();
             UpdateRoundedImages();
-            MoveableImageController.Images.Add(new FlowerSackImage(MazeCanvas, new Coordinate(9, 9)));
+            MoveableImageController.Images.Add(new FlowerSackImage(MazeCanvas, new Coordinate(Maze.HorizontalTiles-1, Maze.VerticalTiles-1)));
             MoveableImageController.Images.Add(new OilBarrelImage(MazeCanvas, new Coordinate(0,0)));
-            MoveableImageController.Images.Add(new OilTowerImage(MazeCanvas, new Coordinate(4, 4)));
-            MoveableImageController.Images.Add(new WheelBarrowImage(MazeCanvas, new Coordinate(5,5)));
-            MoveableImageController.Images.Add((new FireImage(MazeCanvas, new Coordinate(-1,4))));
+            MoveableImageController.Images.Add(new OilTowerImage(MazeCanvas, new Coordinate(0, 1)));
+            MoveableImageController.Images.Add(new WheelBarrowImage(MazeCanvas, new Coordinate(Maze.HorizontalTiles - 1, Maze.VerticalTiles-2)));
+            MoveableImageController.Images.Add((new FireImage(MazeCanvas, new Coordinate(-1,1))));
         }
 
         private void InitializeCanvas()
