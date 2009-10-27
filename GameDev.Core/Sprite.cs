@@ -20,12 +20,13 @@ namespace GameDev.Core
 
     public class Sprite : Placeable
     {
+        public Point OriginalPosition { get; private set; }
         public Direction Direction { get; set; }
         public float Speed { get; set; }
         public Point GameImageOffset { get; set; }
         public GameImage GameImage { get; set; }
 
-        // Lidt i tvivl om hvorledes Textture-sizen sættes til texturefilen's size
+        // Lidt i tvivl om hvorledes Texture-sizen sættes til texturefilen's size
         public Sprite(GameImage gameImage, float speed, Point startingPosition) : this(gameImage, speed, startingPosition.X, startingPosition.Y) { }
         public Sprite(GameImage gameImage, float speed) : this(gameImage, speed, 0, 0) { }
 
@@ -34,6 +35,7 @@ namespace GameDev.Core
         {
             this.GameImage = gameImage;
             this.Speed = speed;
+            this.OriginalPosition = new Point(x, y);
 
         }
 
@@ -51,5 +53,9 @@ namespace GameDev.Core
             base.Draw(gameTime);
         }
 
+        public void Reset()
+        {
+            this.SetPosition(this.OriginalPosition);
+        }
     }
 }

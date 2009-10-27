@@ -78,20 +78,7 @@ namespace KlimaKonflikt
             m_creditsScene = new CreditsScene();
 
 
-            #region Working on Events
-
-            //introScene.SceneLinks.Add(new KeyboardSceneChangeLink(mainGameScene, Keys.Enter));
-            //oilWinScene = new StaticImageScene(scenena, "WIN OIL");
-            ////ENTER leads back to beginning
-            //oilWinScene.SceneLinks.Add(new KeyboardSceneChangeLink(introScene, Keys.Enter));
-            //flowerWinScene = new StaticImageScene("FLOWER_WIN", "WIN Flower");
-            //flowerWinScene.SceneLinks.Add(new KeyboardSceneChangeLink(introScene, Keys.Enter));
-            //creditsScene = new StaticImageScene("Credits", "credit splash");
-            //creditsScene.SceneLinks.Add(new ManyConditionsToOneReactionLink(new KeysDownCondition(Keys.Escape), new GameExitReaction()));
-            //creditsScene.SceneLinks.Add(new ManyConditionsToOneReactionLink(new KeysDownCondition(Keys.Escape), new SceneChangeReaction(introScene)));
-
-            #endregion
-
+          
             sceneManager.AddScene(m_introScene);
             sceneManager.AddScene(m_mainGameScene);
             sceneManager.AddScene(m_oilWinScene);

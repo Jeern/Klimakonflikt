@@ -165,7 +165,6 @@ namespace KlimaKonflikt.Scenes
             Point centerOfPlayersTile = board.GetTileFromPixelPosition(monster.GetPosition().X, monster.GetPosition().Y).Center;
             WalledTile tile = board.GetTileFromPixelPosition(monster.GetPosition());
 
-
             if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, oldPosition))
             {
                 //we are going to cross the center
@@ -187,6 +186,7 @@ namespace KlimaKonflikt.Scenes
                 monster.WantedDirection = GetWantedDirection(monster);
                 monster.Direction = monster.WantedDirection;
                 monster.Move(monster.Direction, pixelMovesLeft);
+                //debug info
             }
             else
             {
@@ -287,7 +287,7 @@ namespace KlimaKonflikt.Scenes
                 bool playerIsLeavingTile = GeometryTools.IsBetweenPoints(oldPosition, centerOfPlayersTile, newPosition);
 
                 //if we are leaving the tile and want to change direction
-                if (playerIsLeavingTile && player.Direction != player.WantedDirection)
+                if (playerIsLeavingTile && player.Direction != player.WantedDirection && player.GetPosition().DistanceTo(tile.Center) < tile.Width /3)
                 {
                     Direction wantedDirection = player.WantedDirection;
                     if (wantedDirection != Direction.None)
@@ -586,10 +586,16 @@ namespace KlimaKonflikt.Scenes
 
             frøPose.Reset();
             olieTønde.Reset();
+            
+            //flytter ild tilbage til udgangspositioner
+            m_Ild1.Reset();
+            m_Ild2.Reset();
+
             m_Ild2.WantedDirection = Direction.Left; //DirectionHelper4.GetRandomDirection();
             m_Ild1.WantedDirection = Direction.Right;// DirectionHelper4.GetRandomDirection();
             m_Ild2.Direction = Direction.Left;// DirectionHelper4.GetRandomDirection();
             m_Ild1.Direction = Direction.Right;// DirectionHelper4.GetRandomDirection
+
 
             board.Reset();
 
