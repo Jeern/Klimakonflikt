@@ -804,13 +804,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="64x64.jpg">
-      <Name>64x64</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AnimatedCircle\Circle_large.png">
       <Name>Circle_large</Name>
       <Importer>TextureImporter</Importer>
@@ -818,6 +811,13 @@
     </Compile>
     <Compile Include="AnimatedCircle\Circle_small.png">
       <Name>Circle_small</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="64x64.jpg">
+      <Name>64x64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
