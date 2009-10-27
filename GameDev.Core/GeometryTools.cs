@@ -43,5 +43,18 @@ namespace GameDev.Core
         return new Rectangle(rectangleToOffset.X + xOffset, rectangleToOffset.Y + yOffset, rectangleToOffset.Width, rectangleToOffset.Height);
     }
 
+        public static float DistanceTo(this Point firstPoint, Point otherPoint)
+        {
+            return (float)Math.Sqrt(
+                Math.Pow(
+                Math.Abs(firstPoint.X - otherPoint.X)
+                ,2)
+                +  
+                Math.Pow(
+                Math.Abs(firstPoint.Y- otherPoint.Y)
+                ,2)
+                );
+        }
+
     }
 }
