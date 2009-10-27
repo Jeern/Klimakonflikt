@@ -7,15 +7,37 @@ namespace LevelEditor
 {
     public class Maze
     {
-        public static void Initialize(int width, int height, int horizontalTiles, int verticalTiles, string backgroundImageFullName)
+        public static void Initialize(int width, int height, int horizontalTiles, int verticalTiles, 
+            string backgroundImageFullName, int levelNumber, string levelName, double speedFactor)
         {
             m_Width = width;
             m_Height = height;
             m_HorizontalTiles = horizontalTiles;
             m_VerticalTiles = verticalTiles;
             m_BackgroundImageFullName = backgroundImageFullName;
+            m_LevelNumber = levelNumber;
+            m_LevelName = levelName;
+            m_SpeedFactor = speedFactor;
         }
-       
+
+        private static double m_SpeedFactor;
+        public static double SpeedFactor
+        {
+            get { return m_SpeedFactor; }
+        }
+
+        private static string m_LevelName;
+        public static string LevelName
+        {
+            get { return m_LevelName; }
+        }
+
+        private static int m_LevelNumber;
+        public static int LevelNumber
+        {
+            get { return m_LevelNumber; }
+        }
+
         private static int m_HorizontalTiles;
         public static int HorizontalTiles
         {

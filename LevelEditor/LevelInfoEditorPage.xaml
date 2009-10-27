@@ -21,7 +21,7 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <local:LETextBox x:Name="NumberTextbox" LabelText="Level Number:" Text="1" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5"></local:LETextBox>
-        <local:LETextBox x:Name="NameTextbox" LabelText="Level Name:" Text="Level 1" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"></local:LETextBox>
+        <local:LETextBox x:Name="NameTextbox" LabelText="Level Name:" Text="Default" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"></local:LETextBox>
         <local:LETextBox x:Name="ColumnsTextbox" LabelText="Columns:" Text="10" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></local:LETextBox>
         <local:LETextBox x:Name="RowsTextbox" LabelText="Rows:" Text="10" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></local:LETextBox>
         <local:LETextBox x:Name="SpeedFactorTextbox" LabelText="Speed Factor:" Text="1.0" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></local:LETextBox>

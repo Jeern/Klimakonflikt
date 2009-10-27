@@ -17,11 +17,18 @@ namespace LevelEditor
     /// <summary>
     /// Interaction logic for LETextBox.xaml
     /// </summary>
-    public partial class LETextBox : UserControl
+    public partial class LETextBox : UserControl, IValidator
     {
+        private Validator m_Validator;
         public LETextBox()
         {
             InitializeComponent();
+        }
+
+        public Validator Validator
+        {
+            get { return m_Validator; }
+            set { m_Validator = value; }
         }
 
         public string LabelText
@@ -35,5 +42,21 @@ namespace LevelEditor
             get { return LEText.Text; }
             set { LEText.Text = value; }
         }
+
+        public bool Validate()
+        {
+            return Validate(Text);
+        }
+
+        #region IValidator Members
+
+        public bool Validate(string item)
+        {
+            if (m_Validator == null)
+                return true;
+            return m_Validator.Validate(item);
+        }
+
+        #endregion
     }
 }
