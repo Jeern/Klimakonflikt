@@ -22,6 +22,11 @@ namespace LevelEditor
         public LevelInfoEditorPage()
         {
             InitializeComponent();
+            NumberTextbox.Validator = new IntegerValidator("Level Number");
+            NameTextbox.Validator = new LevelNameValidator("Level Name");
+            ColumnsTextbox.Validator = new TilesValidator("Columns");
+            RowsTextbox.Validator = new TilesValidator("Rows");
+            SpeedFactorTextbox.Validator = new DoubleValidator("Speed factor");
         }
 
         public int LevelNumber
@@ -54,5 +59,14 @@ namespace LevelEditor
             get { return BackgroundCombobox.SelectedValue; }
         }
 
+        public bool Validate()
+        {
+            return
+                NumberTextbox.Validate() &
+                NameTextbox.Validate() &
+                ColumnsTextbox.Validate() &
+                RowsTextbox.Validate() &
+                SpeedFactorTextbox.Validate();
+        }
     }
 }

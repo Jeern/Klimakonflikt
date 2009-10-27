@@ -95,9 +95,12 @@
   <ItemGroup>
     <Compile Include="BackgroundImages.cs" />
     <Compile Include="Coordinate.cs" />
+    <Compile Include="DoubleValidator.cs" />
     <Compile Include="FireImage.cs" />
     <Compile Include="FlowerSackImage.cs" />
     <Compile Include="HorizontalWallImage.cs" />
+    <Compile Include="IntegerValidator.cs" />
+    <Compile Include="IValidator.cs" />
     <Compile Include="LEComboBox.xaml.cs">
       <DependentUpon>LEComboBox.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,7 @@
     <Compile Include="LevelInfoEditorPage.xaml.cs">
       <DependentUpon>LevelInfoEditorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LevelNameValidator.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="MazeEditorPage.xaml.cs">
       <DependentUpon>MazeEditorPage.xaml</DependentUpon>
@@ -131,6 +135,8 @@
     </Compile>
     <Compile Include="RoundSpotImage.cs" />
     <Compile Include="StaticImage.cs" />
+    <Compile Include="TilesValidator.cs" />
+    <Compile Include="Validator.cs" />
     <Compile Include="VerticalWallImage.cs" />
     <Compile Include="WheelBarrowImage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

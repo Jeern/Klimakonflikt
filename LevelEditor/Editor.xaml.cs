@@ -49,16 +49,23 @@ namespace LevelEditor
 
         private void NextButtonClick(object sender, RoutedEventArgs e)
         {
-            NextButton.IsEnabled = false;
-            BackButton.IsEnabled = true;
-            SaveButton.IsEnabled = true;
-            Maze.Initialize((int)(LEConstants.DefaultTileSize * m_LevelInfoEditor.Columns),
-                (int)(LEConstants.DefaultTileSize * m_LevelInfoEditor.Rows),
-                m_LevelInfoEditor.Columns,
-                m_LevelInfoEditor.Rows, m_LevelInfoEditor.BackgroundImageFullName);
+            if (m_LevelInfoEditor.Validate())
+            {
+                NextButton.IsEnabled = false;
+                BackButton.IsEnabled = true;
+                SaveButton.IsEnabled = true;
+                Maze.Initialize((int)(LEConstants.DefaultTileSize * m_LevelInfoEditor.Columns),
+                    (int)(LEConstants.DefaultTileSize * m_LevelInfoEditor.Rows),
+                    m_LevelInfoEditor.Columns,
+                    m_LevelInfoEditor.Rows,
+                    m_LevelInfoEditor.BackgroundImageFullName,
+                    m_LevelInfoEditor.LevelNumber,
+                    m_LevelInfoEditor.LevelName,
+                    m_LevelInfoEditor.SpeedFactor);
 
-            m_MazeEditor = new MazeEditorPage();
-            EditorFrame.Navigate(m_MazeEditor);
+                m_MazeEditor = new MazeEditorPage();
+                EditorFrame.Navigate(m_MazeEditor);
+            }
         }
 
         private void SaveButtonClick(object sender, RoutedEventArgs e)
