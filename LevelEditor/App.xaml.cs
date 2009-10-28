@@ -12,5 +12,15 @@ namespace LevelEditor
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            AppDomain.CurrentDomain.UnhandledException += DomainUnhandledException;
+        }
+
+        private void DomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            ExceptionHandler.Handle(e.ExceptionObject as Exception);
+        }
     }
 }

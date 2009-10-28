@@ -97,6 +97,7 @@
     <Compile Include="BackgroundImages.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="DoubleValidator.cs" />
+    <Compile Include="ExceptionHandler.cs" />
     <Compile Include="FireImage.cs" />
     <Compile Include="FlowerSackImage.cs" />
     <Compile Include="HorizontalWallImage.cs" />
