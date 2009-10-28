@@ -19,13 +19,13 @@ namespace LevelEditor
         }
 
         private Point m_ImageMovePoint;
-        
+
         private Canvas m_MazeCanvas;
         protected Canvas MazeCanvas
         {
             get { return m_MazeCanvas; }
         }
-        
+
         private Coordinate m_CurrentCoordinate;
         public Coordinate CurrentCoordinate
         {
@@ -102,5 +102,19 @@ namespace LevelEditor
             Canvas.SetTop(this, m_CurrentScreenPosition.Y);
         }
 
+        public string XmlColumn
+        {
+            get { return CurrentCoordinate.X.ToString(); }
+        }
+
+        public string XmlRow
+        {
+            get { return CurrentCoordinate.Y.ToString(); }
+        }
+
+        public virtual string XmlName 
+        {
+            get { return "MoveableImage"; }
+        }
     }
 }

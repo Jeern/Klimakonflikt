@@ -9,5 +9,11 @@ namespace LevelEditor
     public class OilTowerImage : MoveableImage
     {
         public OilTowerImage(Canvas maze, Coordinate coordinate) : base(maze, "Oiltower.png", coordinate) { }
+
+        public override string XmlName
+        {
+            get { return "Oiltower"; }
+        }
+
     }
 }

@@ -21,5 +21,11 @@ namespace LevelEditor
             }
             base.OnMouseMove(e);
         }
+
+        public override string XmlName
+        {
+            get { return "Fire"; }
+        }
+
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Xml.Linq;
 
 namespace LevelEditor
 {
@@ -145,7 +146,7 @@ namespace LevelEditor
                 PixelFormats.Pbgra32);
             renderBitmap.Render(maze);
 
-            using (FileStream fs = new FileStream(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "test.png"), FileMode.Create))
+            using (FileStream fs = new FileStream(System.IO.Path.Combine(Directory.GetCurrentDirectory(), FileName + ".png"), FileMode.Create))
             {
                 PngBitmapEncoder encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
@@ -159,7 +160,39 @@ namespace LevelEditor
         {
             BeforeSave();
             SaveToPng(MazeCanvas);
+            SaveToXml();
             AfterSave();
+            MessageBox.Show(string.Format("Saved 2 files:\r\n{0}\r\n{1}", FullFileName + ".png", FullFileName + ".kklevel"), "KKLevel Editor", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void SaveToXml()
+        {
+            var gameboard = new XElement("Gameboard");
+            gameboard.Add(new XElement("LevelInfo", new XAttribute("Number", Maze.LevelNumber.ToString()), new XAttribute("Name", Maze.LevelName)));
+            gameboard.Add(new XElement("Columns", Maze.HorizontalTiles));
+            gameboard.Add(new XElement("Rows", Maze.VerticalTiles));
+            gameboard.Add(new XElement("Image", FileName + ".png"));
+            var items = new XElement("Items");
+            foreach (MoveableImage image in MoveableImageController.Images)
+            {
+                if (image.CurrentCoordinate.X >= 0 && image.CurrentCoordinate.Y >= 0)
+                {
+                    items.Add(new XElement(image.XmlName, new XAttribute("Column", image.XmlColumn), new XAttribute("Row", image.XmlRow)));
+                }
+            }
+            gameboard.Add(items);
+            var tiles = new XElement("Tiles");
+            gameboard.Save(FileName + ".xml");
+        }
+
+        private string FileName
+        {
+            get { return "Level" + Maze.LevelNumber.ToString() + Maze.LevelName.Replace(" ", ""); }
+        }
+
+        private string FullFileName
+        {
+            get { return System.IO.Path.Combine(Directory.GetCurrentDirectory(), FileName); }
         }
 
         private void UpdateRoundedImages()
