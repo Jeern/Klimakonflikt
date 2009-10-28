@@ -13,7 +13,7 @@ namespace LevelEditor
     public class MoveableImage : Image
     {
         private bool m_IsMoving = false;
-        protected bool IsMoving
+        public bool IsMoving
         {
             get { return m_IsMoving; }
         }

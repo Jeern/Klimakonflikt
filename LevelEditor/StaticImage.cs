@@ -44,6 +44,24 @@ namespace LevelEditor
             //    MouseLeftButtonDown += ImageMouseLeftButtonDown;
             //}
             grid.Children.Add(this);
+            maze.MouseLeftButtonDown += MazeMouseLeftButtonDown;
+            maze.MouseLeftButtonUp += MazeMouseLeftButtonUp;
+        }
+
+        private void MazeMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            m_LeftButtonIsDown = false;
+        }
+
+        private void MazeMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            m_LeftButtonIsDown = true;
+        }
+
+        private bool m_LeftButtonIsDown = false;
+        protected bool LeftButtonIsDown
+        {
+            get { return m_LeftButtonIsDown; }
         }
 
         protected virtual void OnChanged()
