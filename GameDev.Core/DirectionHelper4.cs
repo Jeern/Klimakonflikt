@@ -96,10 +96,18 @@ namespace GameDev.Core
         public static Direction GetDirection(int deltaX, int deltaY)
         {
 
-            //if we are moving diagonally - restrict to east-west
+            //if we are moving diagonally - restrict to east/west or north/south
             if (deltaX * deltaY != 0)
-            { deltaY = 0; }
-            //TODO:
+            {
+                if (deltaX > deltaY)
+                {
+                    deltaY = 0; 
+                }
+                else
+                {
+                    deltaX = 0;
+                }
+            }
             return DirectionHelper8.GetDirection(deltaX, deltaY);
         }
 
@@ -108,7 +116,7 @@ namespace GameDev.Core
             return GetDirection(deltaMove.DeltaX, deltaMove.DeltaY);
         }
 
-        public static Direction GetReverseDirection(Direction direction)
+        public static Direction GetOppositeDirection(Direction direction)
         {
             return DirectionHelper8.GetReverseDirection(direction);
         }

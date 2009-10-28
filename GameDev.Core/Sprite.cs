@@ -22,6 +22,7 @@ namespace GameDev.Core
     {
         public Point OriginalPosition { get; private set; }
         public Direction Direction { get; set; }
+        public Direction WantedDirection { get; set; }
         public float Speed { get; set; }
         public Point GameImageOffset { get; set; }
         public GameImage GameImage { get; set; }
@@ -53,8 +54,9 @@ namespace GameDev.Core
             base.Draw(gameTime);
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
+            this.WantedDirection = Direction.None;
             this.SetPosition(this.OriginalPosition);
         }
     }

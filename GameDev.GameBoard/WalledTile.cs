@@ -18,8 +18,7 @@ namespace GameDev.GameBoard
 {
 	public class WalledTile : Tile
 	{
-
-        public SpriteBatch SpriteBatch { get { return GameDevGame.Current.SpriteBatch; } }
+        private static Random m_random = new Random();
 
         public WallSet Walls { get; private set; }
 
@@ -78,8 +77,59 @@ namespace GameDev.GameBoard
                 }
                 return m_exits;
             }
-
- 
         }
+
+        public Direction GetRandomExit()
+        {
+            List<Direction> exits = Exits;
+            if (exits.Count > 0)
+            {
+                return exits[m_random.Next(exits.Count - 1)];
+            }
+            else return Direction.None;
+        }
+
+        public Direction GetExitClosestTo(Direction directionWanted)
+        {
+            List<Direction> exits = this.Exits;
+            if (exits.Contains(directionWanted))
+            {
+                return directionWanted;
+            }
+            else
+            {
+                List<Direction> rightAndLeft = GetAvailableExitsRightOrLeftOfExit(directionWanted);
+                if (rightAndLeft.Count > 0)
+                {
+                    return rightAndLeft[m_random.Next(rightAndLeft.Count - 1)];
+                }
+                else
+                {
+                    Direction oppositeDirection = DirectionHelper4.GetOppositeDirection(directionWanted);
+                    if (exits.Contains (oppositeDirection))
+                    {
+                        return oppositeDirection;
+                    }
+                }
+            }
+            return Direction.None;
+        }
+
+        public List<Direction> GetAvailableExitsRightOrLeftOfExit(Direction direction)
+        {
+            List<Direction> openExits = this.Exits;
+            List<Direction> rightAndLeft = DirectionHelper4.GetRightAndLeftTurns(direction);
+            List<Direction> possibleSelections = new List<Direction>();
+            foreach (Direction dir in rightAndLeft)
+            {
+                if (openExits.Contains(dir))
+                {
+                    possibleSelections.Add(dir);
+                }
+            }
+            return possibleSelections;
+
+        }
+
 	}
 }

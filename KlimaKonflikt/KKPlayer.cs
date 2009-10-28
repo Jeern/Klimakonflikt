@@ -20,18 +20,21 @@ namespace KlimaKonflikt
 {
     public class KKPlayer : Sprite
     {
-        public Direction WantedDirection { get; set; }
         public int EjedeFelter { get; set; }
-        protected Point m_startingPosition;
         protected int m_startingAmmo;
+        public SoundEffect TakeoverTileSound { get; set; }
+        public SoundEffect RefuelSound { get; set; }
 
+        public Ejerskab EjerskabsType { get; set; }
         public GameImage OutOfAmmoEffect { get; set; }
 
-        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo, GameImage outOfAmmoEffect):base(gameImage, speed, startingPosition)
+        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo, GameImage outOfAmmoEffect, SoundEffect takeTileSound, SoundEffect refuelSound, Ejerskab ejerskabsType):base(gameImage, speed, startingPosition)
         {
-            m_startingPosition = startingPosition;
             m_startingAmmo = ammo;
             this.OutOfAmmoEffect = outOfAmmoEffect;
+            this.RefuelSound = refuelSound;
+            this.TakeoverTileSound = takeTileSound;
+            this.EjerskabsType = ejerskabsType;
             Reset();
         }
 
@@ -39,14 +42,15 @@ namespace KlimaKonflikt
 
         public int Ammunition { get; set; }
 
-        public void Reset()
+        public override void Reset()
         {
+            base.Reset();
             this.Ammunition = m_startingAmmo;
             this.Health = 100;
-            this.SetPosition(m_startingPosition);
             this.WantedDirection = Direction.None;
             this.EjedeFelter = 0;
         }
+
         public override void Update(GameTime gameTime)
         {
             OutOfAmmoEffect.Update(gameTime);
@@ -66,8 +70,6 @@ namespace KlimaKonflikt
              currentTexture = GameImage.CurrentTexture;
             GameDevGame.Current.SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), colorEffect);
 
-
-            //base.Draw(gameTime);
         }
 
     }
