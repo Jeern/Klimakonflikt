@@ -12,5 +12,18 @@ namespace LevelEditor
         {
             get { return m_Images; }
         }
+
+        public static bool ImageIsMoving
+        {
+            get
+            {
+                foreach (MoveableImage image in m_Images)
+                {
+                    if (image.IsMoving)
+                        return true;
+                }
+                return false;
+            }
+        }
     }
 }

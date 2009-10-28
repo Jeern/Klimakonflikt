@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace LevelEditor
 {
@@ -30,10 +31,32 @@ namespace LevelEditor
             }
         }
 
-        protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e)
+        private bool m_VisibilityReversed = false;
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            ReverseVisibility();
+            if (!MoveableImageController.ImageIsMoving && !m_VisibilityReversed)
+            {
+                ReverseVisibility();
+                m_VisibilityReversed = true;
+            }
             base.OnMouseLeftButtonDown(e);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (!MoveableImageController.ImageIsMoving && LeftButtonIsDown && !m_VisibilityReversed)
+            {
+                ReverseVisibility();
+                m_VisibilityReversed = true;
+            }
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseLeave(MouseEventArgs e)
+        {
+            m_VisibilityReversed = false;
+            base.OnMouseLeave(e);
         }
     }
 }
