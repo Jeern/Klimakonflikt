@@ -21,7 +21,7 @@ namespace LevelEditor
                 sb.AppendLine();
                 sb.AppendLine(ex.ToString());
             }
-            MessageBox.Show(sb.ToString(), "LevelEditor", MessageBoxButton.OK, MessageBoxImage.Stop);
+            MessageBox.Show(sb.ToString(), "KKLevel Editor", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
     }
 }

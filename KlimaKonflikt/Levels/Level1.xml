@@ -4,6 +4,14 @@
   <Columns>10</Columns>
   <Rows>10</Rows>
   <Image>Indie9000Level.png</Image>
+  <Items>
+    <Flowersack Column="9" Row="9" />
+    <Oilbarrel Column="0" Row="0" />
+    <Wheelbarrow Column="5" Row="5" />
+    <Oiltower Column="4" Row="4" />
+    <Fire Column="1" Row="3" />
+    <Fire Column="8" Row="6" />
+  </Items>
   <Tiles>
     <Tile Row="0" Column="0" Top="True" Bottom="False" Left="True" Right="True" />
     <Tile Row="1" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
