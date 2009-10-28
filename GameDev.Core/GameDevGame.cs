@@ -26,6 +26,7 @@ namespace GameDev.Core
         static GameDevGame _current;
         public static GameDevGame Current { get { return _current; } }
         public SpriteBatch SpriteBatch { get; set; }
+        public float GameSpeed { get; set; }
 
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
 
@@ -35,6 +36,7 @@ namespace GameDev.Core
             GameDevGame._current = this;
             this.GraphicsDeviceManager = new GraphicsDeviceManager(this);
             this.Services.AddService(typeof(GraphicsDeviceManager), GraphicsDeviceManager);
+            GameSpeed = 1.0F;
             
         }
 

@@ -32,8 +32,6 @@ namespace KlimaKonflikt
         SceneManager sceneManager;
 
 
-        SoundEffectInstance startTunePlayer;
-        
         RealRandom random = new RealRandom(1, 8);
 
         IntroScene m_introScene;

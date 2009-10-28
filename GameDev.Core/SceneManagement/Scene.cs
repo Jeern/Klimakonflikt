@@ -40,11 +40,6 @@ namespace GameDev.Core.SceneManagement
                 {
                     component.Update(gameTime);
                 }
-                //foreach (ManyConditionsToOneReactionLink  mctorl in SceneLinks)
-                //{
-                //    mctorl.Update(gameTime);
-                //}
-                
             }
         }
 
@@ -57,12 +52,12 @@ namespace GameDev.Core.SceneManagement
             }
         }
 
-        public void Pause()
+        public virtual void Pause()
         {
             this.IsPaused = true;
         }
 
-        public void Resume()
+        public virtual void Resume()
         {
             this.IsPaused = false;
         }
