@@ -309,21 +309,32 @@ namespace KlimaKonflikt.Scenes
                 Point tempPosition = centerOfPlayersTile;
                 player.SetPosition(centerOfPlayersTile);
 
-                if ((player == olieTønde && oilTowerTile == tile) || (player == frøPose && wheelBarrowTile == tile))
+                //if ((player == olieTønde && oilTowerTile == tile) || (player == frøPose && wheelBarrowTile == tile))
+                if (oilTowerTile == tile || wheelBarrowTile == tile)
                 {
                     if (player.Ammunition < 10)
                     {
-                        player.Ammunition = 10;
 
-                        if (player == olieTønde)
+                        if (player == olieTønde && oilTowerTile == tile)
                         {
                             olieTankning.Play();
+                            player.Ammunition = 10;
+                            
+                        }
+                        else if (player == frøPose && wheelBarrowTile == tile)
+                        {
+                            frøTankning.Play();
+                            player.Ammunition = 10;
+                        }
+
+                        if (oilTowerTile == tile)
+                        {
                             oilTowerTile = GetNewRefuelPosition();
                             oilTower1.SetPosition(oilTowerTile.Center);
                         }
-                        else if (player == frøPose)
+
+                        if (wheelBarrowTile == tile)
                         {
-                            frøTankning.Play();
                             wheelBarrowTile = GetNewRefuelPosition();
                             wheelBarrow1.SetPosition(wheelBarrowTile.Center);
                         }
