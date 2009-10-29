@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="RoundSpotImage.cs" />
     <Compile Include="StaticImage.cs" />
+    <Compile Include="Tile.cs" />
     <Compile Include="TilesValidator.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="VerticalWallImage.cs" />
