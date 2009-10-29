@@ -39,13 +39,15 @@ namespace LevelEditor
                 Opacity = LEConstants.Transparent;
             }
             IsHitTestVisible = true;
-            //if (checkMouseButton)
-            //{
-            //    MouseLeftButtonDown += ImageMouseLeftButtonDown;
-            //}
             grid.Children.Add(this);
             maze.MouseLeftButtonDown += MazeMouseLeftButtonDown;
             maze.MouseLeftButtonUp += MazeMouseLeftButtonUp;
+            maze.MouseLeave += MazeMouseLeave;
+        }
+
+        private void MazeMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            m_LeftButtonIsDown = false;
         }
 
         private void MazeMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

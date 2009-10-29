@@ -125,6 +125,7 @@
     <Compile Include="MoveableImageController.cs" />
     <Compile Include="OilBarrelImage.cs" />
     <Compile Include="OilTowerImage.cs" />
+    <Compile Include="OutOfboundsEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

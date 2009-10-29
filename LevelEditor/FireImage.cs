@@ -27,5 +27,9 @@ namespace LevelEditor
             get { return "Fire"; }
         }
 
+        protected override void OnOutOfBounds(int x, int y, int maxX, int maxY)
+        {
+            this.Opacity = LEConstants.Invisible;
+        }
     }
 }
