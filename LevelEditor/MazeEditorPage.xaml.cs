@@ -69,10 +69,6 @@ namespace LevelEditor
             }
         }
 
-        private Image[,] m_VerticalImages = new Image[(int)Maze.HorizontalTiles + 1, (int)Maze.VerticalTiles];
-        private Image[,] m_HorizontalImages = new Image[(int)Maze.HorizontalTiles, (int)Maze.VerticalTiles + 1];
-        private Image[,] m_RoundedImages = new Image[(int)Maze.HorizontalTiles + 1, (int)Maze.VerticalTiles + 1];
-
         private void InitializeImages()
         {
             InitializeRoundedImages();
@@ -86,12 +82,10 @@ namespace LevelEditor
             {
                 for (int y = 0; y <= (int)Maze.VerticalTiles; y++)
                 {
-                    m_RoundedImages[x, y] = new RoundSpotImage(MazeCanvas, MazeGrid, x, y);
+                    Maze.RoundedImages[x, y] = new RoundSpotImage(MazeCanvas, MazeGrid, x, y);
                 }
             }
         }
-
-
 
         private void InitializeVerticalImages()
         {
@@ -101,7 +95,7 @@ namespace LevelEditor
                 {
                     var verticalImage = new VerticalWallImage(MazeCanvas, MazeGrid, x, y);
                     verticalImage.Changed += StaticImageChanged;
-                    m_VerticalImages[x, y] = verticalImage;
+                    Maze.VerticalImages[x, y] = verticalImage;
                 }
             }
         }
@@ -114,7 +108,7 @@ namespace LevelEditor
                 {
                     var horizontalImage = new HorizontalWallImage(MazeCanvas, MazeGrid, x, y);
                     horizontalImage.Changed += StaticImageChanged;
-                    m_HorizontalImages[x, y] = horizontalImage;
+                    Maze.HorizontalImages[x, y] = horizontalImage;
                 }
             }
         }
@@ -182,7 +176,23 @@ namespace LevelEditor
             }
             gameboard.Add(items);
             var tiles = new XElement("Tiles");
-            gameboard.Save(FileName + ".xml");
+            Maze.InitializeTilesFromWalls();
+            for (int column = 0; column < Maze.HorizontalTiles; column++ )
+            {
+                for (int row = 0; row < Maze.HorizontalTiles; row++)
+                {
+                    var tile = new XElement("Tile",
+                        new XAttribute("Row", row.ToString()),
+                        new XAttribute("Column", column.ToString()),
+                        new XAttribute("Top", Maze.Tiles[column, row].Top.ToString()),
+                        new XAttribute("Bottom", Maze.Tiles[column, row].Bottom.ToString()),
+                        new XAttribute("Left", Maze.Tiles[column, row].Left.ToString()),
+                        new XAttribute("Right", Maze.Tiles[column, row].Right.ToString()));
+                    tiles.Add(tile);
+                }
+            }
+            gameboard.Add(tiles);            
+            gameboard.Save(FileName + ".kklevel");
         }
 
         private string FileName
@@ -202,7 +212,7 @@ namespace LevelEditor
             {
                 for (int y = 0; y <= (int)Maze.VerticalTiles; y++)
                 {
-                    m_RoundedImages[x, y].Opacity = LEConstants.Transparent;
+                    Maze.RoundedImages[x, y].Opacity = LEConstants.Transparent;
                 }
             }
 
@@ -211,10 +221,10 @@ namespace LevelEditor
             {
                 for (int y = 0; y <= (int)Maze.VerticalTiles; y++)
                 {
-                    if (m_HorizontalImages[x, y].Opacity == LEConstants.Visible)
+                    if (Maze.HorizontalImages[x, y].Opacity == LEConstants.Visible)
                     {
-                        m_RoundedImages[x, y].Opacity = LEConstants.Visible;
-                        m_RoundedImages[x + 1, y].Opacity = LEConstants.Visible;
+                        Maze.RoundedImages[x, y].Opacity = LEConstants.Visible;
+                        Maze.RoundedImages[x + 1, y].Opacity = LEConstants.Visible;
                     }
                 }
             }
@@ -224,10 +234,10 @@ namespace LevelEditor
             {
                 for (int y = 0; y <= (int)Maze.VerticalTiles - 1; y++)
                 {
-                    if (m_VerticalImages[x, y].Opacity == LEConstants.Visible)
+                    if (Maze.VerticalImages[x, y].Opacity == LEConstants.Visible)
                     {
-                        m_RoundedImages[x, y].Opacity = LEConstants.Visible;
-                        m_RoundedImages[x, y + 1].Opacity = LEConstants.Visible;
+                        Maze.RoundedImages[x, y].Opacity = LEConstants.Visible;
+                        Maze.RoundedImages[x, y + 1].Opacity = LEConstants.Visible;
                     }
                 }
             }
@@ -235,15 +245,15 @@ namespace LevelEditor
 
         private void AfterSave()
         {
-            foreach (Image image in m_HorizontalImages)
+            foreach (Image image in Maze.HorizontalImages)
             {
                 AfterSaveImage(image);
             }
-            foreach (Image image in m_VerticalImages)
+            foreach (Image image in Maze.VerticalImages)
             {
                 AfterSaveImage(image);
             }
-            foreach (Image image in m_RoundedImages)
+            foreach (Image image in Maze.RoundedImages)
             {
                 AfterSaveImage(image);
             }
@@ -256,15 +266,15 @@ namespace LevelEditor
 
         private void BeforeSave()
         {
-            foreach (Image image in m_HorizontalImages)
+            foreach (Image image in Maze.HorizontalImages)
             {
                 BeforeSaveImage(image);
             }
-            foreach (Image image in m_VerticalImages)
+            foreach (Image image in Maze.VerticalImages)
             {
                 BeforeSaveImage(image);
             }
-            foreach (Image image in m_RoundedImages)
+            foreach (Image image in Maze.RoundedImages)
             {
                 BeforeSaveImage(image);
             }
