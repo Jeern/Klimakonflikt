@@ -31,7 +31,7 @@ namespace LevelEditor
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (!MoveableImageController.ImageIsMoving && !m_VisibilityReversed)
+            if (!m_VisibilityReversed && !MoveableImageController.ImageIsMoving)
             {
                 ReverseVisibility();
                 m_VisibilityReversed = true;
@@ -41,7 +41,7 @@ namespace LevelEditor
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (!MoveableImageController.ImageIsMoving && LeftButtonIsDown && !m_VisibilityReversed)
+            if (LeftButtonIsDown && !m_VisibilityReversed && !MoveableImageController.ImageIsMoving)
             {
                 ReverseVisibility();
                 m_VisibilityReversed = true;

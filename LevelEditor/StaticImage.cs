@@ -13,6 +13,10 @@ namespace LevelEditor
     {
         private Canvas m_Maze;
 
+        private static DateTime m_LatestOverallChange = DateTime.MinValue;
+        private DateTime m_LatestChange = DateTime.MinValue;
+        private static Type m_LatestImageType = null;
+
         private event EventHandler<EventArgs> m_Changed = delegate { };
         public event EventHandler<EventArgs> Changed
         {
@@ -71,17 +75,29 @@ namespace LevelEditor
             m_Changed(this, new EventArgs());
         }
 
+        private const int SmoothTime = 800; //Milliseconds
+
         protected void ReverseVisibility()
         {
-            if (Opacity == LEConstants.Visible)
+            //This DateTime logic is a weird logic designed to give a smoother drawing experience.
+            DateTime now = DateTime.Now;
+            Type thisType = this.GetType();
+            if (m_LatestChange.AddMilliseconds(SmoothTime) < now && 
+                (m_LatestOverallChange.AddMilliseconds(SmoothTime) < now || m_LatestImageType == thisType))
             {
-                Opacity = LEConstants.Transparent;
+                m_LatestOverallChange = now;
+                m_LatestImageType = thisType;
+                m_LatestChange = now;
+                if (Opacity == LEConstants.Visible)
+                {
+                    Opacity = LEConstants.Transparent;
+                }
+                else
+                {
+                    Opacity = LEConstants.Visible;
+                }
+                OnChanged();
             }
-            else
-            {
-                Opacity = LEConstants.Visible;
-            }
-            OnChanged();
         }
     }
 }
