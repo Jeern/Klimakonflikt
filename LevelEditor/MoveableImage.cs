@@ -51,9 +51,15 @@ namespace LevelEditor
             m_CurrentCoordinate = coordinate;
             m_CurrentScreenPosition = coordinate;
             SetToCenter();
+            canvas.MouseLeave += CanvasMouseLeave;
             canvas.MouseMove += MoveImage;
             canvas.MouseLeftButtonUp += CanvasMouseLeftButtonUp;
             canvas.Children.Add(this);
+        }
+
+        private void CanvasMouseLeave(object sender, MouseEventArgs e)
+        {
+            StopMovingImage();
         }
 
         private void CanvasMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -67,7 +73,47 @@ namespace LevelEditor
             {
                 m_IsMoving = false;
                 SetToCenter();
+                if (CurrentCoordinate.X < 0 || CurrentCoordinate.X > Maze.HorizontalTiles-1 
+                    || CurrentCoordinate.Y < 0 || CurrentCoordinate.Y > Maze.VerticalTiles-1)
+                {
+                    OnOutOfBounds(CurrentCoordinate.X, CurrentCoordinate.Y, Maze.HorizontalTiles-1, Maze.VerticalTiles-1);
+                }
             }
+        }
+
+        private event EventHandler<OutOfboundsEventArgs> m_OutOfBounds = delegate { };
+        public event EventHandler<OutOfboundsEventArgs> OutOfBounds
+        {
+            add { m_OutOfBounds += value; }
+            remove { m_OutOfBounds -= value; }
+        }
+
+        protected virtual void OnOutOfBounds(int x, int y, int maxX, int maxY)
+        {
+            m_OutOfBounds(this, new OutOfboundsEventArgs(x, y, maxX, maxY));
+            MoveInsideBounds(x, y, maxX, maxY);
+        }
+
+        private void MoveInsideBounds(int x, int y, int maxX, int maxY)
+        {
+            if (x < 0)
+            {
+                x = 0;
+            }
+            if (x > maxX)
+            {
+                x = maxX;
+            }
+            if (y < 0)
+            {
+                y = 0;
+            }
+            if (y > maxY)
+            {
+                y = maxY;
+            }
+            m_CurrentCoordinate = new Coordinate(x, y);
+            SetToCenter();
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -90,14 +136,18 @@ namespace LevelEditor
                 Point mazePoint = e.GetPosition(m_MazeCanvas);
                 m_CurrentScreenPosition = new Point(mazePoint.X - m_ImageMovePoint.X, mazePoint.Y - m_ImageMovePoint.Y);
                 m_CurrentCoordinate = m_CurrentScreenPosition;
-                Canvas.SetLeft(this, m_CurrentScreenPosition.X);
-                Canvas.SetTop(this, m_CurrentScreenPosition.Y);
+                ShowImageAtPoint();
             }
         }
 
         private void SetToCenter()
         {
             m_CurrentScreenPosition = m_CurrentCoordinate;
+            ShowImageAtPoint();
+        }
+
+        private void ShowImageAtPoint()
+        {
             Canvas.SetLeft(this, m_CurrentScreenPosition.X);
             Canvas.SetTop(this, m_CurrentScreenPosition.Y);
         }
