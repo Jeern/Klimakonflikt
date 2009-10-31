@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneManagementTest", "Scen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "LevelEditor\LevelEditor.csproj", "{16421AA7-65E7-40A5-B341-D4B056360C77}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LevelEditorSetup", "LevelEditorSetup\LevelEditorSetup.vdproj", "{365DEAD2-30DF-4394-95F2-B2B354C860D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -110,6 +112,13 @@ Global
 		{49AD8EBF-FCE2-4C3B-80EA-5AA3C5A471F8}.Release|Any CPU.ActiveCfg = Release|x86
 		{49AD8EBF-FCE2-4C3B-80EA-5AA3C5A471F8}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{49AD8EBF-FCE2-4C3B-80EA-5AA3C5A471F8}.Release|x86.ActiveCfg = Release|x86
+		{365DEAD2-30DF-4394-95F2-B2B354C860D9}.Debug|Any CPU.ActiveCfg = Debug
+		{365DEAD2-30DF-4394-95F2-B2B354C860D9}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{365DEAD2-30DF-4394-95F2-B2B354C860D9}.Debug|x86.ActiveCfg = Debug
+		{365DEAD2-30DF-4394-95F2-B2B354C860D9}.Release|Any CPU.ActiveCfg = Release
+		{365DEAD2-30DF-4394-95F2-B2B354C860D9}.Release|Mixed Platforms.ActiveCfg = Release
+		{365DEAD2-30DF-4394-95F2-B2B354C860D9}.Release|Mixed Platforms.Build.0 = Release
+		{365DEAD2-30DF-4394-95F2-B2B354C860D9}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
