@@ -130,8 +130,12 @@
     <Compile Include="Graphics\GameDevTexture.cs" />
     <Compile Include="Graphics\GameImage.cs" />
     <Compile Include="Graphics\TextureClipper.cs" />
+    <Compile Include="Menus\Menu.cs" />
+    <Compile Include="Menus\MenuItem.cs" />
+    <Compile Include="Menus\TextMenuItem.cs" />
     <Compile Include="SceneManagement\AnyKeySceneLink.cs" />
     <Compile Include="SceneManagement\KeyboardSceneChangeLink.cs" />
+    <Compile Include="SceneManagement\MenuScene.cs" />
     <Compile Include="SceneManagement\MouseClickSceneChangeLink.cs" />
     <Compile Include="SceneManagement\Scene.cs" />
     <Compile Include="SceneManagement\SceneChangeReaction.cs" />
