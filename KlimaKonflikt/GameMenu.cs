@@ -1,57 +1,57 @@
-﻿#region Usings
+﻿//#region Usings
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Diagnostics;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Diagnostics;
 
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-using Microsoft.Xna.Framework.Storage;
+//using Microsoft.Xna.Framework;
+//using Microsoft.Xna.Framework.Audio;
+//using Microsoft.Xna.Framework.Content;
+//using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.Graphics;
+//using Microsoft.Xna.Framework.Input;
+//using Microsoft.Xna.Framework.Media;
+//using Microsoft.Xna.Framework.Net;
+//using Microsoft.Xna.Framework.Storage;
 
-using GameDev.Core;
-using GameDev.GameBoard;
-using GameDev.Core.Graphics;
-using GameDev.Core.SceneManagement;
-using GameDev.Core.Sequencing;
-using GameDev.Core.Menus;
+//using GameDev.Core;
+//using GameDev.GameBoard;
+//using GameDev.Core.Graphics;
+//using GameDev.Core.SceneManagement;
+//using GameDev.Core.Sequencing;
+//using GameDev.Core.Menus;
 
-#endregion
+//#endregion
 
-namespace KlimaKonflikt
-{
-   public class GameMenu :  MenuBase
-    {
+//namespace KlimaKonflikt
+//{
+//   public class GameMenu :  MenuBase
+//    {
 
-       public static readonly string MENU_STARTSINGLEPLAYER = "Start single player game"; 
-       public static readonly string MENU_START2PLAYER = "Start 2 player game";
-       public static readonly string MENU_INSTRUCTIONS = "Instructions";
-       public static readonly string MENU_CREDITS = "Credits";
-       public static readonly string MENU_EXIT = "Exit game";
+//       public static readonly string MENU_STARTSINGLEPLAYER = "Start single player game"; 
+//       public static readonly string MENU_START2PLAYER = "Start 2 player game";
+//       public static readonly string MENU_INSTRUCTIONS = "Instructions";
+//       public static readonly string MENU_CREDITS = "Credits";
+//       public static readonly string MENU_EXIT = "Exit game";
 
-       SpriteFont menuFont;
+//       SpriteFont menuFont;
 
-       TextMenuItem mnuStart2PlayerGame, mnuStart1PlayerGame, mnuCredits, mnuExit;
+//       TextMenuItem mnuStart2PlayerGame, mnuStart1PlayerGame, mnuCredits, mnuExit;
 
-           public GameMenu ()
-	{
-               menuFont = GameDevGame.Current.Content.Load<SpriteFont>("MenuText");
-               mnuStart2PlayerGame = new TextMenuItem(MENU_START2PLAYER, menuFont, MENU_START2PLAYER);
-               mnuStart2PlayerGame = new TextMenuItem(MENU_STARTSINGLEPLAYER, menuFont, MENU_STARTSINGLEPLAYER);
-               mnuStart2PlayerGame = new TextMenuItem(MENU_INSTRUCTIONS, menuFont, MENU_INSTRUCTIONS);
-               mnuStart2PlayerGame = new TextMenuItem(MENU_CREDITS, menuFont, MENU_CREDITS);
-               mnuStart2PlayerGame = new TextMenuItem(MENU_START2PLAYER, menuFont, MENU_START2PLAYER);
-	}
+//           public GameMenu ()
+//    {
+//               menuFont = GameDevGame.Current.Content.Load<SpriteFont>("MenuText");
+//               mnuStart2PlayerGame = new TextMenuItem(MENU_START2PLAYER, menuFont, MENU_START2PLAYER);
+//               mnuStart2PlayerGame = new TextMenuItem(MENU_STARTSINGLEPLAYER, menuFont, MENU_STARTSINGLEPLAYER);
+//               mnuStart2PlayerGame = new TextMenuItem(MENU_INSTRUCTIONS, menuFont, MENU_INSTRUCTIONS);
+//               mnuStart2PlayerGame = new TextMenuItem(MENU_CREDITS, menuFont, MENU_CREDITS);
+//               mnuStart2PlayerGame = new TextMenuItem(MENU_START2PLAYER, menuFont, MENU_START2PLAYER);
+//    }
 
-        public override void ArrangeMenuItems()
-        {
+//        public override void ArrangeMenuItems()
+//        {
 
-        }
-    }
-}
+//        }
+//    }
+//}
