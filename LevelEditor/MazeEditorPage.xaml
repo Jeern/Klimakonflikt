@@ -8,7 +8,7 @@
             <local:Maze x:Key="maze" />
         </Canvas.Resources>
         <Canvas.Background>
-            <ImageBrush AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Source={StaticResource maze}, Path=BackgroundImage}"/>
+            <ImageBrush AlignmentX="Center" AlignmentY="Center" ImageSource="{Binding Source={StaticResource maze}, Path=BackgroundImageFullName}"/>
         </Canvas.Background>
         <Grid Name="MazeGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Width="640" Height="640" ShowGridLines="True">
         </Grid>

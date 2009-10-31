@@ -24,15 +24,35 @@ namespace LevelEditor
         public MazeEditorPage()
         {
             InitializeComponent();
-            InitializeCanvas(); 
+            InitializeCanvas();
             InitializeGrid();
             InitializeImages();
+            if (Maze.FileLoaded)
+            {
+                Maze.InitializeWallsFromTiles();
+                MoveableImageController.Images.Add(new FlowerSackImage(MazeCanvas, Maze.FlowersackCoordinate));
+                MoveableImageController.Images.Add(new OilBarrelImage(MazeCanvas, Maze.OilbarrelCoordinate));
+                MoveableImageController.Images.Add(new OilTowerImage(MazeCanvas, Maze.OiltowerCoordinate));
+                MoveableImageController.Images.Add(new WheelBarrowImage(MazeCanvas, Maze.WheelbarrowCoordinate));
+                MoveableImageController.Images.Add((new FireImage(MazeCanvas, new Coordinate(-1, 1))));
+                foreach (var fireCoordinate in Maze.Fires)
+                {
+                    MoveableImageController.Images.Add((new FireImage(MazeCanvas, fireCoordinate)));
+                }
+            }
+            else
+            {
+                var flowerSackimage = new FlowerSackImage(MazeCanvas, new Coordinate((int)Maze.FlowersackCoordinate.X, (int)Maze.FlowersackCoordinate.Y));
+                var oilBarrelImage = new OilBarrelImage(MazeCanvas, new Coordinate((int)Maze.OilbarrelCoordinate.X, (int)Maze.OilbarrelCoordinate.Y));
+                var oilTowerImage = new OilTowerImage(MazeCanvas, new Coordinate((int)Maze.OiltowerCoordinate.X, (int)Maze.OiltowerCoordinate.Y));
+                var wheelBarrowImage = new WheelBarrowImage(MazeCanvas, new Coordinate((int)Maze.WheelbarrowCoordinate.X, (int)Maze.WheelbarrowCoordinate.Y));
+                MoveableImageController.Images.Add(flowerSackimage);
+                MoveableImageController.Images.Add(oilBarrelImage);
+                MoveableImageController.Images.Add(oilTowerImage);
+                MoveableImageController.Images.Add(wheelBarrowImage);
+                MoveableImageController.Images.Add((new FireImage(MazeCanvas, new Coordinate(-1, 1))));
+            }
             UpdateRoundedImages();
-            MoveableImageController.Images.Add(new FlowerSackImage(MazeCanvas, new Coordinate(Maze.HorizontalTiles-1, Maze.VerticalTiles-1)));
-            MoveableImageController.Images.Add(new OilBarrelImage(MazeCanvas, new Coordinate(0,0)));
-            MoveableImageController.Images.Add(new OilTowerImage(MazeCanvas, new Coordinate(0, 1)));
-            MoveableImageController.Images.Add(new WheelBarrowImage(MazeCanvas, new Coordinate(Maze.HorizontalTiles - 1, Maze.VerticalTiles-2)));
-            MoveableImageController.Images.Add((new FireImage(MazeCanvas, new Coordinate(-1,1))));
         }
 
         private void InitializeCanvas()
@@ -166,6 +186,7 @@ namespace LevelEditor
             gameboard.Add(new XElement("Columns", Maze.HorizontalTiles));
             gameboard.Add(new XElement("Rows", Maze.VerticalTiles));
             gameboard.Add(new XElement("Image", FileName + ".png"));
+            gameboard.Add(new XElement("Background", Maze.BackgroundImageName));
             var items = new XElement("Items");
             foreach (MoveableImage image in MoveableImageController.Images)
             {
@@ -177,9 +198,9 @@ namespace LevelEditor
             gameboard.Add(items);
             var tiles = new XElement("Tiles");
             Maze.InitializeTilesFromWalls();
-            for (int column = 0; column < Maze.HorizontalTiles; column++ )
+            for (int column = 0; column < Maze.HorizontalTiles; column++)
             {
-                for (int row = 0; row < Maze.HorizontalTiles; row++)
+                for (int row = 0; row < Maze.VerticalTiles; row++)
                 {
                     var tile = new XElement("Tile",
                         new XAttribute("Row", row.ToString()),
@@ -191,7 +212,7 @@ namespace LevelEditor
                     tiles.Add(tile);
                 }
             }
-            gameboard.Add(tiles);            
+            gameboard.Add(tiles);
             gameboard.Save(FileName + ".kklevel");
         }
 
