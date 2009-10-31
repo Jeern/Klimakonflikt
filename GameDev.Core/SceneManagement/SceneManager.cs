@@ -21,6 +21,23 @@ namespace GameDev.Core.SceneManagement
     /// </summary>
     public class SceneManager : DrawableGameComponent
     {
+        static object m_lockObject = new object();
+        static SceneManager m_manager;
+        public static SceneManager Current
+        {
+            get
+            { return m_manager; }
+            private set 
+            {
+                lock (m_lockObject)
+                {
+                    if (m_manager == null)
+                    {
+                        m_manager = value;
+                    }
+                }
+            }
+        }
         private Scene _currentScene;
         public Scene CurrentScene
         {
@@ -49,6 +66,7 @@ namespace GameDev.Core.SceneManagement
         public SceneManager(Game game)
             : base(game)
         {
+            Current = this;
             _scenes = new Dictionary<string, Scene>();
             this._spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
             game.Services.AddService(typeof(SceneManager), this);

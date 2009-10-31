@@ -26,8 +26,21 @@ namespace GameDev.Core.Menus
     {
 
         DateTime m_lastKeyboardInput = DateTime.MinValue;
-        private List<MenuItem> m_menuItems { get; set; }
+        protected List<MenuItem> m_menuItems { get; set; }
         public int KeyboardDelay { get; set; }
+
+        public MenuItem SelectedMenuItem
+        {
+            set
+            {
+                if (m_menuItems.Contains(value))
+                {
+                    SelectedIndex = m_menuItems.IndexOf(value);
+                }
+            }
+
+            get { return m_menuItems[m_selectedIndex]; }
+        }
 
         private int m_selectedIndex;
 
@@ -35,6 +48,8 @@ namespace GameDev.Core.Menus
         {
             set
             {
+
+                m_menuItems[m_selectedIndex].IsSelected = false;
                 if (m_menuItems.Count > 0)
                 {
                     if (value >= 0 && value < m_menuItems.Count)
@@ -48,8 +63,9 @@ namespace GameDev.Core.Menus
                         }
                     if (value >= m_menuItems.Count)
                     {
-                        m_selectedIndex = m_menuItems.Count - 1;
+                        m_selectedIndex = 0;
                     }
+                    m_menuItems[m_selectedIndex].IsSelected = true;
                 }
                 else
                 {
@@ -106,32 +122,57 @@ namespace GameDev.Core.Menus
 
         public MenuBase() : base(GameDevGame.Current)
         {
-            KeyboardDelay = 250; //milliseconds
+            KeyboardDelay = 200; //milliseconds
+            m_menuItems = new List<MenuItem>();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            
             foreach (MenuItem item in m_menuItems)
             {
                 item.Update(gameTime);
             }
-            
-            if ((DateTime.Now - m_lastKeyboardInput).TotalMilliseconds > KeyboardDelay)
+            if (SceneManager.Current.CurrentScene.NoKeysPressed)
             {
+
                 KeyboardState state = Keyboard.GetState();
+                if (state.GetPressedKeys().Length == 0)
+                {
+                    m_lastKeyboardInput = DateTime.MinValue;
+                }
 
-                if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.Tab))
+                if ((DateTime.Now - m_lastKeyboardInput).TotalMilliseconds > KeyboardDelay)
                 {
-                    SelectedIndex++;
+
+                    if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.Tab))
+                    {
+                        SelectedIndex++;
+                        ResetLastKeyboardTime();
+                    }
+                    if (state.IsKeyDown(Keys.Up) ||
+                        (state.IsKeyDown(Keys.Tab) && (state.IsKeyDown(Keys.RightShift) || state.IsKeyDown(Keys.RightShift))))
+                    {
+                        SelectedIndex--;
+                        ResetLastKeyboardTime();
+                    }
+
+                    if (state.IsKeyDown(Keys.Home))
+                    {
+                        SelectedIndex = 0;
+                    }
+                    if (state.IsKeyDown(Keys.End))
+                    {
+                        SelectedIndex = m_menuItems.Count - 1;
+                    }
                 }
-                if (state.IsKeyDown(Keys.Up) ||
-                    (state.IsKeyDown(Keys.Tab) && (state.IsKeyDown(Keys.RightShift)||state.IsKeyDown(Keys.RightShift))))
+                if (state.IsKeyDown(Keys.Enter) || state.IsKeyDown(Keys.Space))
                 {
-                    SelectedIndex--;
-                }
+                    SelectedMenuItem.Activate();
+                } 
             }
-
         }
 
         protected void ResetLastKeyboardTime()

@@ -35,6 +35,7 @@ namespace KlimaKonflikt
         RealRandom random = new RealRandom(1, 8);
 
         IntroScene m_introScene;
+        KKMenuScene m_menuScene;
         MainScene m_mainGameScene;
         OilWinScene m_oilWinScene;
         FlowerWinScene m_flowerWinScene;
@@ -70,6 +71,7 @@ namespace KlimaKonflikt
             sceneManager = new SceneManager(this);
 
             m_introScene = new IntroScene();
+            m_menuScene = new KKMenuScene();
             m_mainGameScene = new MainScene();
             m_oilWinScene = new OilWinScene();
             m_flowerWinScene = new FlowerWinScene();
@@ -78,6 +80,7 @@ namespace KlimaKonflikt
 
           
             sceneManager.AddScene(m_introScene);
+            sceneManager.AddScene(m_menuScene);
             sceneManager.AddScene(m_mainGameScene);
             sceneManager.AddScene(m_oilWinScene);
             sceneManager.AddScene(m_flowerWinScene);
@@ -88,14 +91,5 @@ namespace KlimaKonflikt
             
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
-            sceneManager.Update(gameTime);
-        }
     }
 }

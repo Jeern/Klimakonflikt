@@ -24,8 +24,25 @@ namespace GameDev.Core.Menus
 {
     public class TextMenuItem : MenuItem
     {
-        public SpriteFont Font { get; set; }
-        public string Text { get; set; }
+        private SpriteFont m_font;
+        public SpriteFont Font {
+            get { return m_font; }
+            set
+            {
+                m_font = value;
+                NeedsPositionRecalculation = true;
+            }
+        }
+        private string m_text;
+        public string Text {
+
+            get { return m_text; }
+
+            set {
+                m_text = value;
+                NeedsPositionRecalculation = true;
+            }
+        }
         public Color ActiveColor { get; set; }
         public Color InactiveColor { get; set; }
         public Color CurrentColor { get {
@@ -38,30 +55,23 @@ namespace GameDev.Core.Menus
 
         } }
 
-        private bool m_centered = true;
-        public bool Centered
-        {
-            get 
-            {
-                return m_centered; 
-            }
-            set 
-            {
-                m_centered = value;
-            RecalculatePosition();
-            }
-        }
 
-        public TextMenuItem(string name, SpriteFont font, string text) : this(name, font, text, new Vector2(), Color.White, Color.Gray)
+        public TextMenuItem(string name, SpriteFont font, string text)
+            : this(name, font, text, true)
+        { }
+
+
+        public TextMenuItem(string name, SpriteFont font, string text, bool centered) : this(name, font, text, new Vector2(), Color.White, Color.Gray, centered)
         {}
 
-        public TextMenuItem(string name, SpriteFont font, string text, Vector2 position, Color activeColor, Color inactiveColor)
-            : base(name, position)
+        public TextMenuItem(string name, SpriteFont font, string text, Vector2 position, Color activeColor, Color inactiveColor, bool centered)
+            : base(name, position, centered)
         {
             this.Font = font;
             this.Text = text;
             this.ActiveColor = activeColor;
             this.InactiveColor = inactiveColor;
+            RecalculatePosition();
         }
 
         public override void Draw(GameTime gameTime)
@@ -70,15 +80,18 @@ namespace GameDev.Core.Menus
             GameDevGame.Current.SpriteBatch.DrawString(Font, Text, Position, CurrentColor);
         }
 
-        protected void RecalculatePosition()
+        protected override void RecalculatePosition()
         {
             if (Centered)
             {
                 Vector2 fontSize = Font.MeasureString(this.Text);
-                int x  =(int) (fontSize.X + GameDevGame.Current.GraphicsDevice.Viewport.Width) / 2;
+                int x = (int)(GameDevGame.Current.GraphicsDevice.Viewport.Width - fontSize.X) / 2;
                 int y = (int)Position.Y;
                 this.Position = new Vector2(x, y);
             }
+
         }
+
+ 
     }
 }

@@ -24,48 +24,40 @@ using GameDev.Core.Sequencing;
 
 namespace KlimaKonflikt.Scenes
 {
-    public class MenuScene :  SceneBase
+    public class KKMenuScene :  MenuScene
     {
 
-        //SoundEffectInstance m_creditsTune;
+        SoundEffectInstance m_creditsTune;
 
         
-        public MenuScene()
-            : base(SceneNames.CREDITSSCENE, @"SceneBackdrops\Credits")
+        public KKMenuScene()
+            : base(SceneNames.MENUSCENE, new GameMenu(), Color.Black)
         {
-            //SoundEffect effect = GameDevGame.Current.Content.Load<SoundEffect>(@"GameTunes\CreditsTune");
-            //m_creditsTune = effect.CreateInstance();
+            SoundEffect effect = GameDevGame.Current.Content.Load<SoundEffect>(@"GameTunes\CreditsTune");
+            m_creditsTune = effect.CreateInstance();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-
-            if (noKeysPressed)
-            {
-                if (state.IsKeyDown(Keys.Enter))
+            if (NoKeysPressed)
+            {if(UpdatedKeyboardState.IsKeyDown(Keys.Escape))
                 {
-                    SceneManager.ChangeScene(SceneNames.MAINSCENE);
+                    GameDevGame.Current.Exit();  
                 }
-                else if (state.IsKeyDown(Keys.Escape))
-                {
-                    GameDevGame.Current.Exit();
-                } 
             }
-
         }
 
         public override void OnEntered()
         {
             base.OnEntered();
-            //m_creditsTune.Play();
+            m_creditsTune.Play();
         }
 
         public override void OnLeft()
         {
             base.OnLeft();
-            //m_creditsTune.Stop();
+            m_creditsTune.Stop();
         }
     }
 }

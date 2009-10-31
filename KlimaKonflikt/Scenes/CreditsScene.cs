@@ -24,7 +24,7 @@ using GameDev.Core.Sequencing;
 
 namespace KlimaKonflikt.Scenes
 {
-    public class CreditsScene :  SceneBase
+    public class CreditsScene : StaticImageScene
     {
 
         SoundEffectInstance m_creditsTune;
@@ -42,17 +42,11 @@ namespace KlimaKonflikt.Scenes
         {
             base.Update(gameTime);
 
-
-
-            if (noKeysPressed)
+            if (NoKeysPressed)
             {
-                if (state.IsKeyDown(Keys.Enter))
+                if (UpdatedKeyboardState.GetPressedKeys().Length > 0)
                 {
-                    SceneManager.ChangeScene(SceneNames.MAINSCENE);
-                }
-                else if (state.IsKeyDown(Keys.Escape))
-                {
-                    GameDevGame.Current.Exit();
+                    SceneManager.ChangeScene(SceneNames.MENUSCENE);
                 } 
             }
 

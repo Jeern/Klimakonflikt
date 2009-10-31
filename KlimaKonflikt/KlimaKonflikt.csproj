@@ -12,7 +12,8 @@
     <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaCrossPlatformGroupID>c30b90a7-0ba8-486d-8cad-c9b8445f6c4a</XnaCrossPlatformGroupID>
-    <ApplicationIcon>Flowersack.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -95,10 +96,9 @@
     <Compile Include="KKMonster.cs" />
     <Compile Include="LevelLoader.cs" />
     <Compile Include="KKPlayer.cs" />
-    <Compile Include="Scenes\MenuScene.cs" />
+    <Compile Include="Scenes\KKMenuScene.cs" />
     <Compile Include="Scenes\CreditsScene.cs" />
     <Compile Include="Scenes\FlowerWinScene.cs" />
-    <Compile Include="Scenes\SceneBase.cs" />
     <Compile Include="Scenes\OilWinScene.cs" />
     <Compile Include="Scenes\IntroScene.cs" />
     <Compile Include="Scenes\MainScene.cs" />
@@ -108,7 +108,6 @@
     <Compile Include="Scenes\SceneNames.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Flowersack.ico" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
     <Content Include="Levels\Level1.xml">

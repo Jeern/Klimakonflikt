@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using GameDev.Core.Events;
 
@@ -12,6 +13,9 @@ namespace GameDev.Core.SceneManagement
 
         #region Scene Members
 
+        public Color BackgroundColor { get; set; }
+        protected KeyboardState UpdatedKeyboardState;
+        public bool NoKeysPressed { get; protected set; }
         public GameDevGame Game { get; private set; }
         public SceneManager SceneManager { get;  set; }
         public string Name { get; set; }
@@ -20,9 +24,12 @@ namespace GameDev.Core.SceneManagement
         public SpriteBatch SpriteBatch { get { return Game.SpriteBatch; } }
         //public List<ManyConditionsToOneReactionLink> SceneLinks { get; set; }
 
-        public abstract void OnEntered();
-        public abstract void OnLeft();
-        public abstract void Reset();
+        public virtual void OnEntered()
+        {
+            NoKeysPressed = false;
+        }
+        public virtual  void OnLeft() { }
+        public virtual void Reset() { }
 
         public virtual void Initialize() 
         {
@@ -34,6 +41,15 @@ namespace GameDev.Core.SceneManagement
 
         public virtual void Update(GameTime gameTime)
         {
+            UpdatedKeyboardState = Keyboard.GetState();
+
+            //ensures that the user must have lifted fingers from the ESC that brought him/her here
+            if (!NoKeysPressed && UpdatedKeyboardState.GetPressedKeys().Length == 0)
+            {
+                NoKeysPressed = true;
+                return;
+            }
+
             if (!IsPaused)
             {
                 foreach (GameComponent component in Components)
@@ -68,10 +84,16 @@ namespace GameDev.Core.SceneManagement
         #region Constructors
 
         public Scene(string name)
+            : this(name, Color.Black)
+        { }
+
+        public Scene(string name, Color backgroundColor)
         {
             this.Name = name;
             this.Game = GameDevGame.Current;
             this.Components = new List<GameComponent>();
+            this.BackgroundColor = backgroundColor;
+            NoKeysPressed = false;
             //SceneLinks = new List<ManyConditionsToOneReactionLink>();
         }
 

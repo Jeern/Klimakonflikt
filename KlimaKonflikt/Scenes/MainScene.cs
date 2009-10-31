@@ -55,6 +55,9 @@ namespace KlimaKonflikt.Scenes
         Dictionary<KKPlayer, Sprite> RefuelImage;
         Dictionary<KKPlayer, GameImage> AmmoImages;
 
+        Color positiveScoreColor = Color.White;
+        Color negativeScoreColor = Color.Red;
+
         float scoreDifference;
 
         bool m_singlePlayer = false;
@@ -368,7 +371,7 @@ namespace KlimaKonflikt.Scenes
 
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
-                SceneManager.ChangeScene(SceneNames.CREDITSSCENE);
+                SceneManager.ChangeScene(SceneNames.MENUSCENE);
             }
 
             if (keyboardState.IsArrowKeyDown())
@@ -530,9 +533,27 @@ namespace KlimaKonflikt.Scenes
 
             SpriteBatch.Draw(this.scorePicOilBarrel, new Rectangle(10, 10, 120, 150), Color.White);
             SpriteBatch.Draw(this.scorePicFlowerSack, new Rectangle(890, 10, 120, 150), Color.White);
+
+            Color player1ScoreColor = Color.White;
+            Color player2ScoreColor = Color.White;
+
+            if (scoreDifference > 0)
+            {
+                player1ScoreColor = negativeScoreColor;
+                player2ScoreColor = positiveScoreColor;
+            }
+            else if (scoreDifference < 0)
+            {
+                player2ScoreColor = negativeScoreColor;
+                player1ScoreColor = positiveScoreColor;
+
+            }
+
+            SpriteBatch.DrawString(font, ((-1) * scoreDifference).ToString(), new Vector2(34, 54), Color.Black);
+            SpriteBatch.DrawString(font, ((-1) * scoreDifference).ToString(), new Vector2(30, 50), player1ScoreColor);
             
-            SpriteBatch.DrawString(font, ((-1) * scoreDifference).ToString(), new Vector2(40, 50), Color.White);
-            SpriteBatch.DrawString(font, scoreDifference.ToString(), new Vector2(935, 50), Color.White);      
+            SpriteBatch.DrawString(font, scoreDifference.ToString(), new Vector2(929, 54), Color.Black);
+            SpriteBatch.DrawString(font, scoreDifference.ToString(), new Vector2(925, 50), player2ScoreColor);      
 
             SpriteBatch.Draw(healthBarTexture, olieBarRectangle, healthColors[OilDrumHealthBarIndex]);
             SpriteBatch.Draw(healthBarTexture, SeedSackBarRectangle, healthColors[SeedSackHealthBarIndex]);

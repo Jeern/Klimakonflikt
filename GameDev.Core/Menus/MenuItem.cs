@@ -25,21 +25,40 @@ namespace GameDev.Core.Menus
 {
     public delegate void MenuItemHandler(MenuItem sender, EventArgs e);
 
-    public class MenuItem : DrawableGameComponent
+    public abstract class MenuItem : DrawableGameComponent
     {
 
         #region Properties
-        
+
+        protected bool NeedsPositionRecalculation { get; set; }
         public string Name { get; set; }
         private bool m_isSelected;
         public int Top { get; set; }
         public Vector2 Position { get; set; }
-        
+        private bool m_centered = true;
+        public bool Selectable { get; set; }
+        public bool Centered
+        {
+            get
+            {
+                return m_centered;
+            }
+            set
+            {
+                m_centered = value;
+                NeedsPositionRecalculation = true;
+            }
+        }
+
         public bool IsSelected
         {
             get { return m_isSelected; }
             set
             {
+                if (Selectable)
+                {
+
+                
                 bool oldValue = m_isSelected;
                 m_isSelected = value;
                 if (oldValue != IsSelected)
@@ -53,6 +72,7 @@ namespace GameDev.Core.Menus
                         OnDeSelected();
                     }
                 }
+                }
             }
         }
 
@@ -60,15 +80,18 @@ namespace GameDev.Core.Menus
 
         public event MenuItemHandler Selected;
         public event MenuItemHandler Deselected;
+        public event MenuItemHandler Activated;
 
 
         #region Constructors
-        
-        public MenuItem(string name, Vector2 position)
+
+        public MenuItem(string name, Vector2 position, bool centered)
             : base(GameDevGame.Current)
         {
             this.Name = name;
             this.Position = position;
+            this.Centered = centered;
+            this.Selectable = true;
         }
 
         #endregion
@@ -93,5 +116,28 @@ namespace GameDev.Core.Menus
         } 
         #endregion
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (NeedsPositionRecalculation)
+            {
+                RecalculatePosition();
+                NeedsPositionRecalculation = false;
+            }
+        }
+
+        public void Activate()
+        {
+            OnActivate();
+        }
+
+        protected void OnActivate()
+        {
+            if (Activated != null)
+            {
+                Activated(this, EventArgs.Empty);
+            }
+        }
+        protected abstract void RecalculatePosition();
     }
 }

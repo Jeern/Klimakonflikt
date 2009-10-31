@@ -23,33 +23,42 @@ using GameDev.Core.Menus;
 
 namespace GameDev.Core.SceneManagement
 {
-    public class MenuScene : Scene
+    public class MenuScene : StaticImageScene
     {
-
         MenuBase m_menu = null;
-
-        public MenuScene(string name, MenuBase menu) : base(name)
+        public MenuBase Menu
         {
-            this.m_menu = menu;
+            set
+            {
+
+                if (m_menu != null)
+                {
+                    this.Components.Remove(m_menu);
+                }
+                m_menu = value;
+                this.Components.Add(m_menu);
+            }
         }
 
-        public override void OnEntered()
+
+        public MenuScene(string name, MenuBase menu, GameImage backgroundImage)
+            : base(name, backgroundImage)
         {
+            this.Menu = menu;
         }
 
-        public override void OnLeft()
+        public MenuScene(string name, MenuBase menu, Texture2D backgroundTexture)
+            : base(name, backgroundTexture)
         {
+            this.Menu = menu;
         }
 
-        public override void Reset()
+
+        public MenuScene(string name, MenuBase menu, Color backgroundColor)
+            : base(name, backgroundColor)
         {
+            this.Menu = menu;
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            m_menu.Update(gameTime);
-
-        }
     }
 }

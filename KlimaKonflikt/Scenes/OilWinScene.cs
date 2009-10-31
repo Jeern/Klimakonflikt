@@ -24,7 +24,7 @@ using GameDev.Core.Sequencing;
 
 namespace KlimaKonflikt.Scenes
 {
-    public class OilWinScene :  SceneBase
+    public class OilWinScene : StaticImageScene
     {
         
         public OilWinScene() : base (SceneNames.OILWINSCENE, @"SceneBackdrops\Oil_win")
@@ -35,11 +35,11 @@ namespace KlimaKonflikt.Scenes
             base.Update(gameTime);
 
 
-            if (state.IsKeyDown(Keys.Enter))
+            if (UpdatedKeyboardState.IsKeyDown(Keys.Enter))
             {
                 SceneManager.ChangeScene(SceneNames.MAINSCENE);
             }
-            else if (state.IsKeyDown(Keys.Escape))
+            else if (UpdatedKeyboardState.IsKeyDown(Keys.Escape))
             {
                 SceneManager.ChangeScene(SceneNames.CREDITSSCENE);
             }
