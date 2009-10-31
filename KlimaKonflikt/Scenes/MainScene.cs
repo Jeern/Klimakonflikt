@@ -41,7 +41,7 @@ namespace KlimaKonflikt.Scenes
         KKMonster m_Ild1, m_Ild2;
         Ejerskab[,] EjerskabsOversigt;
         RealRandom random = new RealRandom(1, 8);
-        Texture2D tileFloor, oilSpill, flower, healthBarTexture;
+        Texture2D tileFloor, oilSpill, flower, healthBarTexture, scorePicOilBarrel, scorePicFlowerSack;
         GameImage oilTowerImage1, wheelBarrowImage, completeFloorGameImage, pulsatingCircle;
         Sprite oilTower1, wheelBarrow1;
         SpriteFont font;
@@ -54,6 +54,8 @@ namespace KlimaKonflikt.Scenes
         Dictionary<KKPlayer, WalledTile> RefuelPositions;
         Dictionary<KKPlayer, Sprite> RefuelImage;
         Dictionary<KKPlayer, GameImage> AmmoImages;
+
+        float scoreDifference;
 
         bool m_singlePlayer = false;
 
@@ -83,7 +85,8 @@ namespace KlimaKonflikt.Scenes
             oilSpill = Game.Content.Load<Texture2D>("Olie/ThePatch0030");
             flower = Game.Content.Load<Texture2D>("Blomst/Blomst0030");
 
-
+            scorePicOilBarrel = Game.Content.Load<Texture2D>("Oilbarrel/OilBarrel001");
+            scorePicFlowerSack = Game.Content.Load<Texture2D>("Flowersack/FlowerSack1");
 
             IEnumerable<GameBoard> boards = LevelLoader.GetLevels(Game, staticFloor, SpriteBatch, staticFloor.CurrentTexture.Width);
             //board = new GameBoard(this, staticFloor, SpriteBatch, "Board", tilesAcross, tilesDown, 64);
@@ -448,7 +451,7 @@ namespace KlimaKonflikt.Scenes
                 }
 
 
-                float scoreDifference = SeedSack.EjedeFelter - OilDrum.EjedeFelter;
+                scoreDifference = SeedSack.EjedeFelter - OilDrum.EjedeFelter;
                 float scoreDifferenceFactor = Math.Abs(scoreDifference) / 200;
                 switch (Math.Sign(scoreDifference))
                 {
@@ -497,8 +500,8 @@ namespace KlimaKonflikt.Scenes
             base.Draw(gameTime);
 
             int shadowOffset = 9;
-            SpriteBatch.DrawString(font, OilDrum.EjedeFelter.ToString(), new Vector2(20, 50), Color.White);
-            SpriteBatch.DrawString(font, SeedSack.EjedeFelter.ToString(), new Vector2(910, 50), Color.White);
+            //SpriteBatch.DrawString(font, OilDrum.EjedeFelter.ToString(), new Vector2(20, 50), Color.White);
+            //SpriteBatch.DrawString(font, SeedSack.EjedeFelter.ToString(), new Vector2(910, 50), Color.White);
 
             for (int y = OilDrum.Ammunition - 1; y >= 0; y--)
             {
@@ -524,6 +527,12 @@ namespace KlimaKonflikt.Scenes
             if (OilDrumHealthBarIndex > 4) OilDrumHealthBarIndex = 4;
             if (SeedSackHealthBarIndex < 0) SeedSackHealthBarIndex = 0;
             if (OilDrumHealthBarIndex < 0) OilDrumHealthBarIndex = 0;
+
+            SpriteBatch.Draw(this.scorePicOilBarrel, new Rectangle(10, 10, 120, 150), Color.White);
+            SpriteBatch.Draw(this.scorePicFlowerSack, new Rectangle(890, 10, 120, 150), Color.White);
+            
+            SpriteBatch.DrawString(font, ((-1) * scoreDifference).ToString(), new Vector2(40, 50), Color.White);
+            SpriteBatch.DrawString(font, scoreDifference.ToString(), new Vector2(935, 50), Color.White);      
 
             SpriteBatch.Draw(healthBarTexture, olieBarRectangle, healthColors[OilDrumHealthBarIndex]);
             SpriteBatch.Draw(healthBarTexture, SeedSackBarRectangle, healthColors[SeedSackHealthBarIndex]);
