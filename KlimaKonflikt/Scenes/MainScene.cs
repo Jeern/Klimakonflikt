@@ -581,8 +581,7 @@ namespace KlimaKonflikt.Scenes
 
 
         #endregion
+
         }
-
-
     }
 }

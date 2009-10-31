@@ -91,9 +91,11 @@
     <Compile Include="AIController.cs" />
     <Compile Include="Ejerskab.cs" />
     <Compile Include="GameImages.cs" />
+    <Compile Include="GameMenu.cs" />
     <Compile Include="KKMonster.cs" />
     <Compile Include="LevelLoader.cs" />
     <Compile Include="KKPlayer.cs" />
+    <Compile Include="Scenes\MenuScene.cs" />
     <Compile Include="Scenes\CreditsScene.cs" />
     <Compile Include="Scenes\FlowerWinScene.cs" />
     <Compile Include="Scenes\SceneBase.cs" />
