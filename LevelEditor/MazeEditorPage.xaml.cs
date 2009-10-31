@@ -160,7 +160,7 @@ namespace LevelEditor
                 PixelFormats.Pbgra32);
             renderBitmap.Render(maze);
 
-            using (FileStream fs = new FileStream(System.IO.Path.Combine(Directory.GetCurrentDirectory(), FileName + ".png"), FileMode.Create))
+            using (FileStream fs = new FileStream(FullFileName + ".png", FileMode.Create))
             {
                 PngBitmapEncoder encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
@@ -213,7 +213,7 @@ namespace LevelEditor
                 }
             }
             gameboard.Add(tiles);
-            gameboard.Save(FileName + ".kklevel");
+            gameboard.Save(FullFileName + ".kklevel");
         }
 
         private string FileName
@@ -223,7 +223,10 @@ namespace LevelEditor
 
         private string FullFileName
         {
-            get { return System.IO.Path.Combine(Directory.GetCurrentDirectory(), FileName); }
+            get 
+            { 
+                return System.IO.Path.Combine(Folders.GetLevelsFolder(), FileName);
+            }
         }
 
         private void UpdateRoundedImages()

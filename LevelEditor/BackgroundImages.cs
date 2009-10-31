@@ -11,7 +11,7 @@ namespace LevelEditor
     {
         public BackgroundImages()
         {
-            string path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Backgrounds");
+            string path = Folders.GetBackgroundsFolder();
             var liste =
                 from f in Directory.GetFiles(path, "*.png")
                 select new FileInfo(f);

@@ -103,6 +103,7 @@
     <Compile Include="ExceptionHandler.cs" />
     <Compile Include="FireImage.cs" />
     <Compile Include="FlowerSackImage.cs" />
+    <Compile Include="Folders.cs" />
     <Compile Include="HorizontalWallImage.cs" />
     <Compile Include="IntegerValidator.cs" />
     <Compile Include="IValidator.cs" />

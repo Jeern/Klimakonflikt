@@ -156,7 +156,7 @@ namespace LevelEditor
             get { return m_Fires; }
         }
 
-        private static string m_BackgroundImageFullName = Path.Combine(Directory.GetCurrentDirectory(), "Backgrounds\\DefaultBackground.png");
+        private static string m_BackgroundImageFullName = Path.Combine(Folders.GetBackgroundsFolder(), "DefaultBackground.png");
         public static string BackgroundImageFullName
         {
             get { return m_BackgroundImageFullName; }
@@ -229,7 +229,7 @@ namespace LevelEditor
             m_VerticalTiles = Convert.ToInt32((from e in doc.Descendants("Rows")
                                                select e.Value).First());
 
-            string backgroundFile = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "Backgrounds"),
+            string backgroundFile = Path.Combine(Folders.GetBackgroundsFolder(),
                 (from e in doc.Descendants("Background") select e.Value).First());
             if (File.Exists(backgroundFile))
             {
