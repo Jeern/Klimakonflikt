@@ -31,7 +31,6 @@ namespace KlimaKonflikt
 
         public void Update(GameTime gameTime, Sprite unitToUpdate)
         {
-            //KKMonster monster = (KKMonster)unitToUpdate;
 
             int pixelsToMove = (int)(unitToUpdate.Speed * gameTime.ElapsedGameTime.Milliseconds * GameDevGame.Current.GameSpeed);
             Point newPosition = unitToUpdate.GetNewPosition(unitToUpdate.Direction, pixelsToMove);

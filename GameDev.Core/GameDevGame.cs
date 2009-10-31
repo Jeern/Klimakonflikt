@@ -23,8 +23,20 @@ namespace GameDev.Core
     public class GameDevGame : Game
     {
         static object _locker = new object();
-        static GameDevGame _current;
-        public static GameDevGame Current { get { return _current; } }
+        private static GameDevGame m_game;
+        public static GameDevGame
+            Current { get { return m_game; }
+                private set 
+                {
+                    lock (_locker)
+                    {
+                        if (m_game == null)
+                        {
+                            m_game = value;
+                        }
+                    }
+                }
+            }
         public SpriteBatch SpriteBatch { get; set; }
         public float GameSpeed { get; set; }
 
@@ -33,7 +45,7 @@ namespace GameDev.Core
 
         public GameDevGame()
         {
-            GameDevGame._current = this;
+            GameDevGame.Current = this;
             this.GraphicsDeviceManager = new GraphicsDeviceManager(this);
             this.Services.AddService(typeof(GraphicsDeviceManager), GraphicsDeviceManager);
             GameSpeed = 1.0F;
