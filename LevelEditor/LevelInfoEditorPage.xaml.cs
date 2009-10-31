@@ -27,6 +27,21 @@ namespace LevelEditor
             ColumnsTextbox.Validator = new TilesValidator("Columns");
             RowsTextbox.Validator = new TilesValidator("Rows");
             SpeedFactorTextbox.Validator = new DoubleValidator("Speed factor");
+            NumberTextbox.Text = Maze.LevelNumber.ToString();
+            NameTextbox.Text = Maze.LevelName;
+            ColumnsTextbox.Text = Maze.HorizontalTiles.ToString();
+            RowsTextbox.Text = Maze.VerticalTiles.ToString();
+            SpeedFactorTextbox.Text = Maze.SpeedFactor.ToString();
+
+            ColumnsTextbox.Changed += TextChanged;
+            RowsTextbox.Changed += TextChanged;
+             
+            BackgroundCombobox.SelectedValue = Maze.BackgroundImageFullName;
+        }
+
+        private void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Maze.FileLoaded = false;
         }
 
         public int LevelNumber

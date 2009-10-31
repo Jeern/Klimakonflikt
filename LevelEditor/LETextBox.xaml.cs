@@ -23,6 +23,17 @@ namespace LevelEditor
         public LETextBox()
         {
             InitializeComponent();
+            LEText.TextChanged += TextChanged;
+        }
+
+        private bool m_ChangeEventAllowed = true;
+
+        private void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (m_ChangeEventAllowed)
+            {
+                m_Changed(this, e);
+            }
         }
 
         public Validator Validator
@@ -40,7 +51,19 @@ namespace LevelEditor
         public string Text
         {
             get { return LEText.Text; }
-            set { LEText.Text = value; }
+            set
+            {
+                m_ChangeEventAllowed = false;
+                LEText.Text = value;
+                m_ChangeEventAllowed = true;
+            }
+        }
+
+        private event EventHandler<TextChangedEventArgs> m_Changed = delegate { };
+        public event EventHandler<TextChangedEventArgs> Changed
+        {
+            add { m_Changed += value; }
+            remove { m_Changed -= value; }
         }
 
         public bool Validate()

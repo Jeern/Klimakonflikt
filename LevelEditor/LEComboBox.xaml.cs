@@ -35,12 +35,14 @@ namespace LevelEditor
         public string SelectedValue
         {
             get { return LECombo.SelectedValue as string; }
+            set { LECombo.SelectedValue = value; }
         }
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(LEComboBox));
         public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register("DisplayMemberPath", typeof(string), typeof(LEComboBox));
         public static readonly DependencyProperty SelectedValuePathProperty = DependencyProperty.Register("SelectedValuePath", typeof(string), typeof(LEComboBox));
         public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(LEComboBox));
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(object), typeof(LEComboBox));
 
         public IEnumerable ItemsSource
         {
@@ -66,5 +68,10 @@ namespace LevelEditor
             set { SetValue(LEComboBox.SelectedIndexProperty, value); }
         }
 
+        public object SelectedItem
+        {
+            get { return GetValue(LEComboBox.SelectedItemProperty); }
+            set { SetValue(LEComboBox.SelectedItemProperty, value); }
+        }
     }
 }

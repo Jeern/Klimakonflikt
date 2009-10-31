@@ -4,6 +4,7 @@
   <Columns>10</Columns>
   <Rows>10</Rows>
   <Image>Indie9000Level.png</Image>
+  <Background>blab</Background>
   <Items>
     <Flowersack Column="9" Row="9" />
     <Oilbarrel Column="0" Row="0" />
