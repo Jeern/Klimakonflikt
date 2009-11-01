@@ -91,7 +91,7 @@ namespace KlimaKonflikt.Scenes
             //board = new GameBoard(this, staticFloor, SpriteBatch, "Board", tilesAcross, tilesDown, 64);
             board = boards.ToArray()[0];
 
-            Texture2D completeFloor = Game.Content.Load<Texture2D>("full_level");
+            Texture2D completeFloor = Texture2D.FromFile(Game.GraphicsDevice, board.LevelImageFileName);
             completeFloorGameImage = new GameImage(completeFloor);
             board.CompleteBackground = completeFloorGameImage;
             board.SetPosition(new Point(200, 50));

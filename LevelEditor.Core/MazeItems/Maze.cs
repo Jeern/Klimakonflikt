@@ -31,8 +31,8 @@ namespace LevelEditor.Core.MazeItems
                 m_Tiles = new Tile[(int)HorizontalTiles, (int)VerticalTiles];
                 m_FlowersackCoordinate = new Coordinate((int)HorizontalTiles - 1, (int)VerticalTiles - 1);
                 m_WheelbarrowCoordinate = new Coordinate((int)HorizontalTiles - 1, (int)VerticalTiles - 2);
-                m_OilbarrelCoordinate = new Coordinate(0, 1);
-                m_OiltowerCoordinate = new Coordinate(0, 0);
+                m_OilbarrelCoordinate = new Coordinate(0, 0);
+                m_OiltowerCoordinate = new Coordinate(0, 1);
             }
         }
 

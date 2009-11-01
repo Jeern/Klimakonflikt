@@ -12,8 +12,7 @@
     <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaCrossPlatformGroupID>c30b90a7-0ba8-486d-8cad-c9b8445f6c4a</XnaCrossPlatformGroupID>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Flowersack.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -108,11 +107,21 @@
     <Compile Include="Scenes\SceneNames.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Flowersack.ico" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
-    <Content Include="Levels\Level1.xml">
+    <None Include="Levels\TestLevel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Include="Levels\Indie9000Level.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Levels\Level1.kklevel">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Levels\TestLevel.kklevel">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
