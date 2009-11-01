@@ -117,6 +117,12 @@ namespace GameDev.GameBoard
         public int TilesHorizontally { get { return Tiles.GetLength(0); } }
         public int TilesVertically { get { return Tiles.GetLength(1); } }
 
+        private string m_LevelImageFileName;
+        public string LevelImageFileName
+        {
+            get { return m_LevelImageFileName; }
+        }
+
         public SpriteBatch SpriteBatch { get { return GameDevGame.Current.SpriteBatch; } }
         
         protected void RecalculateDimensions()
@@ -153,9 +159,9 @@ namespace GameDev.GameBoard
 
         #region Constructors
 
-        public GameBoard(GameImage baseGameImage) : this(baseGameImage, "Unnamed", 10, 10, 64) { }
+        public GameBoard(GameImage baseGameImage) : this(baseGameImage, "Unnamed", 10, 10, 64, "Unnamed") { }
 
-        public GameBoard(GameImage baseGameImage, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels)
+        public GameBoard(GameImage baseGameImage, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels, string levelImageFileName)
             : base(GameDevGame.Current)
         {
             Name = name;
@@ -169,7 +175,7 @@ namespace GameDev.GameBoard
                 }
             }
             TileSizeInPixels = tileSizeInPixels;
-        
+            m_LevelImageFileName = levelImageFileName;
         }
 
 

@@ -16,9 +16,9 @@ namespace KlimaKonflikt
     {
         public static IEnumerable<GameBoard> GetLevels(Game game, GameImage tileImage, SpriteBatch spriteBatch, int tileSizeInPixels)
         {
+            
             var xmlFiles =
-                from file in Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "Levels"), "*.xml")
-                where new FileInfo(file).Name.StartsWith("Level")
+                from file in Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "Levels"), "*.kklevel")
                 select file;
 
             foreach (string file in xmlFiles)
@@ -40,6 +40,9 @@ namespace KlimaKonflikt
             int tilesVertically = Convert.ToInt32((from e in doc.Descendants("Rows")
                                           select e.Value).First());
 
+            string imageFileName = GetImageFileName((from e in doc.Descendants("Image")
+                            select e.Value).First(), fileName);
+
             var tiles =
                 from e in doc.Descendants("Tile")
                 select new
@@ -52,7 +55,8 @@ namespace KlimaKonflikt
                     Right = Convert.ToBoolean(e.Attribute("Right").Value)
                 };
 
-            var gameBoard = new GameBoard( tileImage, name, tilesHorizontally, tilesVertically, tileSizeInPixels);
+            var gameBoard = new GameBoard( tileImage, name, tilesHorizontally, tilesVertically, 
+                tileSizeInPixels, imageFileName);
             foreach (var tile in tiles)
             {
                 var gameTile = gameBoard.Tiles[tile.Column, tile.Row];
@@ -64,6 +68,25 @@ namespace KlimaKonflikt
 
             return gameBoard;
 
+        }
+
+        /// <summary>
+        /// Calculates the filename of the imageFile by looking at the path of the kkLevel file. Because they are
+        /// most likely placed in the same directory.
+        /// </summary>
+        /// <param name="imageName"></param>
+        /// <param name="kkLevelfileName"></param>
+        /// <returns></returns>
+        private static string GetImageFileName(string imageName, string kkLevelfileName)
+        {
+            string fileName = Path.Combine(Path.GetDirectoryName(kkLevelfileName), imageName);
+            if (File.Exists(fileName))
+                return fileName;
+
+            if (File.Exists(imageName))
+                return imageName;
+
+            return null;
         }
     }
 }

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Gameboard>
+  <LevelInfo Number="1" Name="Default" />
+  <Columns>10</Columns>
+  <Rows>10</Rows>
+  <Image>TestLevel.png</Image>
+  <Background>DefaultBackground.png</Background>
+  <Items>
+    <Flowersack Column="9" Row="9" />
+    <Oilbarrel Column="0" Row="0" />
+    <Oiltower Column="0" Row="1" />
+    <Wheelbarrow Column="9" Row="8" />
+  </Items>
+  <Tiles>
+    <Tile Row="0" Column="0" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="1" Column="0" Top="False" Bottom="True" Left="True" Right="True" />
+    <Tile Row="2" Column="0" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="3" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="4" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="5" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="6" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="7" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="8" Column="0" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="9" Column="0" Top="False" Bottom="True" Left="True" Right="False" />
+    <Tile Row="0" Column="1" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="1" Column="1" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="2" Column="1" Top="False" Bottom="True" Left="False" Right="True" />
+    <Tile Row="3" Column="1" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="4" Column="1" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="5" Column="1" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="6" Column="1" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="7" Column="1" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="8" Column="1" Top="False" Bottom="True" Left="True" Right="False" />
+    <Tile Row="9" Column="1" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="0" Column="2" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="1" Column="2" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="2" Column="2" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="3" Column="2" Top="False" Bottom="True" Left="False" Right="True" />
+    <Tile Row="4" Column="2" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="5" Column="2" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="6" Column="2" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="7" Column="2" Top="False" Bottom="True" Left="True" Right="False" />
+    <Tile Row="8" Column="2" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="9" Column="2" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="0" Column="3" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="1" Column="3" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="2" Column="3" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="3" Column="3" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="4" Column="3" Top="False" Bottom="True" Left="False" Right="True" />
+    <Tile Row="5" Column="3" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="6" Column="3" Top="False" Bottom="True" Left="True" Right="False" />
+    <Tile Row="7" Column="3" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="8" Column="3" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="9" Column="3" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="0" Column="4" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="1" Column="4" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="2" Column="4" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="3" Column="4" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="4" Column="4" Top="True" Bottom="False" Left="True" Right="False" />
+    <Tile Row="5" Column="4" Top="False" Bottom="True" Left="False" Right="True" />
+    <Tile Row="6" Column="4" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="7" Column="4" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="8" Column="4" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="9" Column="4" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="0" Column="5" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="1" Column="5" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="2" Column="5" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="3" Column="5" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="4" Column="5" Top="True" Bottom="False" Left="False" Right="True" />
+    <Tile Row="5" Column="5" Top="False" Bottom="True" Left="True" Right="True" />
+    <Tile Row="6" Column="5" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="7" Column="5" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="8" Column="5" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="9" Column="5" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="0" Column="6" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="1" Column="6" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="2" Column="6" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="3" Column="6" Top="True" Bottom="False" Left="False" Right="True" />
+    <Tile Row="4" Column="6" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="5" Column="6" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="6" Column="6" Top="False" Bottom="True" Left="False" Right="True" />
+    <Tile Row="7" Column="6" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="8" Column="6" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="9" Column="6" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="0" Column="7" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="1" Column="7" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="2" Column="7" Top="True" Bottom="False" Left="False" Right="True" />
+    <Tile Row="3" Column="7" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="4" Column="7" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="5" Column="7" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="6" Column="7" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="7" Column="7" Top="False" Bottom="True" Left="False" Right="True" />
+    <Tile Row="8" Column="7" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="9" Column="7" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="0" Column="8" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="1" Column="8" Top="True" Bottom="False" Left="False" Right="True" />
+    <Tile Row="2" Column="8" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="3" Column="8" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="4" Column="8" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="5" Column="8" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="6" Column="8" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="7" Column="8" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="8" Column="8" Top="False" Bottom="True" Left="False" Right="True" />
+    <Tile Row="9" Column="8" Top="True" Bottom="True" Left="False" Right="False" />
+    <Tile Row="0" Column="9" Top="True" Bottom="False" Left="False" Right="True" />
+    <Tile Row="1" Column="9" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="2" Column="9" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="3" Column="9" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="4" Column="9" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="5" Column="9" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="6" Column="9" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="7" Column="9" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="8" Column="9" Top="False" Bottom="False" Left="True" Right="True" />
+    <Tile Row="9" Column="9" Top="False" Bottom="True" Left="False" Right="True" />
+  </Tiles>
+</Gameboard>
