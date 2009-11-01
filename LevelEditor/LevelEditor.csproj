@@ -14,7 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <ApplicationIcon>FlowersackLE.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,36 +98,18 @@
     <Compile Include="..\Lib\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BackgroundImages.cs" />
-    <Compile Include="Coordinate.cs" />
-    <Compile Include="DoubleValidator.cs" />
-    <Compile Include="ExceptionHandler.cs" />
-    <Compile Include="FireImage.cs" />
-    <Compile Include="FlowerSackImage.cs" />
-    <Compile Include="Folders.cs" />
-    <Compile Include="HorizontalWallImage.cs" />
-    <Compile Include="IntegerValidator.cs" />
-    <Compile Include="IValidator.cs" />
     <Compile Include="LEComboBox.xaml.cs">
       <DependentUpon>LEComboBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LEConstants.cs" />
     <Compile Include="LETextBox.xaml.cs">
       <DependentUpon>LETextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="LevelInfoEditorPage.xaml.cs">
       <DependentUpon>LevelInfoEditorPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LevelNameValidator.cs" />
-    <Compile Include="Maze.cs" />
     <Compile Include="MazeEditorPage.xaml.cs">
       <DependentUpon>MazeEditorPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MoveableImage.cs" />
-    <Compile Include="MoveableImageController.cs" />
-    <Compile Include="OilBarrelImage.cs" />
-    <Compile Include="OilTowerImage.cs" />
-    <Compile Include="OutOfboundsEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -140,17 +123,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="RoundSpotImage.cs" />
-    <Compile Include="StaticImage.cs" />
-    <Compile Include="Tile.cs" />
-    <Compile Include="TilesValidator.cs" />
-    <Compile Include="Validator.cs" />
-    <Compile Include="VerticalWallImage.cs" />
-    <Compile Include="WheelBarrowImage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Levels\TestLevel.kklevel">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -164,31 +143,21 @@
     <Content Include="Backgrounds\DefaultBackground.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="FlowersackLE.ico" />
+    <Resource Include="Resources\WheelBarrow.png" />
+    <Resource Include="Resources\Oiltower.png" />
+    <Resource Include="Resources\OilBarrel.png" />
+    <Resource Include="Resources\Mur vertical.png" />
+    <Resource Include="Resources\Mur horizontal.png" />
+    <Resource Include="Resources\mur-afrunding.png" />
+    <Resource Include="Resources\FlowersackLE.ico" />
+    <Resource Include="Resources\FlowerSack.png" />
+    <Resource Include="Resources\Fire.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Mur horizontal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Mur vertical.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="mur-afrunding.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="FlowerSack.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="OilBarrel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Fire.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Oiltower.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="WheelBarrow.png" />
+    <ProjectReference Include="..\LevelEditor.Core\LevelEditor.Core.csproj">
+      <Project>{D403E181-05AD-41D9-B85B-39D5144840E3}</Project>
+      <Name>LevelEditor.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

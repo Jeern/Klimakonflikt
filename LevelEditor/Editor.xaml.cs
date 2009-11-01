@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.IO;
+using LevelEditor.Core.Helpers;
+using LevelEditor.Core.MazeItems;
 
 namespace LevelEditor
 {
