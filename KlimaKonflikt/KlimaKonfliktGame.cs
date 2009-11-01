@@ -38,6 +38,7 @@ namespace KlimaKonflikt
         KKMenuScene m_menuScene;
         MainScene m_mainGameScene;
         OilWinScene m_oilWinScene;
+        InstructionsScene m_instructionsScene;
         FlowerWinScene m_flowerWinScene;
         CreditsScene m_creditsScene;
         
@@ -47,6 +48,7 @@ namespace KlimaKonflikt
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
+            graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -74,6 +76,7 @@ namespace KlimaKonflikt
             m_mainGameScene = new MainScene();
             m_oilWinScene = new OilWinScene();
             m_flowerWinScene = new FlowerWinScene();
+            m_instructionsScene = new InstructionsScene();
             m_creditsScene = new CreditsScene();
 
 
@@ -83,6 +86,7 @@ namespace KlimaKonflikt
             sceneManager.AddScene(m_mainGameScene);
             sceneManager.AddScene(m_oilWinScene);
             sceneManager.AddScene(m_flowerWinScene);
+            sceneManager.AddScene(m_instructionsScene);
             sceneManager.AddScene(m_creditsScene);
 
             this.Components.Add(sceneManager);

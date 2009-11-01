@@ -49,7 +49,7 @@ namespace SceneManagementTest
 
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             sceneManager = new SceneManager(this);

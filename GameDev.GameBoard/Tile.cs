@@ -32,13 +32,16 @@ namespace GameDev.GameBoard
 
         public Tile GetNeighbor(Direction direction)
         {
-            Point neighborPosition = this.GetNewPosition(direction);
-            if (GameBoard.ContainsTile(neighborPosition))
+            DirectionChanger offset = DirectionHelper4.Offsets[direction];
+            Point tilePosition = new Point(this.HorizontalIndex + offset.DeltaX, this.VerticalIndex + offset.DeltaY);
+            if (GameBoard.ContainsTile(tilePosition.X, tilePosition.Y ))
             {
-                return GameBoard.Tiles[neighborPosition.X, neighborPosition.Y];
+                return GameBoard.Tiles[tilePosition.X, tilePosition.Y];
             }
             else
-            { return null; }
+            { 
+                return null; 
+            }
         }
 
         public bool HasNeighbor(Direction direction) 

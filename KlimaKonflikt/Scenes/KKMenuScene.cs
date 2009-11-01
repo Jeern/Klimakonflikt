@@ -35,7 +35,45 @@ namespace KlimaKonflikt.Scenes
         {
             SoundEffect effect = GameDevGame.Current.Content.Load<SoundEffect>(@"GameTunes\CreditsTune");
             m_creditsTune = effect.CreateInstance();
+            this.Menu.MenuItemActivated += new GameDev.Core.Menus.MenuItemHandler(Menu_MenuItemActivated);
         }
+
+        void Menu_MenuItemActivated(GameDev.Core.Menus.MenuItem sender, EventArgs e)
+        {
+
+            switch (sender.Name)
+            {
+
+                case GameMenu.MENU_STARTSINGLEPLAYER:
+                    ((MainScene)SceneManager.GetScene(SceneNames.MAINSCENE)).SinglePlayer = true;
+                    SceneManager.ChangeScene(SceneNames.MAINSCENE);
+
+                    break;
+
+                case GameMenu.MENU_START2PLAYER:
+
+                    ((MainScene)SceneManager.GetScene(SceneNames.MAINSCENE)).SinglePlayer = false;
+                    SceneManager.ChangeScene(SceneNames.MAINSCENE);
+                    break;
+
+                case GameMenu.MENU_EXIT:
+                    GameDevGame.Current.Exit();
+                    break;
+
+                case GameMenu.MENU_TOGGLEFULLSCREEN:
+                    GameDevGame.Current.GraphicsDeviceManager.ToggleFullScreen();
+                    break;
+
+                case GameMenu.MENU_CREDITS:
+                    SceneManager.Current.ChangeScene(SceneNames.CREDITSSCENE);
+                    break;
+
+                case GameMenu.MENU_INSTRUCTIONS:
+                    SceneManager.Current.ChangeScene(SceneNames.INSTRUCTIONSSCENE);
+                    break;
+            }
+	}
+
 
         public override void Update(GameTime gameTime)
         {

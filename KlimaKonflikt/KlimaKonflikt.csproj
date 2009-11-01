@@ -95,6 +95,7 @@
     <Compile Include="KKMonster.cs" />
     <Compile Include="LevelLoader.cs" />
     <Compile Include="KKPlayer.cs" />
+    <Compile Include="Scenes\InstructionsScene.cs" />
     <Compile Include="Scenes\KKMenuScene.cs" />
     <Compile Include="Scenes\CreditsScene.cs" />
     <Compile Include="Scenes\FlowerWinScene.cs" />

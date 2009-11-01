@@ -25,7 +25,8 @@ namespace KlimaKonflikt.Scenes
         #region Variables
 
         RandomController fireController;
-        KeyboardController oilController, sackController;
+        GameBoardControllerBase oilController, sackController;
+        SimpleDirectionController directionController;
         private bool m_GameOver = false;
         int tilesAcross = 10, tilesDown = 10;
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
@@ -35,7 +36,7 @@ namespace KlimaKonflikt.Scenes
         KKPlayer SeedSack, OilDrum;
         KKMonster m_Ild1, m_Ild2;
         Ejerskab[,] EjerskabsOversigt;
-        RealRandom random = new RealRandom(1, 8);
+        RealRandom random = null;
         Texture2D tileFloor, oilSpill, flower, healthBarTexture, scorePicOilBarrel, scorePicFlowerSack;
         GameImage oilTowerImage1, wheelBarrowImage, completeFloorGameImage, pulsatingCircle;
         Sprite oilTower1, wheelBarrow1;
@@ -55,7 +56,7 @@ namespace KlimaKonflikt.Scenes
 
         float scoreDifference;
 
-        bool m_singlePlayer = false;
+        public bool SinglePlayer { get; set; }
 
         List<KKPlayer> Players;
 
@@ -125,13 +126,6 @@ namespace KlimaKonflikt.Scenes
             Players.Add(SeedSack);
             Players.Add(OilDrum);
 
-            oilController = new KeyboardController(board, KeyboardController.KeySet.WASD);
-            sackController = new KeyboardController(board, KeyboardController.KeySet.ArrowKeys);
-
-            oilController.TileCenterCrossed += new MoveEventHandler(TileCenterCrossed);
-            oilController.UnitMoved += new MoveEventHandler(UnitMoved);
-            sackController.TileCenterCrossed += new MoveEventHandler(TileCenterCrossed); 
-            sackController.UnitMoved += new MoveEventHandler(UnitMoved);
 
             RefuelImage[SeedSack] = wheelBarrow1;
             RefuelImage[OilDrum] = oilTower1;
@@ -155,10 +149,12 @@ namespace KlimaKonflikt.Scenes
 
             Components.Add(board);
 
-            this.Components.Add(wheelBarrow1);
-            this.Components.Add(oilTower1);
+            Components.Add(wheelBarrow1);
+            Components.Add(oilTower1);
+
             Components.Add(SeedSack);
             Components.Add(OilDrum);
+
             Components.Add(m_Ild1);
             Components.Add(m_Ild2);
 
@@ -287,6 +283,13 @@ namespace KlimaKonflikt.Scenes
 
             RefuelPositions[player] = newPosition;
             RefuelImage[player].SetPosition(RefuelPositions[player].Center);
+
+            if (SinglePlayer && player == OilDrum)
+            {
+                directionController.TargetTile = RefuelPositions[player];
+            }
+
+
             return newPosition;
         }
 
@@ -344,7 +347,7 @@ namespace KlimaKonflikt.Scenes
 
             if (keyboardState.IsKeyDown(Keys.F1))
             {
-                m_singlePlayer = true;
+                SinglePlayer = true;
             }
 
 
@@ -371,12 +374,7 @@ namespace KlimaKonflikt.Scenes
                 fireController.Update(gameTime, m_Ild1);
                 fireController.Update(gameTime, m_Ild2);
 
-                foreach (KKPlayer player in Players)
-                {
-                    //                    CollisionTest(player);
-                }
-
-
+      
                 scoreDifference = SeedSack.EjedeFelter - OilDrum.EjedeFelter;
                 float scoreDifferenceFactor = Math.Abs(scoreDifference) / 200;
                 switch (Math.Sign(scoreDifference))
@@ -426,8 +424,6 @@ namespace KlimaKonflikt.Scenes
             base.Draw(gameTime);
 
             int shadowOffset = 9;
-            //SpriteBatch.DrawString(font, OilDrum.EjedeFelter.ToString(), new Vector2(20, 50), Color.White);
-            //SpriteBatch.DrawString(font, SeedSack.EjedeFelter.ToString(), new Vector2(910, 50), Color.White);
 
             for (int y = OilDrum.Ammunition - 1; y >= 0; y--)
             {
@@ -472,11 +468,21 @@ namespace KlimaKonflikt.Scenes
 
             }
 
-            SpriteBatch.DrawString(font, ((-1) * scoreDifference).ToString(), new Vector2(34, 54), Color.Black);
-            SpriteBatch.DrawString(font, ((-1) * scoreDifference).ToString(), new Vector2(30, 50), player1ScoreColor);
-            
-            SpriteBatch.DrawString(font, scoreDifference.ToString(), new Vector2(929, 54), Color.Black);
-            SpriteBatch.DrawString(font, scoreDifference.ToString(), new Vector2(925, 50), player2ScoreColor);      
+            string strScoreDifference = ((-1) * scoreDifference).ToString();
+            float scoreWidth = font.MeasureString(strScoreDifference).X;
+            Vector2 scorePosition = new Vector2(50 - scoreWidth/2, 55);
+            Vector2 scoreShadowPosition = new Vector2(55 - scoreWidth / 2, 60);
+
+            SpriteBatch.DrawString(font, strScoreDifference, scoreShadowPosition, Color.Black);
+            SpriteBatch.DrawString(font, strScoreDifference, scorePosition, player1ScoreColor);
+
+            strScoreDifference = scoreDifference.ToString();
+            scoreWidth = font.MeasureString(strScoreDifference).X;
+            scorePosition = new Vector2(940 - scoreWidth / 2, 55);
+            scoreShadowPosition = new Vector2(945 - scoreWidth / 2, 60);
+
+            SpriteBatch.DrawString(font, strScoreDifference, scoreShadowPosition, Color.Black);
+            SpriteBatch.DrawString(font, strScoreDifference, scorePosition, player2ScoreColor);      
 
             SpriteBatch.Draw(healthBarTexture, olieBarRectangle, healthColors[OilDrumHealthBarIndex]);
             SpriteBatch.Draw(healthBarTexture, SeedSackBarRectangle, healthColors[SeedSackHealthBarIndex]);
@@ -503,6 +509,8 @@ namespace KlimaKonflikt.Scenes
         }
         public override void Reset()
         {
+
+            
             EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown];
             RefuelPositions[SeedSack] = board.Tiles[m_wheelbarrowBeginTilePosition.X, m_wheelbarrowBeginTilePosition.Y];
             RefuelPositions[OilDrum] = board.Tiles[m_oilTowerBeginTilePosition.X, m_oilTowerBeginTilePosition.Y];
@@ -512,17 +520,34 @@ namespace KlimaKonflikt.Scenes
             foreach (KKPlayer player in Players)
             {
                 player.Reset();
-            //    RefuelImage[player].SetPosition(RefuelPositions[player].Center);
             }
 
-            m_singlePlayer = false;
 
+            sackController = new KeyboardController(board, KeyboardController.KeySet.ArrowKeys);
+            directionController = new SimpleDirectionController(board);
+            directionController.TargetTile = RefuelPositions[OilDrum];
+
+            if (SinglePlayer)
+            {
+                oilController = directionController;
+                random = new RealRandom(1, 8);
+            }
+            else
+            {
+                oilController = new KeyboardController(board, KeyboardController.KeySet.WASD);
+                random = new RealRandom(0, 9);
+            }
+            oilController.TileCenterCrossed += new MoveEventHandler(TileCenterCrossed);
+            oilController.UnitMoved += new MoveEventHandler(UnitMoved);
+            sackController.TileCenterCrossed += new MoveEventHandler(TileCenterCrossed);
+            sackController.UnitMoved += new MoveEventHandler(UnitMoved);
+
+            
             //flytter ild tilbage til udgangspositioner
             m_Ild1.Reset();
             m_Ild2.Reset();
 
             m_mainGameTune.Pitch = 0;
-            
             board.Reset();
 
 

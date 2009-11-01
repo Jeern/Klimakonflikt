@@ -74,6 +74,11 @@ namespace GameDev.GameBoard
         {
             //this override is done to read keyboard more often than
             ReadKeyboard();
+            SetWantedDirection(unitToUpdate);
+            if (unitToUpdate.WantedDirection == DirectionHelper4.GetOppositeDirection(unitToUpdate.Direction))
+            {
+                unitToUpdate.Direction = unitToUpdate.WantedDirection;
+            }
             base.Update(gameTime, unitToUpdate);
         }
       
@@ -151,5 +156,6 @@ namespace GameDev.GameBoard
         {
             controllee.WantedDirection = wantedDirection;
         }
+
     }
 }

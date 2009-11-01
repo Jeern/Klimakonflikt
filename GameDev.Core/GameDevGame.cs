@@ -42,6 +42,7 @@ namespace GameDev.Core
 
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
 
+        public SpriteFont DebugFont { get; set; }
 
         public GameDevGame()
         {
@@ -50,12 +51,20 @@ namespace GameDev.Core
             this.Services.AddService(typeof(GraphicsDeviceManager), GraphicsDeviceManager);
             GameSpeed = 1.0F;
             
+            
         }
 
         protected override void Initialize()
         {
             base.Initialize();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            this.DebugFont = Content.Load<SpriteFont>("DebugFont");
         }
+
+        protected override void LoadContent()
+        {
+            
+        }
+
     }
 }
