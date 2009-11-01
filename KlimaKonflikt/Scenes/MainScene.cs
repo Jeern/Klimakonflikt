@@ -2,17 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Diagnostics;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-using Microsoft.Xna.Framework.Storage;
 
 using GameDev.Core;
 using GameDev.GameBoard;
@@ -31,6 +25,7 @@ namespace KlimaKonflikt.Scenes
         #region Variables
 
         RandomController fireController;
+        KeyboardController oilController, sackController;
         private bool m_GameOver = false;
         int tilesAcross = 10, tilesDown = 10;
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
@@ -100,6 +95,9 @@ namespace KlimaKonflikt.Scenes
             board.CompleteBackground = completeFloorGameImage;
             board.SetPosition(new Point(200, 50));
 
+            //testing pathfinder
+
+
             m_oilTowerBeginTilePosition = new Point(4, 4);
 
             m_wheelbarrowBeginTilePosition = new Point(5, 5);
@@ -126,6 +124,14 @@ namespace KlimaKonflikt.Scenes
             Players = new List<KKPlayer>();
             Players.Add(SeedSack);
             Players.Add(OilDrum);
+
+            oilController = new KeyboardController(board, KeyboardController.KeySet.WASD);
+            sackController = new KeyboardController(board, KeyboardController.KeySet.ArrowKeys);
+
+            oilController.TileCenterCrossed += new MoveEventHandler(TileCenterCrossed);
+            oilController.UnitMoved += new MoveEventHandler(UnitMoved);
+            sackController.TileCenterCrossed += new MoveEventHandler(TileCenterCrossed); 
+            sackController.UnitMoved += new MoveEventHandler(UnitMoved);
 
             RefuelImage[SeedSack] = wheelBarrow1;
             RefuelImage[OilDrum] = oilTower1;
@@ -172,9 +178,20 @@ namespace KlimaKonflikt.Scenes
                 ammoPlacering[0, y] = new Rectangle(20, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
                 ammoPlacering[1, y] = new Rectangle(910, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
             }
+            
             fireController = new RandomController(board);
 
             Reset();
+        }
+
+        void UnitMoved(Sprite sprite, EventArgs e)
+        {
+            FireCollistionTest((KKPlayer)sprite);
+        }
+
+        void TileCenterCrossed(Sprite sprite, EventArgs e)
+        {
+            TileCollisionTest((KKPlayer)sprite);
         }
 
 
@@ -191,7 +208,7 @@ namespace KlimaKonflikt.Scenes
 
         #region Movement and collision
 
-        private void CollisionTest(KKPlayer player)
+        private void FireCollistionTest(KKPlayer player)
         {
             WalledTile ild1Tile = board.GetTileFromPixelPosition(m_Ild1.GetPosition().X, m_Ild1.GetPosition().Y);
             WalledTile ild2Tile = board.GetTileFromPixelPosition(m_Ild2.GetPosition().X, m_Ild2.GetPosition().Y);
@@ -202,6 +219,12 @@ namespace KlimaKonflikt.Scenes
                 Collision(player);
                 player.TakeoverTileSound.Play();
             }
+
+        }
+
+        private void TileCollisionTest(KKPlayer player)
+        {
+            WalledTile playerTile = board.GetTileFromPixelPosition(player.X, player.Y);
 
             if (RefuelPositions[player] == playerTile)
             {
@@ -253,98 +276,6 @@ namespace KlimaKonflikt.Scenes
             player.Ammunition = 0;
         }
 
-        private void CalculatePlayerMove(GameTime gameTime, KKPlayer player)
-        {
-            int pixelsToMove = (int)(player.Speed * gameTime.ElapsedGameTime.Milliseconds * GameDevGame.Current.GameSpeed);
-            Point newPosition = player.GetNewPosition(player.Direction, pixelsToMove);
-            Point oldPosition = player.GetPosition();
-
-            Point centerOfPlayersTile = board.GetTileFromPixelPosition(player.GetPosition().X, player.GetPosition().Y).Center;
-            WalledTile tile = board.GetTileFromPixelPosition(player.GetPosition());
-            WalledTile newTile = board.GetTileFromPixelPosition(newPosition);
-
-            #region Movement aid for people not so skilled at keyboard navigation
-
-            //the following code checks to see whether the player is past the center of the square, 
-            //but could leave by the wanted direction if he/she first backed up
-            //in which case it reverses direction for the player
-
-            //first check to see whether the player is going to stay on the same tile in this movement
-            //otherwise the player may mean to change direction in the square he/she is entering
-            if (tile == newTile)
-            {
-                //find out whether the player has already crossed the center of the board and is now leaving the tile
-                //because that's the only reason for reversing direction
-                bool playerIsLeavingTile = GeometryTools.IsBetweenPoints(oldPosition, centerOfPlayersTile, newPosition);
-
-                //if we are leaving the tile and want to change direction
-                if (playerIsLeavingTile && player.Direction != player.WantedDirection && player.GetPosition().DistanceTo(tile.Center) < tile.Width / 3)
-                {
-                    Direction wantedDirection = player.WantedDirection;
-                    if (wantedDirection != Direction.None)
-                    {
-                        //if the tile is open in that direction...
-                        if (!tile.HasBorder(wantedDirection))
-                        {
-                            //turn back :)
-                            player.Direction = DirectionHelper4.GetOppositeDirection(player.Direction);
-                        }
-                    }
-                }
-            }
-            #endregion
-            if (GeometryTools.IsBetweenPoints(centerOfPlayersTile, newPosition, oldPosition))
-            {
-                //we are going to cross the center
-                //first move to center
-                Point tempPosition = centerOfPlayersTile;
-                player.SetPosition(centerOfPlayersTile);
-
-                CollisionTest(player);
-
-
-                //Console.WriteLine(tile);
-                //calculate how much move we have left
-                int pixelMovesLeft = int.MinValue;
-                DirectionChanger deltaMoves = DirectionHelper4.Offsets[player.Direction];
-                if (deltaMoves.DeltaX != 0) //we are moving horizontally
-                {
-                    pixelMovesLeft = Math.Abs(newPosition.X - oldPosition.X);
-                }
-                else //we are moving vertically
-                {
-                    pixelMovesLeft = Math.Abs(newPosition.Y - oldPosition.Y);
-                }
-
-
-                //TODO: check whether the wanteddirection is clear
-                //
-                Direction wantedDirection = player.WantedDirection;
-                Direction playerDirection = player.Direction;
-
-                if (wantedDirection != Direction.None)
-                {
-                    if (!tile.HasBorder(wantedDirection))
-                    {
-                        player.Direction = wantedDirection;
-                        player.Move(player.Direction, pixelMovesLeft);
-                    }
-                    else
-                    {
-                        if (!tile.HasBorder(playerDirection))
-                        {
-                            player.Move(playerDirection, pixelMovesLeft);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                player.X = newPosition.X;
-                player.Y = newPosition.Y;
-            }
-        }
-
         private WalledTile MoveRefuelPosition(KKPlayer player)
         {
 
@@ -374,15 +305,7 @@ namespace KlimaKonflikt.Scenes
                 SceneManager.ChangeScene(SceneNames.MENUSCENE);
             }
 
-            if (keyboardState.IsArrowKeyDown())
-            {
-                SeedSack.WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirectionArrowKeys());
-            }
 
-            if (keyboardState.IsWASDKeyDown())
-            {
-                OilDrum.WantedDirection = DirectionHelper4.LimitDirection(keyboardState.GetDirectionWASDKeys());
-            }
 
             if (keyboardState.IsKeyDown(Keys.P))
             {
@@ -395,8 +318,7 @@ namespace KlimaKonflikt.Scenes
                 this.Resume();
                 m_mainGameTune.Resume();
             }
-
-
+            
             #region speedchange
 
             if (keyboardState.IsKeyDown(Keys.D1))
@@ -433,10 +355,10 @@ namespace KlimaKonflikt.Scenes
 
                 //if (!m_singlePlayer)
                 //{
-                    foreach (KKPlayer player in Players)
-                    {
-                        CalculatePlayerMove(gameTime, player);
-                    }
+                    //foreach (KKPlayer player in Players)
+                    //{
+                    //    CalculatePlayerMove(gameTime, player);
+                    //}
 
                 //}
                 //else
@@ -444,7 +366,8 @@ namespace KlimaKonflikt.Scenes
                 //    CalculatePlayerMove(gameTime, SeedSack);
                 //    fireController.Update(gameTime, OilDrum);
                 //}
-
+                oilController.Update(gameTime, OilDrum);
+                sackController.Update(gameTime, SeedSack);
                 fireController.Update(gameTime, m_Ild1);
                 fireController.Update(gameTime, m_Ild2);
 
@@ -597,6 +520,8 @@ namespace KlimaKonflikt.Scenes
             //flytter ild tilbage til udgangspositioner
             m_Ild1.Reset();
             m_Ild2.Reset();
+
+            m_mainGameTune.Pitch = 0;
             
             board.Reset();
 

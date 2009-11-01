@@ -147,17 +147,17 @@ namespace GameDev.Core.Menus
                 if ((DateTime.Now - m_lastKeyboardInput).TotalMilliseconds > KeyboardDelay)
                 {
 
-                    if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.Tab))
+                    if (state.IsKeyDown(Keys.Down) || (state.IsKeyDown(Keys.Tab) && ! (state.IsKeyDown(Keys.LeftShift) || state.IsKeyDown(Keys.RightShift))))
                     {
                         SelectedIndex++;
                         ResetLastKeyboardTime();
                     }
-                    if (state.IsKeyDown(Keys.Up) ||
-                        (state.IsKeyDown(Keys.Tab) && (state.IsKeyDown(Keys.RightShift) || state.IsKeyDown(Keys.RightShift))))
+                    if (state.IsKeyDown(Keys.Up) || (state.IsKeyDown(Keys.Tab) && (state.IsKeyDown(Keys.LeftShift) || state.IsKeyDown(Keys.RightShift))))
                     {
                         SelectedIndex--;
                         ResetLastKeyboardTime();
                     }
+
 
                     if (state.IsKeyDown(Keys.Home))
                     {

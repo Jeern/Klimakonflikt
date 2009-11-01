@@ -30,10 +30,37 @@ namespace GameDev.GameBoard
 
         public SpriteBatch SpriteBatch { get { return GameDevGame.Current.SpriteBatch; } }
 
+        public Tile GetNeighbor(Direction direction)
+        {
+            Point neighborPosition = this.GetNewPosition(direction);
+            if (GameBoard.ContainsTile(neighborPosition))
+            {
+                return GameBoard.Tiles[neighborPosition.X, neighborPosition.Y];
+            }
+            else
+            { return null; }
+        }
 
         public bool HasNeighbor(Direction direction) 
         {
             return GameBoard.ContainsTile(this.GetNewPosition(direction));
+        }
+
+        public List<Tile> Neighbors
+        {
+            get {
+                Tile neighbor = null;
+                List<Tile> _neighbors = new List<Tile>();
+                foreach (Direction dir in DirectionHelper4.AllDirections)
+                {
+                    neighbor = GetNeighbor(dir);
+                    if (neighbor != null)
+                    {
+                        _neighbors.Add(neighbor);
+                    }
+                }
+                return _neighbors;
+            }
         }
 
         public int Width { get {return this.BackgroundGameImage.CurrentTexture.Width; }}

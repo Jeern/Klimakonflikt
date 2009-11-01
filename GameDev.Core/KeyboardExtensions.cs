@@ -27,7 +27,7 @@ namespace GameDev.Core
 
 
         
-        public static Direction GetDirectionArrowKeys(this KeyboardState state)
+        public static Direction GetDirectionFromArrowKeys(this KeyboardState state)
         {
             if (IsArrowKeyDown(state))
             {
@@ -43,7 +43,7 @@ namespace GameDev.Core
         }
 
 
-        public static Direction GetDirectionWASDKeys(this KeyboardState state)
+        public static Direction GetDirectionFromWASDKeys(this KeyboardState state)
         {
             if (IsWASDKeyDown(state))
             {

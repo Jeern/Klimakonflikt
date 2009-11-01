@@ -75,7 +75,8 @@ namespace GameDev.GameBoard
                         }
                     }
                 }
-                return m_exits;
+                //remember to give a copy back, so people don't edit the cached copy
+                return  new List<Direction>( m_exits);
             }
         }
 
