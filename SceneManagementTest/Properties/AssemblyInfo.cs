@@ -9,4 +9,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("SceneManagementTest")]
-[assembly: ComVisible(false)]
+[assembly: Guid("1B23386E-DF86-4b7f-8609-1A9DB735A6AB")]

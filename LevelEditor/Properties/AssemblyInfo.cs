@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Windows;
+using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -8,6 +9,7 @@ using System.Windows;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("KKLevel Editor")]
+[assembly: Guid("436FD75B-D1D9-40a5-A5A3-B438CF0A2614")]
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located
