@@ -55,6 +55,10 @@ namespace GameDev.Core.Menus
 
         } }
 
+        public TextMenuItem(string name, SpriteFont font)
+            : this(name, font, name, true)
+        { }
+
 
         public TextMenuItem(string name, SpriteFont font, string text)
             : this(name, font, text, true)

@@ -93,13 +93,18 @@ namespace GameDev.Core
         #endregion
 
 
+        public static Direction GetDirection(Point start, Point destination)
+        {
+            return GetDirection(destination.X - start.X, destination.Y - start.Y);
+        }
+
         public static Direction GetDirection(int deltaX, int deltaY)
         {
 
             //if we are moving diagonally - restrict to east/west or north/south
             if (deltaX * deltaY != 0)
             {
-                if (deltaX > deltaY)
+                if (Math.Abs(deltaX) > Math.Abs(deltaY))
                 {
                     deltaY = 0; 
                 }

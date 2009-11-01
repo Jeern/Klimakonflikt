@@ -47,7 +47,6 @@ namespace KlimaKonflikt
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
-            graphics.IsFullScreen = true;
         }
 
         /// <summary>

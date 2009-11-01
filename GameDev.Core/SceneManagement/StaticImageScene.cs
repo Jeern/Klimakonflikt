@@ -36,7 +36,18 @@ namespace GameDev.Core.SceneManagement
         {
             if (DestinationRectangle == Rectangle.Empty)
             {
-                DestinationRectangle = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.TitleSafeArea;
+                if (GameDevGame.Current.GraphicsDeviceManager.IsFullScreen)
+                {
+                    DestinationRectangle = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.TitleSafeArea;
+                }
+                else
+                {
+                    Rectangle bounds = GameDevGame.Current.Window.ClientBounds;
+                    bounds.Offset(- bounds.Left, - bounds.Top);
+                    DestinationRectangle = bounds;
+                }
+
+                
             }
                 GameDevGame.Current.SpriteBatch.Begin();
                 if (BackgroundImage != null)
