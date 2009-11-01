@@ -24,6 +24,7 @@ namespace GameDev.GameBoard
 
     public abstract class GameBoardControllerBase : IController
     {
+        
         protected Random Random = new Random();
         public GameBoard Board { get; private set; }
 
@@ -80,7 +81,7 @@ namespace GameDev.GameBoard
                 {
                     pixelMovesLeft = Math.Abs(newPosition.Y - oldPosition.Y);
                 }
-
+                
                 SetWantedDirection(unitToUpdate);
                 UpdateDirection(unitToUpdate);
                 unitToUpdate.Move(unitToUpdate.Direction, pixelMovesLeft);
@@ -99,5 +100,12 @@ namespace GameDev.GameBoard
    
 
         protected abstract void SetWantedDirection(Sprite controllee);
+
+        protected void WriteDebugInfo(Sprite controllee)
+        {
+            Tile currentTile = Board.GetTileFromPixelPosition(controllee.GetPosition());
+           Console.WriteLine("Unit is at tile [" +currentTile.HorizontalIndex + "," + currentTile.VerticalIndex + "] is heading " + controllee.Direction + " and wants to go " + controllee.WantedDirection );
+        }
+
     }
 }

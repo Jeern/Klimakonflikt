@@ -38,6 +38,10 @@ namespace GameDev.Core.SceneManagement
                 m_menu = value;
                 this.Components.Add(m_menu);
             }
+            get
+            {
+                return m_menu;
+            }
         }
 
 
@@ -59,6 +63,5 @@ namespace GameDev.Core.SceneManagement
         {
             this.Menu = menu;
         }
-
     }
 }

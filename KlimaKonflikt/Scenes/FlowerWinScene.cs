@@ -39,7 +39,7 @@ namespace KlimaKonflikt.Scenes
 
             if (UpdatedKeyboardState.IsKeyDown(Keys.Enter))
             {
-                SceneManager.ChangeScene(SceneNames.MAINSCENE);
+                SceneManager.ChangeScene(SceneNames.MENUSCENE);
             }
             else if (UpdatedKeyboardState.IsKeyDown(Keys.Escape))
             {

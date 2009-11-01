@@ -81,7 +81,7 @@ namespace GameDev.Core
 
         public static Point GetNewPosition(this IPlaceable place, Direction direction)
         {
-            return new Point(Offsets[direction].DeltaX, Offsets[direction].DeltaY);
+            return new Point(place.X + Offsets[direction].DeltaX, place.Y + Offsets[direction].DeltaY);
         }
 
 

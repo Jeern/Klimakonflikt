@@ -49,14 +49,20 @@ namespace GameDev.Core
         public override void Draw(GameTime gameTime)
         {
             Texture2D currentTexture = GameImage.CurrentTexture;
-
-            GameDevGame.Current.SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), Color.White);
+            Rectangle position = new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height);
+            GameDevGame.Current.SpriteBatch.Draw(currentTexture, position, Color.White);
+            
+            //Vector2 textPos = new Vector2(position.Left + 30, position.Top + 30);
+            //GameDevGame.Current.SpriteBatch.DrawString(GameDevGame.Current.DebugFont, "want: " + WantedDirection ,textPos , Color.White);
+            //textPos.Y += 20;
+            //GameDevGame.Current.SpriteBatch.DrawString(GameDevGame.Current.DebugFont, "dir: " + Direction, textPos, Color.White);
             base.Draw(gameTime);
         }
 
         public virtual void Reset()
         {
             this.WantedDirection = Direction.None;
+            this.Direction = Direction.None;
             this.SetPosition(this.OriginalPosition);
         }
     }

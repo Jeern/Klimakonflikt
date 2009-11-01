@@ -47,6 +47,7 @@ namespace GameDev.Core.SceneManagement
                 //to make sure we don't set the scene twice
                 //this is done because the Update() method runs on another thread
                 //and might call update on the previous scene
+                
                 if (CurrentScene == value)
                 {
                     return;

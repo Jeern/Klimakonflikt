@@ -25,9 +25,13 @@ namespace GameDev.Core.Menus
     public abstract class MenuBase : DrawableGameComponent
     {
 
+        public event MenuItemHandler MenuItemActivated;
+
+
         DateTime m_lastKeyboardInput = DateTime.MinValue;
         protected List<MenuItem> m_menuItems { get; set; }
         public int KeyboardDelay { get; set; }
+        private int m_selectedIndex;
 
         public MenuItem SelectedMenuItem
         {
@@ -42,7 +46,6 @@ namespace GameDev.Core.Menus
             get { return m_menuItems[m_selectedIndex]; }
         }
 
-        private int m_selectedIndex;
 
         public int SelectedIndex
         {
@@ -85,11 +88,13 @@ namespace GameDev.Core.Menus
             {
                 item.IsSelected = true;
             }
+            item.Activated +=new MenuItemHandler(OnMenuItemActivated);
             ArrangeMenuItems();
         }
 
         public void RemoveMenuItem(MenuItem item)
         {
+            item.Activated -= new MenuItemHandler(OnMenuItemActivated);
             this.m_menuItems.Remove(item);
             EnsureSelectionBoundaries();
             ArrangeMenuItems();
@@ -106,9 +111,8 @@ namespace GameDev.Core.Menus
 
         public void RemoveMenuItemAt(int index)
         {
-            this.m_menuItems.RemoveAt(index);
-            EnsureSelectionBoundaries();
-            ArrangeMenuItems();
+            MenuItem item = this.m_menuItems[index];
+            RemoveMenuItem(item);
         }
 
         public override void Draw(GameTime gameTime)
@@ -178,6 +182,15 @@ namespace GameDev.Core.Menus
         protected void ResetLastKeyboardTime()
         {
             m_lastKeyboardInput = DateTime.Now;
+        }
+
+        protected void OnMenuItemActivated(MenuItem item, EventArgs e)
+        {
+            if (MenuItemActivated != null)
+            {
+                MenuItemActivated(item, e);
+            }
+ 
         }
 
         public abstract void ArrangeMenuItems();

@@ -47,7 +47,6 @@ namespace KlimaKonflikt
             base.Reset();
             this.Ammunition = m_startingAmmo;
             this.Health = 100;
-            this.WantedDirection = Direction.None;
             this.EjedeFelter = 0;
         }
 
@@ -59,6 +58,7 @@ namespace KlimaKonflikt
 
         public override void Draw(GameTime gameTime)
         {
+            base.Draw(gameTime);
             Color colorEffect = Color.White;
             Texture2D currentTexture = null;
             if (Ammunition == 0)
@@ -69,6 +69,7 @@ namespace KlimaKonflikt
             }
              currentTexture = GameImage.CurrentTexture;
             GameDevGame.Current.SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), colorEffect);
+
 
         }
 
