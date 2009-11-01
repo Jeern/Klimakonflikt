@@ -2,10 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:LevelEditor"
+    xmlns:helpers="clr-namespace:LevelEditor.Core.Helpers;assembly=LevelEditor.Core"
+    xmlns:ui="clr-namespace:LevelEditor.Core.UI;assembly=LevelEditor.Core"
     Title="LevelInfoEditorPage">
     <Grid>
         <Grid.Resources>
-            <local:BackgroundImages x:Key="backgroundImages" />
+            <ui:BackgroundImages x:Key="backgroundImages" />
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>

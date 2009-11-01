@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using System.IO;
+using LevelEditor.Core.MazeItems;
+using LevelEditor.Core.Helpers;
 
 namespace LevelEditor
 {
@@ -35,6 +37,7 @@ namespace LevelEditor
                 if (!File.Exists(file))
                     return null;
 
+                Maze.LevelFile = file;
                 return file;
             }
             return null;

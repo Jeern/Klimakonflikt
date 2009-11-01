@@ -13,6 +13,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Xml.Linq;
+using LevelEditor.Core.MazeItems;
+using LevelEditor.Core.Images;
+using LevelEditor.Core.Helpers;
 
 namespace LevelEditor
 {
@@ -218,7 +221,13 @@ namespace LevelEditor
 
         private string FileName
         {
-            get { return "Level" + Maze.LevelNumber.ToString() + Maze.LevelName.Replace(" ", ""); }
+            get 
+            {
+                if (Maze.LevelFile != null)
+                    return System.IO.Path.GetFileNameWithoutExtension(Maze.LevelFile);
+
+                return "Level" + Maze.LevelNumber.ToString() + Maze.LevelName.Replace(" ", ""); 
+            }
         }
 
         private string FullFileName
