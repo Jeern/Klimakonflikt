@@ -32,9 +32,10 @@ namespace KlimaKonflikt.Scenes
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
         SoundEffectInstance m_mainGameTune;
         Point m_oilTowerBeginTilePosition, m_wheelbarrowBeginTilePosition;
-        GameBoard board;
+        KKGameBoard board;
         KKPlayer SeedSack, OilDrum;
-        KKMonster m_Ild1, m_Ild2;
+        //KKMonster m_Ild1, m_Ild2;
+        List<KKMonster> m_Fires;
         Ejerskab[,] EjerskabsOversigt;
         RealRandom random = null;
         Texture2D tileFloor, oilSpill, flower, healthBarTexture, scorePicOilBarrel, scorePicFlowerSack;
@@ -87,7 +88,7 @@ namespace KlimaKonflikt.Scenes
             scorePicOilBarrel = Game.Content.Load<Texture2D>("Oilbarrel/OilBarrel001");
             scorePicFlowerSack = Game.Content.Load<Texture2D>("Flowersack/FlowerSack1");
 
-            IEnumerable<GameBoard> boards = LevelLoader.GetLevels(Game, staticFloor, SpriteBatch, staticFloor.CurrentTexture.Width);
+            IEnumerable<KKGameBoard> boards = LevelLoader.GetLevels(Game, staticFloor, SpriteBatch, staticFloor.CurrentTexture.Width);
             //board = new GameBoard(this, staticFloor, SpriteBatch, "Board", tilesAcross, tilesDown, 64);
             board = boards.ToArray()[0];
 
@@ -99,10 +100,9 @@ namespace KlimaKonflikt.Scenes
             //testing pathfinder
 
 
-            m_oilTowerBeginTilePosition = new Point(4, 4);
+            m_oilTowerBeginTilePosition = board.StartPositionOilTower;
 
-            m_wheelbarrowBeginTilePosition = new Point(5, 5);
-
+            m_wheelbarrowBeginTilePosition = board.StartPositionWheelBarrow;
 
             font = Game.Content.Load<SpriteFont>("Arial");
             Texture2D wheelBarrowTexture = Game.Content.Load<Texture2D>("wheelbarrel");
@@ -119,8 +119,12 @@ namespace KlimaKonflikt.Scenes
 
             RefuelImage = new Dictionary<KKPlayer, Sprite>();
 
-            SeedSack = new KKPlayer(GameImages.GetFlowersackImage(Game.Content), .2F, board.Tiles[9, 9].Center, 10, pulsatingCircle, plantFrø, frøTankning, Ejerskab.Blomst);
-            OilDrum = new KKPlayer(GameImages.GetOilBarrelImage(Game.Content), .2F, board.Tiles[0, 0].Center, 10, pulsatingCircle, olieDryp, olieTankning, Ejerskab.Olie);
+            SeedSack = new KKPlayer(GameImages.GetFlowersackImage(Game.Content), .2F, 
+                board.Tiles[board.StartPositionFlowerSack.X, board.StartPositionFlowerSack.Y].Center, 
+                10, pulsatingCircle, plantFrø, frøTankning, Ejerskab.Blomst);
+            OilDrum = new KKPlayer(GameImages.GetOilBarrelImage(Game.Content), .2F,
+                board.Tiles[board.StartPositionOilBarrel.X, board.StartPositionOilBarrel.Y].Center, 
+                10, pulsatingCircle, olieDryp, olieTankning, Ejerskab.Olie);
 
             Players = new List<KKPlayer>();
             Players.Add(SeedSack);
@@ -130,12 +134,14 @@ namespace KlimaKonflikt.Scenes
             RefuelImage[SeedSack] = wheelBarrow1;
             RefuelImage[OilDrum] = oilTower1;
 
-            m_Ild1 = new KKMonster(GameImages.GetIldImage(Game.Content), .23F, board.Tiles[0, 9].Center,
-                new GameDev.Core.Sequencing.SequencedIterator<Direction>(
-                new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20);
-            m_Ild2 = new KKMonster(GameImages.GetIldImage(Game.Content), .25F, board.Tiles[9, 0].Center,
-                new GameDev.Core.Sequencing.SequencedIterator<Direction>(
-                new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20);
+            m_Fires = new List<KKMonster>();
+            foreach (Point startPos in board.StartPositionsFire)
+            {
+                m_Fires.Add(new KKMonster(GameImages.GetIldImage(Game.Content), .24F, 
+                    board.Tiles[startPos.X, startPos.Y].Center,
+                    new GameDev.Core.Sequencing.SequencedIterator<Direction>(
+                    new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20));
+            }
             AmmoImages = new Dictionary<KKPlayer, GameImage>();
 
             AmmoImages[SeedSack] = GameImages.GetBlomstImage();
@@ -155,8 +161,10 @@ namespace KlimaKonflikt.Scenes
             Components.Add(SeedSack);
             Components.Add(OilDrum);
 
-            Components.Add(m_Ild1);
-            Components.Add(m_Ild2);
+            foreach (KKMonster fire in m_Fires)
+            {
+                Components.Add(fire);
+            }
 
             healthColors = new Color[5];
             healthColors[0] = Color.Red;
@@ -206,16 +214,18 @@ namespace KlimaKonflikt.Scenes
 
         private void FireCollistionTest(KKPlayer player)
         {
-            WalledTile ild1Tile = board.GetTileFromPixelPosition(m_Ild1.GetPosition().X, m_Ild1.GetPosition().Y);
-            WalledTile ild2Tile = board.GetTileFromPixelPosition(m_Ild2.GetPosition().X, m_Ild2.GetPosition().Y);
-            WalledTile playerTile = board.GetTileFromPixelPosition(player.X, player.Y);
-
-            if (ild1Tile == playerTile || ild2Tile == playerTile)
+            foreach (KKMonster fire in m_Fires)
             {
-                Collision(player);
-                player.TakeoverTileSound.Play();
-            }
+                WalledTile fireTile = board.GetTileFromPixelPosition(fire.GetPosition().X, fire.GetPosition().Y);
+                WalledTile playerTile = board.GetTileFromPixelPosition(player.X, player.Y);
 
+                if (fireTile == playerTile)
+                {
+                    Collision(player);
+                    player.TakeoverTileSound.Play();
+                    return;
+                }
+            }
         }
 
         private void TileCollisionTest(KKPlayer player)
@@ -371,9 +381,10 @@ namespace KlimaKonflikt.Scenes
                 //}
                 oilController.Update(gameTime, OilDrum);
                 sackController.Update(gameTime, SeedSack);
-                fireController.Update(gameTime, m_Ild1);
-                fireController.Update(gameTime, m_Ild2);
-
+                foreach (KKMonster fire in m_Fires)
+                {
+                    fireController.Update(gameTime, fire);
+                }
       
                 scoreDifference = SeedSack.EjedeFelter - OilDrum.EjedeFelter;
                 float scoreDifferenceFactor = Math.Abs(scoreDifference) / 200;
@@ -544,8 +555,10 @@ namespace KlimaKonflikt.Scenes
 
             
             //flytter ild tilbage til udgangspositioner
-            m_Ild1.Reset();
-            m_Ild2.Reset();
+            foreach (KKMonster fire in m_Fires)
+            {
+                fire.Reset();
+            }
 
             m_mainGameTune.Pitch = 0;
             board.Reset();
