@@ -7,7 +7,7 @@
   <Background>blab</Background>
   <Items>
     <Flowersack Column="9" Row="9" />
-    <Oilbarrel Column="0" Row="0" />
+    <Oilbarrel Column="0" Row="1" />
     <Wheelbarrow Column="5" Row="5" />
     <Oiltower Column="4" Row="4" />
     <Fire Column="1" Row="3" />

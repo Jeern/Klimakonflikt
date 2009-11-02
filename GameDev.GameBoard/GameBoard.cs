@@ -142,7 +142,6 @@ namespace GameDev.GameBoard
             }
         }
 
-        
         private int _tileSizeInPixels;
         public int TileSizeInPixels 
         { 
@@ -161,7 +160,8 @@ namespace GameDev.GameBoard
 
         public GameBoard(GameImage baseGameImage) : this(baseGameImage, "Unnamed", 10, 10, 64, "Unnamed") { }
 
-        public GameBoard(GameImage baseGameImage, string name, int tilesHorizontally, int tilesVertically, int tileSizeInPixels, string levelImageFileName)
+        public GameBoard(GameImage baseGameImage, string name, int tilesHorizontally, int tilesVertically,
+            int tileSizeInPixels, string levelImageFileName)
             : base(GameDevGame.Current)
         {
             Name = name;

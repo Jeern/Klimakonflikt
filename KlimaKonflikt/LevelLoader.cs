@@ -14,7 +14,7 @@ namespace KlimaKonflikt
 {
     public static class LevelLoader
     {
-        public static IEnumerable<GameBoard> GetLevels(Game game, GameImage tileImage, SpriteBatch spriteBatch, int tileSizeInPixels)
+        public static IEnumerable<KKGameBoard> GetLevels(Game game, GameImage tileImage, SpriteBatch spriteBatch, int tileSizeInPixels)
         {
             
             var xmlFiles =
@@ -27,7 +27,7 @@ namespace KlimaKonflikt
             }
         }
 
-        private static GameBoard GetLevel(string fileName, Game game, GameImage tileImage, SpriteBatch spriteBatch, int tileSizeInPixels)
+        private static KKGameBoard GetLevel(string fileName, Game game, GameImage tileImage, SpriteBatch spriteBatch, int tileSizeInPixels)
         {
             XDocument doc = XDocument.Load(fileName);
 
@@ -55,8 +55,15 @@ namespace KlimaKonflikt
                     Right = Convert.ToBoolean(e.Attribute("Right").Value)
                 };
 
-            var gameBoard = new GameBoard( tileImage, name, tilesHorizontally, tilesVertically, 
-                tileSizeInPixels, imageFileName);
+            Point startPosFlowerSack = LoadPointElement(doc, "Flowersack");
+            Point startPosOilBarrel = LoadPointElement(doc, "Oilbarrel");
+            Point startPosWheelBarrow = LoadPointElement(doc, "Wheelbarrow");
+            Point startPosOilTower = LoadPointElement(doc, "Oiltower");
+            List<Point> startPosFires = LoadPointElements(doc, "Fire").ToList();
+
+            var gameBoard = new KKGameBoard(tileImage, name, tilesHorizontally, tilesVertically, 
+                tileSizeInPixels, imageFileName, startPosFlowerSack, startPosWheelBarrow, startPosOilBarrel, startPosOilTower,
+                startPosFires);
             foreach (var tile in tiles)
             {
                 var gameTile = gameBoard.Tiles[tile.Column, tile.Row];
@@ -68,6 +75,20 @@ namespace KlimaKonflikt
 
             return gameBoard;
 
+        }
+
+        private static Point LoadPointElement(XDocument doc, string elementName)
+        {
+            return LoadPointElements(doc, elementName).First(); 
+        }
+
+        private static IEnumerable<Point> LoadPointElements(XDocument doc, string elementName)
+        {
+            return
+                from e in doc.Descendants(elementName)
+                 select new Point(
+                     Convert.ToInt32(e.Attribute("Column").Value),
+                     Convert.ToInt32(e.Attribute("Row").Value));
         }
 
         /// <summary>
