@@ -28,7 +28,6 @@ namespace KlimaKonflikt.Scenes
         GameBoardControllerBase oilController, sackController;
         SimpleDirectionController directionController;
         private bool m_GameOver = false;
-        int tilesAcross = 10, tilesDown = 10;
         SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
         SoundEffectInstance m_mainGameTune;
         Point m_oilTowerBeginTilePosition, m_wheelbarrowBeginTilePosition;
@@ -37,7 +36,7 @@ namespace KlimaKonflikt.Scenes
         //KKMonster m_Ild1, m_Ild2;
         List<KKMonster> m_Fires;
         Ejerskab[,] EjerskabsOversigt;
-        RealRandom random = null;
+        RealRandom m_RandomX, m_RandomY; 
         Texture2D tileFloor, oilSpill, flower, healthBarTexture, scorePicOilBarrel, scorePicFlowerSack;
         GameImage oilTowerImage1, wheelBarrowImage, completeFloorGameImage, pulsatingCircle;
         Sprite oilTower1, wheelBarrow1;
@@ -288,7 +287,7 @@ namespace KlimaKonflikt.Scenes
             WalledTile newPosition = RefuelPositions[SeedSack];
             do
             {
-                newPosition = board.Tiles[random.Next(), random.Next()];
+                newPosition = board.Tiles[m_RandomX.Next(), m_RandomY.Next()];
             } while (RefuelPositions.ContainsValue(newPosition));
 
             RefuelPositions[player] = newPosition;
@@ -522,7 +521,7 @@ namespace KlimaKonflikt.Scenes
         {
 
             
-            EjerskabsOversigt = new Ejerskab[tilesAcross, tilesDown];
+            EjerskabsOversigt = new Ejerskab[board.TilesHorizontally, board.TilesVertically];
             RefuelPositions[SeedSack] = board.Tiles[m_wheelbarrowBeginTilePosition.X, m_wheelbarrowBeginTilePosition.Y];
             RefuelPositions[OilDrum] = board.Tiles[m_oilTowerBeginTilePosition.X, m_oilTowerBeginTilePosition.Y];
             wheelBarrow1.SetPosition(RefuelPositions[SeedSack].Center);
@@ -541,12 +540,14 @@ namespace KlimaKonflikt.Scenes
             if (SinglePlayer)
             {
                 oilController = directionController;
-                random = new RealRandom(1, 8);
+                m_RandomX = new RealRandom(1, board.TilesHorizontally-2);
+                m_RandomY = new RealRandom(1, board.TilesVertically - 2);
             }
             else
             {
                 oilController = new KeyboardController(board, KeyboardController.KeySet.WASD);
-                random = new RealRandom(0, 9);
+                m_RandomX = new RealRandom(0, board.TilesHorizontally - 1);
+                m_RandomY = new RealRandom(0, board.TilesVertically - 1);
             }
             oilController.TileCenterCrossed += new MoveEventHandler(TileCenterCrossed);
             oilController.UnitMoved += new MoveEventHandler(UnitMoved);
