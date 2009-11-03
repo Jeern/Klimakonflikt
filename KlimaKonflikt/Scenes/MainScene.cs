@@ -222,7 +222,6 @@ namespace KlimaKonflikt.Scenes
             foreach (KKMonster fire in m_Fires)
             {
                 WalledTile fireTile = board.GetTileFromPixelPosition(fire.GetPosition().X, fire.GetPosition().Y);
-                
 
                 if (fireTile == playerTile)
                 {
@@ -301,6 +300,7 @@ namespace KlimaKonflikt.Scenes
         private void Collision(KKPlayer player)
         {
             player.Ammunition = 0;
+            player.Health -= 1F;
         }
 
         private WalledTile MoveRefuelPosition(KKPlayer player)
