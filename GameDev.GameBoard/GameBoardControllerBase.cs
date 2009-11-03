@@ -20,7 +20,6 @@ using GameDev.Core.Control;
 namespace GameDev.GameBoard
 {
 
-    public delegate void MoveEventHandler(Sprite sprite, EventArgs e);
 
     public abstract class GameBoardControllerBase : IController
     {
@@ -34,23 +33,31 @@ namespace GameDev.GameBoard
             this.Board = board;
         }
 
-        public event MoveEventHandler TileCenterCrossed;
-        public event MoveEventHandler UnitMoved;
+        private event EventHandler<EventArgs<Sprite>> m_UnitMoved = delegate { };
 
+        public event EventHandler<EventArgs<Sprite>> UnitMoved
+        {
+            add { m_UnitMoved += value; }
+            remove { m_UnitMoved -= value; }
+        }
+
+        private event EventHandler<EventArgs<Sprite>> m_TileCenterCrossed = delegate { };
+        
+        public event EventHandler<EventArgs<Sprite>> TileCenterCrossed
+        {
+            add { m_TileCenterCrossed += value; }
+            remove { m_TileCenterCrossed -= value; }
+        }
+        
+        //TODO: implement EventArgs specialized to include the Sprite
         protected void OnTileCenterCrossed(Sprite sprite)
         {
-            if (TileCenterCrossed != null)
-            {
-                TileCenterCrossed(sprite, EventArgs.Empty);
-            }
+            m_TileCenterCrossed(this, new EventArgs<Sprite>(sprite));
         }
 
         protected void OnUnitMoved(Sprite sprite)
         {
-            if (UnitMoved != null)
-            {
-                UnitMoved(sprite, EventArgs.Empty);
-            }
+            m_UnitMoved(this, new EventArgs<Sprite>(sprite));
         }
 
         public virtual void Update(GameTime gameTime, Sprite unitToUpdate)
@@ -98,7 +105,6 @@ namespace GameDev.GameBoard
 
         protected abstract void UpdateDirection(Sprite controllee);
    
-
         protected abstract void SetWantedDirection(Sprite controllee);
 
         protected void WriteDebugInfo(Sprite controllee)

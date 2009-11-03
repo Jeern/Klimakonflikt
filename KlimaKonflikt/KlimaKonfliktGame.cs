@@ -83,8 +83,6 @@ namespace KlimaKonflikt
             m_instructionsScene = new InstructionsScene();
             m_creditsScene = new CreditsScene();
 
-
-          
             sceneManager.AddScene(m_introScene);
             sceneManager.AddScene(m_menuScene);
             sceneManager.AddScene(m_mainGameScene);

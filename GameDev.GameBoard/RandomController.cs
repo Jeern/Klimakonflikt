@@ -58,7 +58,7 @@ namespace GameDev.GameBoard
                 bool hadExitOpposite = exits.Remove(reverse);
                 if (exits.Count > 0)
                 {
-                    controllee.Direction = exits[Random.Next(exits.Count - 1)];
+                    controllee.Direction = exits[Random.Next(exits.Count)];
                 }
                 else
                 {

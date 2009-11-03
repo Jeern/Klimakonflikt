@@ -172,5 +172,6 @@ namespace GameDev.GameBoard
             this.BackgroundGameImage = _originalBackgroundImage;
             this.ContentGameImage = null;
         }
+
     }
 }
