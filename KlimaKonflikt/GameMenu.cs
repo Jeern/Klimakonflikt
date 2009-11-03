@@ -37,6 +37,7 @@ namespace KlimaKonflikt
        public const string MENU_CREDITS = "Credits";
        public const string MENU_TOGGLEFULLSCREEN = "Toggle fullscreen";
        public const string MENU_EXIT = "Exit game";
+       
        int topMargin = 150;
 
        SpriteFont menuFont;

@@ -139,6 +139,12 @@
     <Compile Include="..\Lib\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="A_StarPathFinder.cs" />
+    <Compile Include="A_StarController.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IHasNeighbors.cs" />
+    <Compile Include="Path.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="SimpleDirectionController.cs" />
     <Compile Include="GameBoardControllerBase.cs" />
     <Compile Include="RandomController.cs" />

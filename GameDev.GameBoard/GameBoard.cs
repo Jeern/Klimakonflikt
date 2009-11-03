@@ -20,62 +20,7 @@ namespace GameDev.GameBoard
 {
     public class GameBoard : DrawableGameComponent, IPlaceable
     {
-
-        //public Texture2D CompleteGameBoard { get; set; }
-        //private bool _autoUpdateTiles = true;
-        
-        //private bool _bigImageUpdated = false;
-
-        //public bool AutoUpdateTiles {
-        //    get { return _autoUpdateTiles; }
-        //    set { this._autoUpdateTiles = value;}
-        //}
-
-        //int _xOffset, _yOffset;
-        //public int XOffset { get { return _xOffset; }
-        //    set {
-
-        //        foreach (Tile tile in Tiles)
-        //        {
-        //            UpdateTileOffsets();
-        //        }
-        //    }
-        //}
-
-        //void UpdateTileOffsets()
-        //{
-        //    foreach (Tile tile in Tiles)
-        //    {
-
-        //    }
-        //}
-
-        //private void CreateBigImage(GameTime gametime)
-        //{
-
-        //    //source: http://www.krissteele.net/blogdetails.aspx?id=146
-
-        //    // Create the new RenderTarget
-        //    RenderTarget2D tileRenderTarget = new RenderTarget2D(Game.GraphicsDevice, this.WidthInPixels,this.HeightInPixels, 1, SurfaceFormat.Color);
-
-        //    // Get the original target (so we can set it back later)
-        //    RenderTarget oldTarget = Game.GraphicsDevice.GetRenderTarget(0);
-
-        //    // Use the new RenderTarget for drawing
-        //    Game.GraphicsDevice.SetRenderTarget(0, tileRenderTarget);
-
-        //    // Clear with a transparent color so that our new Texture2D is transparent in areas
-        //    // that don't have tiles on them.
-        //    Game.GraphicsDevice.Clear(ClearOptions.Target, new Color(255, 255, 255, 0), 0, 0);
-
-        //    Draw(gametime);
-        //    // Set the graphics device back to status quo
-        //    Game.GraphicsDevice.SetRenderTarget(0, oldTarget as RenderTarget2D);
-
-        //    // Get our new tile texture
-        //    CompleteGameBoard = tileRenderTarget.GetTexture();
-        //}
-
+        private Random m_random;
         public string Name { get; set; }
         public WalledTile[,] Tiles { get; protected set; }
 
@@ -85,6 +30,11 @@ namespace GameDev.GameBoard
              set{_completeBackground = value;
                 SetTileBackgroundDrawing(CompleteBackground == null);
              }
+        }
+
+        public Tile RandomTile
+        {
+            get {return Tiles[m_random.Next(this.TilesHorizontally), m_random.Next(this.TilesVertically)]; }
         }
 
  private void SetTileBackgroundDrawing(bool shouldDrawBackground)
@@ -176,6 +126,7 @@ namespace GameDev.GameBoard
             }
             TileSizeInPixels = tileSizeInPixels;
             m_LevelImageFileName = levelImageFileName;
+            m_random = new Random();
         }
 
 

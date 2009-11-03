@@ -25,30 +25,21 @@ namespace GameDev.GameBoard
     {
         public SimpleDirectionController(GameBoard board) : base(board) { }
 
-        public Tile TargetTile{get;set;}
+        public Tile TargetTile { get; set; }
 
         public override void Update(GameTime gameTime, Sprite unitToUpdate)
         {
-            
+
             base.Update(gameTime, unitToUpdate);
-            
+
         }
 
         override protected void UpdateDirection(Sprite controllee)
         {
-           //console.write("[ UpdateDirection begin ] ");
             Direction wantedDirection = controllee.WantedDirection;
             WalledTile tile = Board.GetTileFromPixelPosition(controllee.GetPosition());
             List<Direction> possibleDirections = tile.Exits;
 
-           //console.write("possibleDirections :");
-            foreach (Direction dir in possibleDirections)
-            {
-               //console.write(dir + ", ");
-            }
-           //console.writeLine();
-
-            
             //if the controllee has a wish
             if (wantedDirection != Direction.None)
             {
@@ -57,7 +48,7 @@ namespace GameDev.GameBoard
                 {
                     //we do it
                     controllee.Direction = wantedDirection;
-                   //console.writeLine("Found wanteddirection " + wantedDirection + " open - taking it!");
+                    //console.writeLine("Found wanteddirection " + wantedDirection + " open - taking it!");
                     return;
                 }
             }
@@ -65,7 +56,7 @@ namespace GameDev.GameBoard
             //is it possible to continue where it's headed now?
             if (possibleDirections.Contains(controllee.Direction))
             {
-               //console.writeLine("Usual direction " + wantedDirection + " open - taking it!");
+                //console.writeLine("Usual direction " + wantedDirection + " open - taking it!");
                 //just continue
                 return;
             }
@@ -91,10 +82,10 @@ namespace GameDev.GameBoard
                     }
                 }
             }
-           //console.write("UpdateDirection end - ");
+            //console.write("UpdateDirection end - ");
             //WriteDebugInfo(controllee);
 
-   
+
         }
 
         /// <summary>
@@ -117,30 +108,17 @@ namespace GameDev.GameBoard
             float distanceToWantedTileFromMostPromising = mostPromisingTile.Center.DistanceTo(TargetTile.Center);
 
             if (mostWantedDirection != Direction.None)
-	{
-
-	
-            foreach (Direction dir in currentTile.GetAvailableExitsRightOrLeftOfExit(mostWantedDirection))
             {
-                Tile otherPossibleTile = currentTile.GetNeighbor(dir);
-                if (distanceToWantedTileFromMostPromising == otherPossibleTile.Center.DistanceTo(TargetTile.Center))
+                foreach (Direction dir in currentTile.GetAvailableExitsRightOrLeftOfExit(mostWantedDirection))
                 {
-                    possibleDirections.Add(dir);
+                    Tile otherPossibleTile = currentTile.GetNeighbor(dir);
+                    if (distanceToWantedTileFromMostPromising == otherPossibleTile.Center.DistanceTo(TargetTile.Center))
+                    {
+                        possibleDirections.Add(dir);
+                    }
                 }
             }
-    }        
-            //foreach (Direction dir in currentTile.Exits)
-            //{
-            //    possibleTiles.Add((WalledTile)currentTile.GetNeighbor(dir));
-
-            //}
-
-            controllee.WantedDirection =  possibleDirections[Random.Next(possibleDirections.Count)];// mostWantedDirection;
-            
-           //console.write("[ SetWantedDirection ] ");
-            //WriteDebugInfo(controllee);
-
+            controllee.WantedDirection = possibleDirections[Random.Next(possibleDirections.Count)];// mostWantedDirection;
         }
-
     }
 }

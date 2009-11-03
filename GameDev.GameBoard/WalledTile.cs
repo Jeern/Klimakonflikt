@@ -16,7 +16,7 @@ using GameDev.Core.Graphics;
 
 namespace GameDev.GameBoard
 {
-	public class WalledTile : Tile
+	public class WalledTile : Tile, IHasNeighbours<WalledTile>
 	{
         private static Random m_random = new Random();
 
@@ -132,5 +132,21 @@ namespace GameDev.GameBoard
 
         }
 
-	}
+        #region IHasNeighbours<WalledTile> Members
+
+        public IEnumerable<WalledTile> AccessibleNeighbours
+        {
+            get
+            {
+                List<WalledTile> neighbors = new List<WalledTile>();
+                foreach (Direction dir in Exits)
+                {
+                    neighbors.Add((WalledTile) GetNeighbor(dir));
+                }
+                return neighbors;
+            }
+        }
+
+        #endregion
+    }
 }
