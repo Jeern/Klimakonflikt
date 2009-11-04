@@ -26,8 +26,8 @@ namespace KlimaKonflikt.Scenes
 
         RandomController fireController;
         GameBoardControllerBase oilController, sackController;
-        SimpleDirectionController aggressiveFireController;
-        A_StarController astarController;
+        //SimpleDirectionController aggressiveFireController;
+        //A_StarController astarController;
 
         float damageFactor = 1.0F;
 
@@ -300,7 +300,11 @@ namespace KlimaKonflikt.Scenes
         private void Collision(KKPlayer player)
         {
             player.Ammunition = 0;
-            player.Health -= 1F;
+            if (!SinglePlayer)
+            {
+                player.Health -= 1F;
+            }
+            
         }
 
         private WalledTile MoveRefuelPosition(KKPlayer player)
@@ -319,13 +323,13 @@ namespace KlimaKonflikt.Scenes
             {
                 if (OilDrum.Ammunition == 10)
                 {
-                    astarController.TargetTile = RefuelPositions[SeedSack];
-                    Console.WriteLine("Ammo: " + OilDrum.Ammunition + ", going for adversary's refuel at [" + astarController.TargetTile.HorizontalIndex + "," + astarController.TargetTile.VerticalIndex + "]");
+                    ((A_StarController)oilController).TargetTile = RefuelPositions[SeedSack];
+                    //Console.WriteLine("Ammo: " + OilDrum.Ammunition + ", going for adversary's refuel at [" + astarController.TargetTile.HorizontalIndex + "," + astarController.TargetTile.VerticalIndex + "]");
                 }
                 else
                 {
-                    Console.WriteLine("Ammo: " + OilDrum.Ammunition + ", going for own refuel at [" + astarController.TargetTile.HorizontalIndex + "," + astarController.TargetTile.VerticalIndex + "]");
-                    astarController.TargetTile = RefuelPositions[OilDrum];
+                    //Console.WriteLine("Ammo: " + OilDrum.Ammunition + ", going for own refuel at [" + astarController.TargetTile.HorizontalIndex + "," + astarController.TargetTile.VerticalIndex + "]");
+                    ((A_StarController)oilController).TargetTile = RefuelPositions[OilDrum];
                 }
             }
 
@@ -403,7 +407,7 @@ namespace KlimaKonflikt.Scenes
 
                 //oilController.Update(gameTime, OilDrum);
                 //astarController.TargetTile = RefuelPositions[OilDrum];// board.GetTileFromPixelPosition(OilDrum.GetPosition());
-                astarController.Update(gameTime, OilDrum);
+                oilController.Update(gameTime, OilDrum);
                 sackController.Update(gameTime, SeedSack);
                 foreach (KKMonster fire in m_Fires)
                 {
@@ -556,19 +560,19 @@ namespace KlimaKonflikt.Scenes
             {
                 player.Reset();
             }
-            astarController = new A_StarController(board);
+            oilController = (A_StarController)new A_StarController(board);
 
             sackController = new KeyboardController(board, KeyboardController.KeySet.ArrowKeys);
-            astarController.TargetTile = RefuelPositions[OilDrum];
+            ((A_StarController)oilController).TargetTile = RefuelPositions[OilDrum];
 
             directionController = new SimpleDirectionController(board);
             directionController.TargetTile = RefuelPositions[OilDrum];
 
-            aggressiveFireController = new SimpleDirectionController(board);
+            //aggressiveFireController = new SimpleDirectionController(board);
             
             if (SinglePlayer)
             {
-                oilController = directionController;
+                //oilController = directionController;
                 m_RandomX = new RealRandom(1, board.TilesHorizontally-2);
                 m_RandomY = new RealRandom(1, board.TilesVertically - 2);
             }
@@ -578,8 +582,8 @@ namespace KlimaKonflikt.Scenes
                 m_RandomX = new RealRandom(0, board.TilesHorizontally - 1);
                 m_RandomY = new RealRandom(0, board.TilesVertically - 1);
             }
-            astarController.TileCenterCrossed += TileCenterCrossed;
-            astarController.UnitMoved += UnitMoved;
+            oilController.TileCenterCrossed += TileCenterCrossed;
+            oilController.UnitMoved += UnitMoved;
             sackController.TileCenterCrossed += TileCenterCrossed;
             sackController.UnitMoved += UnitMoved;
 
