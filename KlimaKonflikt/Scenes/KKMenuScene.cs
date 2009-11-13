@@ -47,7 +47,6 @@ namespace KlimaKonflikt.Scenes
                 case GameMenu.MENU_STARTSINGLEPLAYER:
                     ((MainScene)SceneManager.GetScene(SceneNames.MAINSCENE)).SinglePlayer = true;
                     SceneManager.ChangeScene(SceneNames.MAINSCENE);
-
                     break;
 
                 case GameMenu.MENU_START2PLAYER:

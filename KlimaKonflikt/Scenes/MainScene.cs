@@ -29,7 +29,10 @@ namespace KlimaKonflikt.Scenes
         //SimpleDirectionController aggressiveFireController;
         //A_StarController astarController;
 
-        float damageFactor = 1.0F;
+        bool m_gameWaitingToBegin = true;
+        float m_damageFactor = 1.0F;
+
+        GraphicTimer m_timer;
 
         SimpleDirectionController directionController;
         private bool m_GameOver = false;
@@ -189,7 +192,17 @@ namespace KlimaKonflikt.Scenes
             
             fireController = new RandomController(board);
 
+            m_timer = new GraphicTimer(font, 3);
+            m_timer.TimesUp += new EventHandler<EventArgs>(m_timer_TimesUp);
+
+            Components.Add(m_timer);
+
             Reset();
+        }
+
+        void m_timer_TimesUp(object sender, EventArgs e)
+        {
+            m_gameWaitingToBegin = false;
         }
 
         void UnitMoved(object sender, EventArgs<Sprite> e)
@@ -200,15 +213,6 @@ namespace KlimaKonflikt.Scenes
         void TileCenterCrossed(object sender, EventArgs<Sprite> e)
         {
             TileCollisionTest((KKPlayer)e.Data);
-        }
-
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            // TODO: Add your initialization logic here
-
-
         }
 
         #endregion
@@ -294,7 +298,6 @@ namespace KlimaKonflikt.Scenes
                 player.Ammunition--;
 
             }
-
         }
 
         private void Collision(KKPlayer player)
@@ -351,8 +354,6 @@ namespace KlimaKonflikt.Scenes
                 SceneManager.ChangeScene(SceneNames.MENUSCENE);
             }
 
-
-
             if (keyboardState.IsKeyDown(Keys.P))
             {
                 this.Pause();
@@ -367,7 +368,7 @@ namespace KlimaKonflikt.Scenes
 
             if (keyboardState.IsKeyDown(Keys.RightControl) && keyboardState.IsKeyDown(Keys.Insert))
             {
-                damageFactor = 1 - damageFactor;
+                m_damageFactor = 1 - m_damageFactor;
             }
 
             
@@ -402,7 +403,7 @@ namespace KlimaKonflikt.Scenes
 
             #endregion
 
-            if (!this.IsPaused)
+            if (!this.IsPaused && !m_gameWaitingToBegin)
             {
 
                 //oilController.Update(gameTime, OilDrum);
@@ -419,11 +420,11 @@ namespace KlimaKonflikt.Scenes
                 switch (Math.Sign(scoreDifference))
                 {
                     case -1: // frø er foran
-                        SeedSack.Health -= scoreDifferenceFactor * damageFactor;
+                        SeedSack.Health -= scoreDifferenceFactor * m_damageFactor;
                         break;
 
                     case 1: // OilDrum er foran
-                        OilDrum.Health -= scoreDifferenceFactor * damageFactor;
+                        OilDrum.Health -= scoreDifferenceFactor * m_damageFactor;
                         break;
                 }
                 float maxSpeed = .4F;
@@ -432,8 +433,9 @@ namespace KlimaKonflikt.Scenes
                 {
                     m_mainGameTune.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
                 }
-                base.Update(gameTime);
+                
             }
+            base.Update(gameTime);
         }
 
 
@@ -544,12 +546,10 @@ namespace KlimaKonflikt.Scenes
         public override void OnLeft()
         {
             m_mainGameTune.Stop();
-
         }
+
         public override void Reset()
         {
-
-            
             EjerskabsOversigt = new Ejerskab[board.TilesHorizontally, board.TilesVertically];
             RefuelPositions[SeedSack] = board.Tiles[m_wheelbarrowBeginTilePosition.X, m_wheelbarrowBeginTilePosition.Y];
             RefuelPositions[OilDrum] = board.Tiles[m_oilTowerBeginTilePosition.X, m_oilTowerBeginTilePosition.Y];
@@ -594,8 +594,13 @@ namespace KlimaKonflikt.Scenes
                 fire.Reset();
             }
 
+            scoreDifference = 0;
+
             m_mainGameTune.Pitch = 0;
             board.Reset();
+            m_gameWaitingToBegin = true;
+            m_timer.SecondsToCountDown = 3;
+            m_timer.Reset();
 
         #endregion
 

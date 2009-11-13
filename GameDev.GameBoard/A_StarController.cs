@@ -29,9 +29,7 @@ namespace GameDev.GameBoard
 
         public override void Update(GameTime gameTime, Sprite unitToUpdate)
         {
-
             base.Update(gameTime, unitToUpdate);
-
         }
 
         override protected void UpdateDirection(Sprite controllee)
@@ -40,7 +38,6 @@ namespace GameDev.GameBoard
             Direction wantedDirection = controllee.WantedDirection;
             WalledTile currentTile = Board.GetTileFromPixelPosition(controllee.GetPosition());
             List<Direction> possibleDirections = currentTile.Exits;
-
 
             //if the controllee has a wish
             if (wantedDirection != Direction.None)

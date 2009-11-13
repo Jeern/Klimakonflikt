@@ -22,6 +22,7 @@ namespace GameDev.Core
 {
     public class GameDevGame : Game
     {
+
         static object _locker = new object();
         private static GameDevGame m_game;
         public static GameDevGame
@@ -50,8 +51,6 @@ namespace GameDev.Core
             this.GraphicsDeviceManager = new GraphicsDeviceManager(this);
             this.Services.AddService(typeof(GraphicsDeviceManager), GraphicsDeviceManager);
             GameSpeed = 1.0F;
-            
-            
         }
 
         protected override void Initialize()
@@ -59,11 +58,6 @@ namespace GameDev.Core
             base.Initialize();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             this.DebugFont = Content.Load<SpriteFont>("DebugFont");
-        }
-
-        protected override void LoadContent()
-        {
-            
         }
 
     }

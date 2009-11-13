@@ -126,7 +126,7 @@ namespace GameDev.Core.Menus
 
         public MenuBase() : base(GameDevGame.Current)
         {
-            KeyboardDelay = 200; //milliseconds
+            KeyboardDelay = 500; //milliseconds
             m_menuItems = new List<MenuItem>();
         }
 
@@ -139,6 +139,7 @@ namespace GameDev.Core.Menus
             {
                 item.Update(gameTime);
             }
+
             if (SceneManager.Current.CurrentScene.NoKeysPressed)
             {
 
