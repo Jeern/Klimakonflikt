@@ -43,7 +43,7 @@ namespace GameDev.Core.SceneManagement
         {
             UpdatedKeyboardState = Keyboard.GetState();
 
-            //ensures that the user must have lifted fingers from the ESC that brought him/her here
+            //ensures that the user must have lifted fingers from the key that brought him/her here
             if (!NoKeysPressed && UpdatedKeyboardState.GetPressedKeys().Length == 0)
             {
                 NoKeysPressed = true;
@@ -54,7 +54,10 @@ namespace GameDev.Core.SceneManagement
             {
                 foreach (GameComponent component in Components)
                 {
-                    component.Update(gameTime);
+                    if (component.Enabled)
+                    {
+                        component.Update(gameTime);    
+                    }
                 }
             }
         }
@@ -64,7 +67,10 @@ namespace GameDev.Core.SceneManagement
         {
             foreach (DrawableGameComponent comp in Components)
             {
-                comp.Draw(gameTime);
+                if (comp.Visible)
+                {
+                    comp.Draw(gameTime);
+                }
             }
         }
 
