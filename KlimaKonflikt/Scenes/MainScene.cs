@@ -26,8 +26,6 @@ namespace KlimaKonflikt.Scenes
 
         RandomController fireController;
         GameBoardControllerBase oilController, sackController;
-        //SimpleDirectionController aggressiveFireController;
-        //A_StarController astarController;
 
         bool m_gameWaitingToBegin = true;
         float m_damageFactor = 1.0F;
@@ -41,7 +39,6 @@ namespace KlimaKonflikt.Scenes
         Point m_oilTowerBeginTilePosition, m_wheelbarrowBeginTilePosition;
         KKGameBoard board;
         KKPlayer SeedSack, OilDrum;
-        //KKMonster m_Ild1, m_Ild2;
         List<KKMonster> m_Fires;
         Ejerskab[,] EjerskabsOversigt;
         RealRandom m_RandomX, m_RandomY; 
