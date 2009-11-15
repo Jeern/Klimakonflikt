@@ -211,7 +211,6 @@ namespace KlimaKonflikt.Scenes
 
         #endregion
 
-
         #region Movement and collision
 
         private void FireAndFuelCollisionTest(KKPlayer player)
@@ -334,7 +333,6 @@ namespace KlimaKonflikt.Scenes
         }
 
         #endregion
-
 
         #region Update and Draw
 
@@ -528,7 +526,6 @@ namespace KlimaKonflikt.Scenes
 
         #endregion
 
-
         #region Scene class overrides
 
         public override void OnEntered()
@@ -595,9 +592,7 @@ namespace KlimaKonflikt.Scenes
             m_gameWaitingToBegin = true;
             m_timer.SecondsToCountDown = 3;
             m_timer.Reset();
-
-        #endregion
-
         }
+        #endregion
     }
 }
