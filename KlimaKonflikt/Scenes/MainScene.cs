@@ -1,200 +1,197 @@
-﻿#region Usings
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using GameDev.Core;
+using GameDev.Core.Graphics;
+using GameDev.Core.SceneManagement;
+using GameDev.Core.Sequencing;
+using GameDev.GameBoard;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using GameDev.Core;
-using GameDev.GameBoard;
-using GameDev.Core.Graphics;
-using GameDev.Core.SceneManagement;
-using GameDev.Core.Sequencing;
-
-#endregion
-
-
 namespace KlimaKonflikt.Scenes
 {
     public class MainScene : Scene
     {
-
         #region Variables
 
-        RandomController fireController;
-        GameBoardControllerBase oilController, sackController;
+        private RandomController m_FireController;
+        private GameBoardControllerBase m_OilController, m_SackController;
 
-        bool m_gameWaitingToBegin = true;
-        float m_damageFactor = 1.0F;
+        private bool m_gameWaitingToBegin = true;
+        private float m_damageFactor = 1.0F;
 
-        GraphicTimer m_timer;
+        private GraphicTimer m_timer;
 
-        SimpleDirectionController directionController;
+        private SimpleDirectionController m_DirectionController;
         private bool m_GameOver = false;
-        SoundEffect plantFrø, olieDryp, frøTankning, olieTankning;
-        SoundEffectInstance m_mainGameTune;
-        Point m_oilTowerBeginTilePosition, m_wheelbarrowBeginTilePosition;
-        KKGameBoard board;
-        KKPlayer SeedSack, OilDrum;
-        List<KKMonster> m_Fires;
-        Ejerskab[,] EjerskabsOversigt;
-        RealRandom m_RandomX, m_RandomY; 
-        Texture2D tileFloor, oilSpill, flower, healthBarTexture, scorePicOilBarrel, scorePicFlowerSack;
-        GameImage oilTowerImage1, wheelBarrowImage, completeFloorGameImage, pulsatingCircle;
-        Sprite oilTower1, wheelBarrow1;
-        SpriteFont font;
-        //WalledTile oilTowerTile, wheelBarrowTile;
-        Rectangle[,] ammoPlacering;
-        Color[] healthColors;
-        Color shadow = new Color(0, 0, 0, .6F);
-        Color background = new Color(50, 50, 50);
-        Dictionary<KKPlayer, KKPlayer> Adversary;
-        Dictionary<KKPlayer, WalledTile> RefuelPositions;
-        Dictionary<KKPlayer, Sprite> RefuelImage;
-        Dictionary<KKPlayer, GameImage> AmmoImages;
+        private SoundEffect m_SeedPlanting, m_OilDrip, m_SeedFueling, m_OilFueling;
+        private SoundEffectInstance m_MainGameTune;
+        private Point m_OilTowerBeginTilePosition, m_WheelbarrowBeginTilePosition;
+        private Ejerskab[,] m_EjerskabsOversigt;
+        private RealRandom m_RandomX, m_RandomY;
+        
+        private Texture2D m_TileFloor, m_OilSpill, m_Flower, m_HealthBar, m_ScorePicOilBarrel, m_ScorePicFlowerSack;
+        private GameImage m_OilTowerImage, m_WheelBarrowImage, m_CompleteFloorGameImage, m_PulsatingCircle;
+        private Sprite m_OilTower, m_WheelBarrow;
+        private SpriteFont m_Font;
+        private Rectangle[,] m_AmmoPlacering;
 
-        Color positiveScoreColor = Color.White;
-        Color negativeScoreColor = Color.Red;
+        private List<Color> m_HealthColors = new List<Color>()
+            {
+                Color.Red,
+                Color.Orange,
+                Color.Yellow,
+                Color.GreenYellow,
+                Color.Green 
+            };
 
-        float scoreDifference;
+        private Color m_Shadow = new Color(0, 0, 0, .6F);
+        private Color m_Background = new Color(50, 50, 50);
+        private Color m_PositiveScoreColor = Color.White;
+        private Color m_NegativeScoreColor = Color.Red;
+
+        private KKGameBoard m_Board;
+        private KKPlayer m_SeedSack, m_OilBarrel;
+        private List<KKPlayer> m_Players = new List<KKPlayer>();
+        private List<KKMonster> m_Fires = new List<KKMonster>();
+        private Dictionary<KKPlayer, KKPlayer> m_Adversaries = new Dictionary<KKPlayer, KKPlayer>();
+        private Dictionary<KKPlayer, WalledTile> m_RefuelPositions = new Dictionary<KKPlayer, WalledTile>();
+        private Dictionary<KKPlayer, Sprite> m_RefuelImages = new Dictionary<KKPlayer, Sprite>();
+        private Dictionary<KKPlayer, GameImage> m_AmmoImages = new Dictionary<KKPlayer, GameImage>();
+
+        private float m_ScoreDifference;
 
         public bool SinglePlayer { get; set; }
 
-        List<KKPlayer> Players;
-
         #endregion
-
 
         #region Constructor and Initialize
 
         public MainScene()
             : base(SceneNames.MAINSCENE)
         {
-            tileFloor = Game.Content.Load<Texture2D>("64x64");
+            LoadLevels();
+            LoadSounds();
+            LoadGraphics();
+            InitializeBoard();
+            InitializeImages();
+            InitializePlayersAndMonsters();
+            SaveToDictionaries();
+            AddComponents();
+            Reset();
+        }
 
-            GameImage staticFloor = new GameImage(tileFloor);
-            SoundEffect effect = Game.Content.Load<SoundEffect>(@"GameTunes\MainGameTune");
-            m_mainGameTune = effect.CreateInstance();
-            m_mainGameTune.IsLooped = true;
+        private void SaveToDictionaries()
+        {
+            m_RefuelImages[m_SeedSack] = m_WheelBarrow;
+            m_RefuelImages[m_OilBarrel] = m_OilTower;
+            m_AmmoImages[m_SeedSack] = GameImages.GetBlomstImage();
+            m_AmmoImages[m_OilBarrel] = GameImages.GetOlieImage();
+            m_Adversaries[m_SeedSack] = m_OilBarrel;
+            m_Adversaries[m_OilBarrel] = m_SeedSack;
+            m_Players.Add(m_SeedSack);
+            m_Players.Add(m_OilBarrel);
+        }
 
-            plantFrø = Game.Content.Load<SoundEffect>("froe_plantes");
-            olieDryp = Game.Content.Load<SoundEffect>("olieplet_spildes");
-            frøTankning = Game.Content.Load<SoundEffect>("tankfroe");
-            olieTankning = Game.Content.Load<SoundEffect>("tankolie");
-
-            healthBarTexture = Game.Content.Load<Texture2D>("bar");
-            oilSpill = Game.Content.Load<Texture2D>("Olie/ThePatch0030");
-            flower = Game.Content.Load<Texture2D>("Blomst/Blomst0030");
-
-            scorePicOilBarrel = Game.Content.Load<Texture2D>("Oilbarrel/OilBarrel001");
-            scorePicFlowerSack = Game.Content.Load<Texture2D>("Flowersack/FlowerSack1");
-
-            IEnumerable<KKGameBoard> boards = LevelLoader.GetLevels(Game, staticFloor, SpriteBatch, staticFloor.CurrentTexture.Width);
-            //board = new GameBoard(this, staticFloor, SpriteBatch, "Board", tilesAcross, tilesDown, 64);
-            board = boards.ToArray()[0];
-
-            Texture2D completeFloor = Texture2D.FromFile(Game.GraphicsDevice, board.LevelImageFileName);
-            completeFloorGameImage = new GameImage(completeFloor);
-            board.CompleteBackground = completeFloorGameImage;
-            board.SetPosition(new Point(200, 50));
-
-            //testing pathfinder
-
-
-            m_oilTowerBeginTilePosition = board.StartPositionOilTower;
-
-            m_wheelbarrowBeginTilePosition = board.StartPositionWheelBarrow;
-
-            font = Game.Content.Load<SpriteFont>("Arial");
-            Texture2D wheelBarrowTexture = Game.Content.Load<Texture2D>("wheelbarrel");
-            oilTowerImage1 = GameImages.GetOlieTaarnImage(Game.Content);
-            oilTower1 = new Sprite(oilTowerImage1, 0, board.Tiles[m_oilTowerBeginTilePosition.X, m_oilTowerBeginTilePosition.Y].Center);
-
-            wheelBarrowImage = new GameImage(wheelBarrowTexture);
-
-            wheelBarrow1 = new Sprite(wheelBarrowImage, 0, board.Tiles[m_wheelbarrowBeginTilePosition.X, m_wheelbarrowBeginTilePosition.Y].Center);
-
-            oilTower1.GameImageOffset = new Point(0, -20);
-
-            pulsatingCircle = GameImages.GetPulsatingCircleImage(Game.Content);
-
-            RefuelImage = new Dictionary<KKPlayer, Sprite>();
-
-            SeedSack = new KKPlayer(GameImages.GetFlowersackImage(Game.Content), .2F, 
-                board.Tiles[board.StartPositionFlowerSack.X, board.StartPositionFlowerSack.Y].Center, 
-                10, pulsatingCircle, plantFrø, frøTankning, Ejerskab.Blomst);
-            OilDrum = new KKPlayer(GameImages.GetOilBarrelImage(Game.Content), .2F,
-                board.Tiles[board.StartPositionOilBarrel.X, board.StartPositionOilBarrel.Y].Center, 
-                10, pulsatingCircle, olieDryp, olieTankning, Ejerskab.Olie);
-
-            Players = new List<KKPlayer>();
-            Players.Add(SeedSack);
-            Players.Add(OilDrum);
-
-
-            RefuelImage[SeedSack] = wheelBarrow1;
-            RefuelImage[OilDrum] = oilTower1;
-
-            m_Fires = new List<KKMonster>();
-            foreach (Point startPos in board.StartPositionsFire)
+        private void InitializePlayersAndMonsters()
+        {
+            m_SeedSack = new KKPlayer(GameImages.GetFlowersackImage(Game.Content), .2F,
+                m_Board.Tiles[m_Board.StartPositionFlowerSack.X, m_Board.StartPositionFlowerSack.Y].Center,
+                10, m_PulsatingCircle, m_SeedPlanting, m_SeedFueling, Ejerskab.Blomst);
+            m_OilBarrel = new KKPlayer(GameImages.GetOilBarrelImage(Game.Content), .2F,
+                m_Board.Tiles[m_Board.StartPositionOilBarrel.X, m_Board.StartPositionOilBarrel.Y].Center,
+                10, m_PulsatingCircle, m_OilDrip, m_OilFueling, Ejerskab.Olie);
+            foreach (Point startPos in m_Board.StartPositionsFire)
             {
-                m_Fires.Add(new KKMonster(GameImages.GetIldImage(Game.Content), .10F, 
-                    board.Tiles[startPos.X, startPos.Y].Center,
+                m_Fires.Add(new KKMonster(GameImages.GetIldImage(Game.Content), .10F,
+                    m_Board.Tiles[startPos.X, startPos.Y].Center,
                     new GameDev.Core.Sequencing.SequencedIterator<Direction>(
                     new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20));
             }
-            AmmoImages = new Dictionary<KKPlayer, GameImage>();
+        }
 
-            AmmoImages[SeedSack] = GameImages.GetBlomstImage();
-            AmmoImages[OilDrum] = GameImages.GetOlieImage();
-
-            Adversary = new Dictionary<KKPlayer, KKPlayer>();
-            Adversary[SeedSack] = OilDrum;
-            Adversary[OilDrum] = SeedSack;
-
-            RefuelPositions = new Dictionary<KKPlayer, WalledTile>();
-
-            Components.Add(board);
-
-            Components.Add(wheelBarrow1);
-            Components.Add(oilTower1);
-
-            Components.Add(SeedSack);
-            Components.Add(OilDrum);
-
-            foreach (KKMonster fire in m_Fires)
-            {
-                Components.Add(fire);
-            }
-
-            healthColors = new Color[5];
-            healthColors[0] = Color.Red;
-            healthColors[1] = Color.Orange;
-            healthColors[2] = Color.Yellow;
-            healthColors[3] = Color.GreenYellow;
-            healthColors[4] = Color.Green;
-
-            base.Initialize();
-            ammoPlacering = new Rectangle[2, 10];
+        private void InitializeImages()
+        {
+            m_OilTowerBeginTilePosition = m_Board.StartPositionOilTower;
+            m_WheelbarrowBeginTilePosition = m_Board.StartPositionWheelBarrow;
+            m_OilTower.GameImageOffset = new Point(0, -20);
+            m_AmmoPlacering = new Rectangle[2, 10];
             int ammoSize = 100;
             int ammoBottomOffset = 600;
             for (int y = 0; y < 10; y++)
             {
-                ammoPlacering[0, y] = new Rectangle(20, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
-                ammoPlacering[1, y] = new Rectangle(910, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
+                m_AmmoPlacering[0, y] = new Rectangle(20, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
+                m_AmmoPlacering[1, y] = new Rectangle(910, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
             }
-            
-            fireController = new RandomController(board);
-
-            m_timer = new GraphicTimer(font, 3);
+            m_FireController = new RandomController(m_Board);
+            m_timer = new GraphicTimer(m_Font, 3);
             m_timer.TimesUp += new EventHandler<EventArgs>(m_timer_TimesUp);
+        }
 
+        private void InitializeBoard()
+        {
+            Components.Add(m_Board);
+            base.Initialize();
+            m_Board.SetPosition(new Point((m_Board.GraphicsDevice.Viewport.Width - m_Board.WidthInPixels) / 2,
+                (m_Board.GraphicsDevice.Viewport.Height - m_Board.HeightInPixels) / 2));
+        }
+
+        private void AddComponents()
+        {
+            Components.Add(m_WheelBarrow);
+            Components.Add(m_OilTower);
+            Components.Add(m_SeedSack);
+            Components.Add(m_OilBarrel);
+            foreach (KKMonster fire in m_Fires)
+            {
+                Components.Add(fire);
+            }
             Components.Add(m_timer);
+        }
 
-            Reset();
+        private void LoadGraphics()
+        {
+            m_HealthBar = Game.Content.Load<Texture2D>("bar");
+            m_OilSpill = Game.Content.Load<Texture2D>("Olie/ThePatch0030");
+            m_Flower = Game.Content.Load<Texture2D>("Blomst/Blomst0030");
+            m_ScorePicOilBarrel = Game.Content.Load<Texture2D>("Oilbarrel/OilBarrel001");
+            m_ScorePicFlowerSack = Game.Content.Load<Texture2D>("Flowersack/FlowerSack1");
+            Texture2D completeFloor = Texture2D.FromFile(Game.GraphicsDevice, m_Board.LevelImageFileName);
+            m_CompleteFloorGameImage = new GameImage(completeFloor);
+            m_Board.CompleteBackground = m_CompleteFloorGameImage;
+            m_Font = Game.Content.Load<SpriteFont>("Arial");
+            Texture2D wheelBarrowTexture = Game.Content.Load<Texture2D>("wheelbarrel");
+            m_OilTowerImage = GameImages.GetOlieTaarnImage(Game.Content);
+            m_OilTower = new Sprite(m_OilTowerImage, 0, m_Board.Tiles[m_OilTowerBeginTilePosition.X, m_OilTowerBeginTilePosition.Y].Center);
+
+            m_WheelBarrowImage = new GameImage(wheelBarrowTexture);
+
+            m_WheelBarrow = new Sprite(m_WheelBarrowImage, 0, m_Board.Tiles[m_WheelbarrowBeginTilePosition.X, m_WheelbarrowBeginTilePosition.Y].Center);
+            m_PulsatingCircle = GameImages.GetPulsatingCircleImage(Game.Content);
+
+
+        }
+
+        private void LoadSounds()
+        {
+            SoundEffect effect = Game.Content.Load<SoundEffect>(@"GameTunes\MainGameTune");
+            m_MainGameTune = effect.CreateInstance();
+            m_MainGameTune.IsLooped = true;
+            m_SeedPlanting = Game.Content.Load<SoundEffect>("froe_plantes");
+            m_OilDrip = Game.Content.Load<SoundEffect>("olieplet_spildes");
+            m_SeedFueling = Game.Content.Load<SoundEffect>("tankfroe");
+            m_OilFueling = Game.Content.Load<SoundEffect>("tankolie");
+        }
+
+        private void LoadLevels()
+        {
+            m_TileFloor = Game.Content.Load<Texture2D>("64x64");
+            GameImage staticFloor = new GameImage(m_TileFloor);
+            IEnumerable<KKGameBoard> boards = LevelLoader.GetLevels(Game, staticFloor, SpriteBatch, staticFloor.CurrentTexture.Width);
+            m_Board = boards.ToArray()[0];
         }
 
         void m_timer_TimesUp(object sender, EventArgs e)
@@ -219,10 +216,10 @@ namespace KlimaKonflikt.Scenes
 
         private void FireAndFuelCollisionTest(KKPlayer player)
         {
-            WalledTile playerTile = board.GetTileFromPixelPosition(player.X, player.Y);
+            WalledTile playerTile = m_Board.GetTileFromPixelPosition(player.X, player.Y);
             foreach (KKMonster fire in m_Fires)
             {
-                WalledTile fireTile = board.GetTileFromPixelPosition(fire.GetPosition().X, fire.GetPosition().Y);
+                WalledTile fireTile = m_Board.GetTileFromPixelPosition(fire.GetPosition().X, fire.GetPosition().Y);
 
                 if (fireTile == playerTile)
                 {
@@ -231,7 +228,7 @@ namespace KlimaKonflikt.Scenes
                     return;
                 }
             }
-            if (RefuelPositions[player] == playerTile)
+            if (m_RefuelPositions[player] == playerTile)
             {
                 if (player.Ammunition < 10)
                 {
@@ -255,9 +252,9 @@ namespace KlimaKonflikt.Scenes
                 //    astarController.TargetTile = RefuelPositions[OilDrum];
                 //}
 
-                if (RefuelPositions.ContainsValue(playerTile))
+                if (m_RefuelPositions.ContainsValue(playerTile))
                 {
-                    MoveRefuelPosition(Adversary[player]);
+                    MoveRefuelPosition(m_Adversaries[player]);
                 }
 
             }
@@ -266,25 +263,25 @@ namespace KlimaKonflikt.Scenes
 
         private void TileCollisionTest(KKPlayer player)
         {
-            WalledTile playerTile = board.GetTileFromPixelPosition(player.X, player.Y);
+            WalledTile playerTile = m_Board.GetTileFromPixelPosition(player.X, player.Y);
 
           
 
-            if (player.Ammunition > 0 && player.EjerskabsType != EjerskabsOversigt[playerTile.HorizontalIndex, playerTile.VerticalIndex])
+            if (player.Ammunition > 0 && player.EjerskabsType != m_EjerskabsOversigt[playerTile.HorizontalIndex, playerTile.VerticalIndex])
             {
-                KKPlayer adversary = Adversary[player];
+                KKPlayer adversary = m_Adversaries[player];
 
-                if (EjerskabsOversigt[playerTile.HorizontalIndex, playerTile.VerticalIndex] == adversary.EjerskabsType)
+                if (m_EjerskabsOversigt[playerTile.HorizontalIndex, playerTile.VerticalIndex] == adversary.EjerskabsType)
                 {
                     adversary.EjedeFelter--;
                 }
-                EjerskabsOversigt[playerTile.HorizontalIndex, playerTile.VerticalIndex] = player.EjerskabsType;
+                m_EjerskabsOversigt[playerTile.HorizontalIndex, playerTile.VerticalIndex] = player.EjerskabsType;
 
-                if (player == SeedSack)
+                if (player == m_SeedSack)
                 {
                     playerTile.ContentGameImage = GameImages.GetBlomstImage();
                 }
-                else if (player == OilDrum)
+                else if (player == m_OilBarrel)
                 {
                     playerTile.ContentGameImage = GameImages.GetOlieImage();
                 }
@@ -310,26 +307,26 @@ namespace KlimaKonflikt.Scenes
         private WalledTile MoveRefuelPosition(KKPlayer player)
         {
 
-            WalledTile newPosition = RefuelPositions[SeedSack];
+            WalledTile newPosition = m_RefuelPositions[m_SeedSack];
             do
             {
-                newPosition = board.Tiles[m_RandomX.Next(), m_RandomY.Next()];
-            } while (RefuelPositions.ContainsValue(newPosition));
+                newPosition = m_Board.Tiles[m_RandomX.Next(), m_RandomY.Next()];
+            } while (m_RefuelPositions.ContainsValue(newPosition));
 
-            RefuelPositions[player] = newPosition;
-            RefuelImage[player].SetPosition(RefuelPositions[player].Center);
+            m_RefuelPositions[player] = newPosition;
+            m_RefuelImages[player].SetPosition(m_RefuelPositions[player].Center);
 
             if (SinglePlayer)
             {
-                if (OilDrum.Ammunition == 10)
+                if (m_OilBarrel.Ammunition == 10)
                 {
-                    ((A_StarController)oilController).TargetTile = RefuelPositions[SeedSack];
+                    ((A_StarController)m_OilController).TargetTile = m_RefuelPositions[m_SeedSack];
                     //Console.WriteLine("Ammo: " + OilDrum.Ammunition + ", going for adversary's refuel at [" + astarController.TargetTile.HorizontalIndex + "," + astarController.TargetTile.VerticalIndex + "]");
                 }
                 else
                 {
                     //Console.WriteLine("Ammo: " + OilDrum.Ammunition + ", going for own refuel at [" + astarController.TargetTile.HorizontalIndex + "," + astarController.TargetTile.VerticalIndex + "]");
-                    ((A_StarController)oilController).TargetTile = RefuelPositions[OilDrum];
+                    ((A_StarController)m_OilController).TargetTile = m_RefuelPositions[m_OilBarrel];
                 }
             }
 
@@ -353,14 +350,14 @@ namespace KlimaKonflikt.Scenes
 
             if (keyboardState.IsKeyDown(Keys.P))
             {
-                this.Pause();
-                m_mainGameTune.Pause();
+                Pause();
+                m_MainGameTune.Pause();
             }
 
             if (keyboardState.IsKeyDown(Keys.R))
             {
-                this.Resume();
-                m_mainGameTune.Resume();
+                Resume();
+                m_MainGameTune.Resume();
             }
 
             if (keyboardState.IsKeyDown(Keys.RightControl) && keyboardState.IsKeyDown(Keys.Insert))
@@ -400,35 +397,35 @@ namespace KlimaKonflikt.Scenes
 
             #endregion
 
-            if (!this.IsPaused && !m_gameWaitingToBegin)
+            if (!IsPaused && !m_gameWaitingToBegin)
             {
 
                 //oilController.Update(gameTime, OilDrum);
                 //astarController.TargetTile = RefuelPositions[OilDrum];// board.GetTileFromPixelPosition(OilDrum.GetPosition());
-                oilController.Update(gameTime, OilDrum);
-                sackController.Update(gameTime, SeedSack);
+                m_OilController.Update(gameTime, m_OilBarrel);
+                m_SackController.Update(gameTime, m_SeedSack);
                 foreach (KKMonster fire in m_Fires)
                 {
-                    fireController.Update(gameTime, fire);
+                    m_FireController.Update(gameTime, fire);
                 }
       
-                scoreDifference = SeedSack.EjedeFelter - OilDrum.EjedeFelter;
-                float scoreDifferenceFactor = Math.Abs(scoreDifference) / 200;
-                switch (Math.Sign(scoreDifference))
+                m_ScoreDifference = m_SeedSack.EjedeFelter - m_OilBarrel.EjedeFelter;
+                float scoreDifferenceFactor = Math.Abs(m_ScoreDifference) / 200;
+                switch (Math.Sign(m_ScoreDifference))
                 {
                     case -1: // frø er foran
-                        SeedSack.Health -= scoreDifferenceFactor * m_damageFactor;
+                        m_SeedSack.Health -= scoreDifferenceFactor * m_damageFactor;
                         break;
 
                     case 1: // OilDrum er foran
-                        OilDrum.Health -= scoreDifferenceFactor * m_damageFactor;
+                        m_OilBarrel.Health -= scoreDifferenceFactor * m_damageFactor;
                         break;
                 }
                 float maxSpeed = .4F;
-                float lowestHealth = Math.Min(SeedSack.Health, OilDrum.Health);
+                float lowestHealth = Math.Min(m_SeedSack.Health, m_OilBarrel.Health);
                 if (lowestHealth < 50 && !m_GameOver)
                 {
-                    m_mainGameTune.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
+                    m_MainGameTune.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
                 }
                 
             }
@@ -438,12 +435,12 @@ namespace KlimaKonflikt.Scenes
 
         public override void Draw(GameTime gameTime)
         {
-            Game.GraphicsDevice.Clear(background);
+            Game.GraphicsDevice.Clear(m_Background);
 
             // TODO: Add your drawing code here
             SpriteBatch.Begin();
 
-            if (SeedSack.Health <= 0.5F)
+            if (m_SeedSack.Health <= 0.5F)
             {
 
                 m_GameOver = true;
@@ -451,7 +448,7 @@ namespace KlimaKonflikt.Scenes
                 SpriteBatch.End();
                 return;
             }
-            else if (OilDrum.Health <= 0.5F)
+            else if (m_OilBarrel.Health <= 0.5F)
             {
                 m_GameOver = true;
                 SceneManager.ChangeScene(SceneNames.FLOWERWINSCENE);
@@ -463,67 +460,67 @@ namespace KlimaKonflikt.Scenes
 
             int shadowOffset = 9;
 
-            for (int y = OilDrum.Ammunition - 1; y >= 0; y--)
+            for (int y = m_OilBarrel.Ammunition - 1; y >= 0; y--)
             {
-                SpriteBatch.Draw(oilSpill, ammoPlacering[0, y].GetOffsetCopy(shadowOffset), shadow);
-                SpriteBatch.Draw(oilSpill, ammoPlacering[0, y], Color.White);
+                SpriteBatch.Draw(m_OilSpill, m_AmmoPlacering[0, y].GetOffsetCopy(shadowOffset), m_Shadow);
+                SpriteBatch.Draw(m_OilSpill, m_AmmoPlacering[0, y], Color.White);
             }
-            for (int y = SeedSack.Ammunition - 1; y >= 0; y--)
+            for (int y = m_SeedSack.Ammunition - 1; y >= 0; y--)
             {
-                SpriteBatch.Draw(flower, ammoPlacering[1, y].GetOffsetCopy(shadowOffset), shadow);
-                SpriteBatch.Draw(flower, ammoPlacering[1, y], Color.White);
+                SpriteBatch.Draw(m_Flower, m_AmmoPlacering[1, y].GetOffsetCopy(shadowOffset), m_Shadow);
+                SpriteBatch.Draw(m_Flower, m_AmmoPlacering[1, y], Color.White);
             }
 
-            int olieBarRectangleHeight = (int)(640 * OilDrum.Health / 100);
-            int SeedSackRectangleHeight = (int)(640 * SeedSack.Health / 100);
+            int olieBarRectangleHeight = (int)(640 * m_OilBarrel.Health / 100);
+            int SeedSackRectangleHeight = (int)(640 * m_SeedSack.Health / 100);
 
-            Rectangle olieBarRectangle = new Rectangle(140, 700 - olieBarRectangleHeight, healthBarTexture.Width, olieBarRectangleHeight);
-            Rectangle SeedSackBarRectangle = new Rectangle(850, 700 - SeedSackRectangleHeight, healthBarTexture.Width, SeedSackRectangleHeight);
+            Rectangle olieBarRectangle = new Rectangle(140, 700 - olieBarRectangleHeight, m_HealthBar.Width, olieBarRectangleHeight);
+            Rectangle SeedSackBarRectangle = new Rectangle(850, 700 - SeedSackRectangleHeight, m_HealthBar.Width, SeedSackRectangleHeight);
 
-            int SeedSackHealthBarIndex = (int)(SeedSack.Health / 20);
-            int OilDrumHealthBarIndex = (int)(OilDrum.Health / 20);
+            int SeedSackHealthBarIndex = (int)(m_SeedSack.Health / 20);
+            int OilDrumHealthBarIndex = (int)(m_OilBarrel.Health / 20);
 
             if (SeedSackHealthBarIndex > 4) SeedSackHealthBarIndex = 4;
             if (OilDrumHealthBarIndex > 4) OilDrumHealthBarIndex = 4;
             if (SeedSackHealthBarIndex < 0) SeedSackHealthBarIndex = 0;
             if (OilDrumHealthBarIndex < 0) OilDrumHealthBarIndex = 0;
 
-            SpriteBatch.Draw(this.scorePicOilBarrel, new Rectangle(10, 10, 120, 150), Color.White);
-            SpriteBatch.Draw(this.scorePicFlowerSack, new Rectangle(890, 10, 120, 150), Color.White);
+            SpriteBatch.Draw(m_ScorePicOilBarrel, new Rectangle(10, 10, 120, 150), Color.White);
+            SpriteBatch.Draw(m_ScorePicFlowerSack, new Rectangle(890, 10, 120, 150), Color.White);
 
             Color player1ScoreColor = Color.White;
             Color player2ScoreColor = Color.White;
 
-            if (scoreDifference > 0)
+            if (m_ScoreDifference > 0)
             {
-                player1ScoreColor = negativeScoreColor;
-                player2ScoreColor = positiveScoreColor;
+                player1ScoreColor = m_NegativeScoreColor;
+                player2ScoreColor = m_PositiveScoreColor;
             }
-            else if (scoreDifference < 0)
+            else if (m_ScoreDifference < 0)
             {
-                player2ScoreColor = negativeScoreColor;
-                player1ScoreColor = positiveScoreColor;
+                player2ScoreColor = m_NegativeScoreColor;
+                player1ScoreColor = m_PositiveScoreColor;
 
             }
 
-            string strScoreDifference = ((-1) * scoreDifference).ToString();
-            float scoreWidth = font.MeasureString(strScoreDifference).X;
+            string strScoreDifference = ((-1) * m_ScoreDifference).ToString();
+            float scoreWidth = m_Font.MeasureString(strScoreDifference).X;
             Vector2 scorePosition = new Vector2(50 - scoreWidth/2, 55);
             Vector2 scoreShadowPosition = new Vector2(55 - scoreWidth / 2, 60);
 
-            SpriteBatch.DrawString(font, strScoreDifference, scoreShadowPosition, Color.Black);
-            SpriteBatch.DrawString(font, strScoreDifference, scorePosition, player1ScoreColor);
+            SpriteBatch.DrawString(m_Font, strScoreDifference, scoreShadowPosition, Color.Black);
+            SpriteBatch.DrawString(m_Font, strScoreDifference, scorePosition, player1ScoreColor);
 
-            strScoreDifference = scoreDifference.ToString();
-            scoreWidth = font.MeasureString(strScoreDifference).X;
+            strScoreDifference = m_ScoreDifference.ToString();
+            scoreWidth = m_Font.MeasureString(strScoreDifference).X;
             scorePosition = new Vector2(940 - scoreWidth / 2, 55);
             scoreShadowPosition = new Vector2(945 - scoreWidth / 2, 60);
 
-            SpriteBatch.DrawString(font, strScoreDifference, scoreShadowPosition, Color.Black);
-            SpriteBatch.DrawString(font, strScoreDifference, scorePosition, player2ScoreColor);      
+            SpriteBatch.DrawString(m_Font, strScoreDifference, scoreShadowPosition, Color.Black);
+            SpriteBatch.DrawString(m_Font, strScoreDifference, scorePosition, player2ScoreColor);      
 
-            SpriteBatch.Draw(healthBarTexture, olieBarRectangle, healthColors[OilDrumHealthBarIndex]);
-            SpriteBatch.Draw(healthBarTexture, SeedSackBarRectangle, healthColors[SeedSackHealthBarIndex]);
+            SpriteBatch.Draw(m_HealthBar, olieBarRectangle, m_HealthColors[OilDrumHealthBarIndex]);
+            SpriteBatch.Draw(m_HealthBar, SeedSackBarRectangle, m_HealthColors[SeedSackHealthBarIndex]);
             SpriteBatch.End();
 
         }
@@ -537,52 +534,52 @@ namespace KlimaKonflikt.Scenes
         public override void OnEntered()
         {
             Reset();
-            m_mainGameTune.Play();
+            m_MainGameTune.Play();
 
         }
         public override void OnLeft()
         {
-            m_mainGameTune.Stop();
+            m_MainGameTune.Stop();
         }
 
         public override void Reset()
         {
-            EjerskabsOversigt = new Ejerskab[board.TilesHorizontally, board.TilesVertically];
-            RefuelPositions[SeedSack] = board.Tiles[m_wheelbarrowBeginTilePosition.X, m_wheelbarrowBeginTilePosition.Y];
-            RefuelPositions[OilDrum] = board.Tiles[m_oilTowerBeginTilePosition.X, m_oilTowerBeginTilePosition.Y];
-            wheelBarrow1.SetPosition(RefuelPositions[SeedSack].Center);
-            oilTower1.SetPosition(RefuelPositions[OilDrum].Center);
+            m_EjerskabsOversigt = new Ejerskab[m_Board.TilesHorizontally, m_Board.TilesVertically];
+            m_RefuelPositions[m_SeedSack] = m_Board.Tiles[m_WheelbarrowBeginTilePosition.X, m_WheelbarrowBeginTilePosition.Y];
+            m_RefuelPositions[m_OilBarrel] = m_Board.Tiles[m_OilTowerBeginTilePosition.X, m_OilTowerBeginTilePosition.Y];
+            m_WheelBarrow.SetPosition(m_RefuelPositions[m_SeedSack].Center);
+            m_OilTower.SetPosition(m_RefuelPositions[m_OilBarrel].Center);
 
-            foreach (KKPlayer player in Players)
+            foreach (KKPlayer player in m_Players)
             {
                 player.Reset();
             }
-            oilController = (A_StarController)new A_StarController(board);
+            m_OilController = (A_StarController)new A_StarController(m_Board);
 
-            sackController = new KeyboardController(board, KeyboardController.KeySet.ArrowKeys);
-            ((A_StarController)oilController).TargetTile = RefuelPositions[OilDrum];
+            m_SackController = new KeyboardController(m_Board, KeyboardController.KeySet.ArrowKeys);
+            ((A_StarController)m_OilController).TargetTile = m_RefuelPositions[m_OilBarrel];
 
-            directionController = new SimpleDirectionController(board);
-            directionController.TargetTile = RefuelPositions[OilDrum];
+            m_DirectionController = new SimpleDirectionController(m_Board);
+            m_DirectionController.TargetTile = m_RefuelPositions[m_OilBarrel];
 
             //aggressiveFireController = new SimpleDirectionController(board);
             
             if (SinglePlayer)
             {
                 //oilController = directionController;
-                m_RandomX = new RealRandom(1, board.TilesHorizontally-2);
-                m_RandomY = new RealRandom(1, board.TilesVertically - 2);
+                m_RandomX = new RealRandom(1, m_Board.TilesHorizontally-2);
+                m_RandomY = new RealRandom(1, m_Board.TilesVertically - 2);
             }
             else
             {
-                oilController = new KeyboardController(board, KeyboardController.KeySet.WASD);
-                m_RandomX = new RealRandom(0, board.TilesHorizontally - 1);
-                m_RandomY = new RealRandom(0, board.TilesVertically - 1);
+                m_OilController = new KeyboardController(m_Board, KeyboardController.KeySet.WASD);
+                m_RandomX = new RealRandom(0, m_Board.TilesHorizontally - 1);
+                m_RandomY = new RealRandom(0, m_Board.TilesVertically - 1);
             }
-            oilController.TileCenterCrossed += TileCenterCrossed;
-            oilController.UnitMoved += UnitMoved;
-            sackController.TileCenterCrossed += TileCenterCrossed;
-            sackController.UnitMoved += UnitMoved;
+            m_OilController.TileCenterCrossed += TileCenterCrossed;
+            m_OilController.UnitMoved += UnitMoved;
+            m_SackController.TileCenterCrossed += TileCenterCrossed;
+            m_SackController.UnitMoved += UnitMoved;
 
             
             //flytter ild tilbage til udgangspositioner
@@ -591,10 +588,10 @@ namespace KlimaKonflikt.Scenes
                 fire.Reset();
             }
 
-            scoreDifference = 0;
+            m_ScoreDifference = 0;
 
-            m_mainGameTune.Pitch = 0;
-            board.Reset();
+            m_MainGameTune.Pitch = 0;
+            m_Board.Reset();
             m_gameWaitingToBegin = true;
             m_timer.SecondsToCountDown = 3;
             m_timer.Reset();
