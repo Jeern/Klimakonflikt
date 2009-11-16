@@ -635,11 +635,21 @@ namespace KlimaKonflikt.Scenes
 
         private double TileCostCalculator(WalledTile tile)
         {
+
+            
             foreach (KKMonster monster in m_Fires)
             {
-                if (m_Board.GetTileFromPixelPosition(monster.GetPosition()) == tile)
+                WalledTile monsterTile = (WalledTile)m_Board.GetTileFromPixelPosition(monster.GetPosition());
+                if (monsterTile == tile)
                 {
                     return 100;
+                }
+                else
+                {
+                    if (monsterTile.AccessibleNeighbours.Contains(tile))
+                    {
+                        return 20;
+                    }
                 }
             }
 
