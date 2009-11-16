@@ -20,7 +20,7 @@ using GameDev.Core.Sequencing;
 
 namespace GameDev.Core
 {
-    internal static class BaseTextures
+    public static class BaseTextures
     {
         public static Texture2D Square_128x128 { get; internal set; }
         public static Texture2D Circle_128x128 { get; internal set; }
