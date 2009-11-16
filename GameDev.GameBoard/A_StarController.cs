@@ -23,7 +23,17 @@ namespace GameDev.GameBoard
 
     public class A_StarController : GameBoardControllerBase
     {
-        public A_StarController(GameBoard board) : base(board) { }
+        public Path<WalledTile>  Path { get; private set; }
+        private Func<WalledTile, double> m_estimate;
+        public A_StarController(GameBoard board) : base(board) 
+        {
+            m_estimate = x => { return 0; };
+        }
+        public A_StarController(GameBoard board, Func<WalledTile, double> estimate) : base(board)
+        {
+            m_estimate = estimate;
+        }
+
 
         public WalledTile TargetTile { get; set; }
 
@@ -51,8 +61,12 @@ namespace GameDev.GameBoard
                 }
             }
 //            DateTime start = DateTime.Now;
-            Path<WalledTile> path = A_StarPathFinder.FindPath<WalledTile>(currentTile, TargetTile, (w1, w2) => { return w1.Center.DistanceTo(w2.Center); }, x => { return 0; });
-            List<WalledTile> reversed = path.Reverse<WalledTile>().ToList();
+            Path = A_StarPathFinder.FindPath<WalledTile>(currentTile, TargetTile, (w1, w2) => { return w1.Center.DistanceTo(w2.Center); }, m_estimate);
+            if (Path.TotalCost > 100)
+            {
+                int i = 9;
+            }
+            List<WalledTile> reversed = Path.Reverse<WalledTile>().ToList();
             reversed.RemoveAt(0);
             WalledTile tileToGoto = null;
             if (reversed.Count() > 0)

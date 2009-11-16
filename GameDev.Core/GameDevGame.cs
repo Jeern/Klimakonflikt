@@ -22,7 +22,6 @@ namespace GameDev.Core
 {
     public class GameDevGame : Game
     {
-
         static object _locker = new object();
         private static GameDevGame m_game;
         public static GameDevGame

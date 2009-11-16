@@ -48,5 +48,9 @@ namespace GameDev.Core
             return (float)Math.Sqrt(Math.Pow(Math.Abs(firstPoint.X - otherPoint.X),2)+  Math.Pow(Math.Abs(firstPoint.Y- otherPoint.Y),2));
         }
 
+        public static Vector2 ToVector(this Point p)
+        { return new Vector2(p.X, p.Y); }
+
+
     }
 }

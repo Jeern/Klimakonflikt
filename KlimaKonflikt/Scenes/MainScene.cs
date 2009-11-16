@@ -17,6 +17,8 @@ namespace KlimaKonflikt.Scenes
     {
         #region Variables
 
+
+        private bool m_debug = false;
         private RandomController m_FireController;
         private GameBoardControllerBase m_OilController, m_SackController;
 
@@ -358,10 +360,15 @@ namespace KlimaKonflikt.Scenes
                 m_MainGameTune.Resume();
             }
 
-            if (keyboardState.IsKeyDown(Keys.RightControl) && keyboardState.IsKeyDown(Keys.Insert))
-            {
-                m_damageFactor = 1 - m_damageFactor;
-            }
+                if (keyboardState.IsKeyDown(Keys.RightControl) && keyboardState.IsKeyDown(Keys.Insert))
+                {
+                    m_damageFactor = 1 - m_damageFactor;
+                }
+
+            if (keyboardState.IsKeyDown(Keys.F1))
+                {
+                    m_debug = !m_debug;
+                }
 
             
             #region speedchange
@@ -519,10 +526,40 @@ namespace KlimaKonflikt.Scenes
 
             SpriteBatch.Draw(m_HealthBar, olieBarRectangle, m_HealthColors[OilDrumHealthBarIndex]);
             SpriteBatch.Draw(m_HealthBar, SeedSackBarRectangle, m_HealthColors[SeedSackHealthBarIndex]);
-            SpriteBatch.End();
+
+            if (m_debug)
+            {
+
+                Vector2 tilePosition, boardPosition;
+                boardPosition = new Vector2(m_Board.X + 5, m_Board.Y + 5);
+                foreach (Tile t in m_Board.Tiles)
+                {
+                    tilePosition = new Vector2(t.X, t.Y);
+                    tilePosition += boardPosition;
+                    SpriteBatch.DrawString(GameDevGame.Current.DebugFont, TileCostCalculator((WalledTile)t).ToString(), tilePosition, Color.Black);
+                    tilePosition -= Vector2.One;
+                    SpriteBatch.DrawString(GameDevGame.Current.DebugFont, TileCostCalculator((WalledTile)t).ToString(), tilePosition, Color.White);
+
+                }
+                if (((A_StarController)m_OilController).Path != null)
+                {
+
+
+                    foreach (WalledTile t in ((A_StarController)m_OilController).Path)
+                    {
+                        tilePosition = t.GetPosition().ToVector();
+                        tilePosition += boardPosition + Vector2.One * 15;
+
+                        SpriteBatch.Draw(BaseTextures.Circle_128x128, new Rectangle((int)tilePosition.X, (int)tilePosition.Y, 10, 10), Color.Blue);
+                    }
+
+                }
+
+    
 
         }
-
+            SpriteBatch.End();
+        }
 
         #endregion
 
@@ -551,7 +588,7 @@ namespace KlimaKonflikt.Scenes
             {
                 player.Reset();
             }
-            m_OilController = (A_StarController)new A_StarController(m_Board);
+            m_OilController = (A_StarController)new A_StarController(m_Board, TileCostCalculator);
 
             m_SackController = new KeyboardController(m_Board, KeyboardController.KeySet.ArrowKeys);
             ((A_StarController)m_OilController).TargetTile = m_RefuelPositions[m_OilBarrel];
@@ -594,5 +631,39 @@ namespace KlimaKonflikt.Scenes
             m_timer.Reset();
         }
         #endregion
+
+
+        private double TileCostCalculator(WalledTile tile)
+        {
+            foreach (KKMonster monster in m_Fires)
+            {
+                if (m_Board.GetTileFromPixelPosition(monster.GetPosition()) == tile)
+                {
+                    return 100;
+                }
+            }
+
+            Ejerskab ejer = m_EjerskabsOversigt[tile.HorizontalIndex,tile.VerticalIndex];
+
+
+            switch (ejer)
+            {
+                case Ejerskab.None:
+                    return 2;
+                case Ejerskab.Blomst:
+                    if (m_OilBarrel.Ammunition > 4)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return 2;
+                    } 
+                case Ejerskab.Olie:
+                    return 4;
+            }
+            return 2;
+
+        }
     }
 }

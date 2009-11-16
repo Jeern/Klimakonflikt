@@ -28,8 +28,9 @@ namespace GameDev.GameBoard
                 closed.Add(path.LastStep);
                 foreach (Node n in path.LastStep.AccessibleNeighbours)
                 {
+                    double stepcost = estimate(n);
                     double d = distance(path.LastStep, n);
-                    var newPath = path.AddStep(n, d);
+                    var newPath = path.AddStep(n, stepcost);
                     queue.Enqueue(newPath.TotalCost + estimate(n), newPath);
                 }
             }
