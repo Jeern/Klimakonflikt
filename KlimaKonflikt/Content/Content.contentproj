@@ -605,11 +605,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="OlieTaarnet\Oilie tårn0040.png">
-      <Name>Oilie tårn0040</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OilBarrel\OilBarrel001.png">
