@@ -90,7 +90,7 @@
     </Compile>
     <Compile Include="Ejerskab.cs" />
     <Compile Include="GameImages.cs" />
-    <Compile Include="GameMenu.cs" />
+    <Compile Include="KKGameMenu.cs" />
     <Compile Include="KKGameBoard.cs" />
     <Compile Include="KKMonster.cs" />
     <Compile Include="LevelLoader.cs" />

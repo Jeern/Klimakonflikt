@@ -75,7 +75,7 @@ namespace GameDev.Core.Menus
             this.Text = text;
             this.ActiveColor = activeColor;
             this.InactiveColor = inactiveColor;
-            RecalculatePosition();
+            NeedsPositionRecalculation = true;
         }
 
         public override void Draw(GameTime gameTime)
@@ -93,6 +93,7 @@ namespace GameDev.Core.Menus
                 int y = (int)Position.Y;
                 this.Position = new Vector2(x, y);
             }
+            NeedsPositionRecalculation = false;
 
         }
 

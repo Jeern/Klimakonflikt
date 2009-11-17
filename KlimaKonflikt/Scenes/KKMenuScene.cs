@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework.Storage;
 using GameDev.Core;
 using GameDev.GameBoard;
 using GameDev.Core.Graphics;
+using GameDev.Core.Menus;
 using GameDev.Core.SceneManagement;
 using GameDev.Core.Sequencing;
 
@@ -31,7 +32,7 @@ namespace KlimaKonflikt.Scenes
 
         
         public KKMenuScene()
-            : base(SceneNames.MENUSCENE, new GameMenu(), Color.Black)
+            : base(SceneNames.MENUSCENE, new KKGameMenu(), Color.Black)
         {
             SoundEffect effect = GameDevGame.Current.Content.Load<SoundEffect>(@"GameTunes\CreditsTune");
             m_creditsTune = effect.CreateInstance();
@@ -40,34 +41,38 @@ namespace KlimaKonflikt.Scenes
 
         void Menu_MenuItemActivated(GameDev.Core.Menus.MenuItem sender, EventArgs e)
         {
+            int numberOfWinsToWinGame = ((SliderMenuItem)Menu.GetMenuItem(KKGameMenu.MENU_NUMBEROFWINS)).CurrentValue;
 
             switch (sender.Name)
             {
 
-                case GameMenu.MENU_STARTSINGLEPLAYER:
-                    ((MainScene)SceneManager.GetScene(SceneNames.MAINSCENE)).SinglePlayer = true;
-                    SceneManager.ChangeScene(SceneNames.MAINSCENE);
+                case KKGameMenu.MENU_STARTSINGLEPLAYER:
+                    MainScene mainScene = (MainScene)SceneManager.GetScene(SceneNames.MAINSCENE);
+                       mainScene.SinglePlayer = true;
+                    mainScene.NumberOfWinsToWinGame = numberOfWinsToWinGame;
+                    SceneManager.ChangeScene(mainScene);
                     break;
 
-                case GameMenu.MENU_START2PLAYER:
-
-                    ((MainScene)SceneManager.GetScene(SceneNames.MAINSCENE)).SinglePlayer = false;
-                    SceneManager.ChangeScene(SceneNames.MAINSCENE);
+                case KKGameMenu.MENU_START2PLAYER:
+                    mainScene = (MainScene)SceneManager.GetScene(SceneNames.MAINSCENE);
+                    mainScene.SinglePlayer = false;
+                    mainScene.NumberOfWinsToWinGame = numberOfWinsToWinGame;
+                    SceneManager.ChangeScene(mainScene);
                     break;
 
-                case GameMenu.MENU_EXIT:
+                case KKGameMenu.MENU_EXIT:
                     GameDevGame.Current.Exit();
                     break;
 
-                case GameMenu.MENU_TOGGLEFULLSCREEN:
+                case KKGameMenu.MENU_TOGGLEFULLSCREEN:
                     GameDevGame.Current.GraphicsDeviceManager.ToggleFullScreen();
                     break;
 
-                case GameMenu.MENU_CREDITS:
+                case KKGameMenu.MENU_CREDITS:
                     SceneManager.Current.ChangeScene(SceneNames.CREDITSSCENE);
                     break;
 
-                case GameMenu.MENU_INSTRUCTIONS:
+                case KKGameMenu.MENU_INSTRUCTIONS:
                     SceneManager.Current.ChangeScene(SceneNames.INSTRUCTIONSSCENE);
                     break;
             }

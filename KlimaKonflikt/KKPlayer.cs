@@ -20,6 +20,8 @@ namespace KlimaKonflikt
 {
     public class KKPlayer : Sprite
     {
+
+        public int RoundsWon { get; set; }
         public int EjedeFelter { get; set; }
         protected int m_startingAmmo;
         public SoundEffect TakeoverTileSound { get; set; }
@@ -48,7 +50,14 @@ namespace KlimaKonflikt
             this.Ammunition = m_startingAmmo;
             this.Health = 100;
             this.EjedeFelter = 0;
+            
         }
+
+        public void ResetGame()
+        {
+            this.RoundsWon = 0;
+        }
+        
 
         public override void Update(GameTime gameTime)
         {
