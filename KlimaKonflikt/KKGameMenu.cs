@@ -21,6 +21,7 @@ using GameDev.Core.Graphics;
 using GameDev.Core.SceneManagement;
 using GameDev.Core.Sequencing;
 using GameDev.Core.Menus;
+
 using KlimaKonflikt.Scenes;
 
 #endregion
@@ -44,6 +45,7 @@ namespace KlimaKonflikt
        SpriteFont menuFont;
        TextMenuItem mnuStart1PlayerGame , mnuStart2PlayerGame, mnuInstructions, mnuCredits,mnuToggleFullscreen, mnuExit;
        SliderMenuItem mnuNumberOfWins;
+
        public KKGameMenu()
        {
            menuFont = GameDevGame.Current.Content.Load<SpriteFont>("MenuText");
@@ -51,7 +53,7 @@ namespace KlimaKonflikt
            mnuStart1PlayerGame = new TextMenuItem(MENU_STARTSINGLEPLAYER, menuFont, MENU_STARTSINGLEPLAYER);
            mnuStart2PlayerGame = new TextMenuItem(MENU_START2PLAYER, menuFont);
 
-           mnuNumberOfWins = new SliderMenuItem(MENU_NUMBEROFWINS, menuFont, MENU_NUMBEROFWINS, 5, 1, 1);
+           mnuNumberOfWins = new SliderMenuItem(MENU_NUMBEROFWINS, menuFont, MENU_NUMBEROFWINS, 7, 1, 1);
            mnuNumberOfWins.CurrentValue = 3;
            mnuInstructions = new TextMenuItem(MENU_INSTRUCTIONS, menuFont);
            mnuCredits = new TextMenuItem(MENU_CREDITS, menuFont);

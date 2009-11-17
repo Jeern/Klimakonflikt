@@ -134,10 +134,16 @@
     <Compile Include="Graphics\GraphicTimer.cs" />
     <Compile Include="Graphics\SpriteBatchExtensions.cs" />
     <Compile Include="Graphics\TextureClipper.cs" />
+    <Compile Include="Graphics\ViewPortExtensions.cs" />
     <Compile Include="Menus\TextMenuItem.cs" />
     <Compile Include="Menus\MenuBase.cs" />
     <Compile Include="Menus\MenuItem.cs" />
     <Compile Include="Menus\SliderMenuItem.cs" />
+    <Compile Include="Particles\ExplosionParticleSystem.cs" />
+    <Compile Include="Particles\ExplosionSmokeParticleSystem.cs" />
+    <Compile Include="Particles\Particle.cs" />
+    <Compile Include="Particles\ParticleSystem.cs" />
+    <Compile Include="Particles\SmokePlumeParticleSystem.cs" />
     <Compile Include="SceneManagement\AnyKeySceneLink.cs" />
     <Compile Include="SceneManagement\KeyboardSceneChangeLink.cs" />
     <Compile Include="SceneManagement\MenuScene.cs" />
@@ -166,6 +172,7 @@
     <Compile Include="RealRandom.cs" />
     <Compile Include="Sequencing\StaticSequencer.cs" />
     <Compile Include="Vector2Helper.cs" />
+    <Compile Include="VectorSprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">

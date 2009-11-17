@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace GameDev.Core
 {
     public class DirectionChanger : IEquatable<DirectionChanger>
     {
+
         public DirectionChanger() : this(0, 0) { }
 
         public DirectionChanger(int deltaX, int deltaY)
