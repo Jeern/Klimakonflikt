@@ -34,14 +34,16 @@ namespace KlimaKonflikt.Scenes
         {
             base.Update(gameTime);
 
-
-            if (UpdatedKeyboardState.IsKeyDown(Keys.Enter))
+            if (NoKeysPressed)
             {
-                SceneManager.ChangeScene(SceneNames.MENUSCENE);
-            }
-            else if (UpdatedKeyboardState.IsKeyDown(Keys.Escape))
-            {
-                SceneManager.ChangeScene(SceneNames.CREDITSSCENE);
+                if (UpdatedKeyboardState.IsKeyDown(Keys.Enter))
+                {
+                    SceneManager.ChangeScene(SceneNames.MENUSCENE);
+                }
+                else if (UpdatedKeyboardState.IsKeyDown(Keys.Escape))
+                {
+                    SceneManager.ChangeScene(SceneNames.CREDITSSCENE);
+                }
             }
 
         }

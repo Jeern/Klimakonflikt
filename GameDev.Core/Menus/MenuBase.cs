@@ -33,6 +33,19 @@ namespace GameDev.Core.Menus
         public int KeyboardDelay { get; set; }
         private int m_selectedIndex;
 
+
+        public MenuItem GetMenuItem(string menuItemName)
+        {
+            foreach (MenuItem item in m_menuItems)
+            {
+                if (item.Name == menuItemName)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
         public MenuItem SelectedMenuItem
         {
             set

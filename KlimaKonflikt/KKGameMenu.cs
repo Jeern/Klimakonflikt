@@ -27,7 +27,7 @@ using KlimaKonflikt.Scenes;
 
 namespace KlimaKonflikt
 {
-   public class GameMenu :  MenuBase
+   public class KKGameMenu :  MenuBase
     {
 
 
@@ -36,18 +36,23 @@ namespace KlimaKonflikt
        public const string MENU_INSTRUCTIONS = "Instructions";
        public const string MENU_CREDITS = "Credits";
        public const string MENU_TOGGLEFULLSCREEN = "Toggle fullscreen";
+       public const string MENU_NUMBEROFWINS = "Number of wins";
        public const string MENU_EXIT = "Exit game";
        
        int topMargin = 150;
 
        SpriteFont menuFont;
        TextMenuItem mnuStart1PlayerGame , mnuStart2PlayerGame, mnuInstructions, mnuCredits,mnuToggleFullscreen, mnuExit;
-       public GameMenu()
+       SliderMenuItem mnuNumberOfWins;
+       public KKGameMenu()
        {
            menuFont = GameDevGame.Current.Content.Load<SpriteFont>("MenuText");
 
            mnuStart1PlayerGame = new TextMenuItem(MENU_STARTSINGLEPLAYER, menuFont, MENU_STARTSINGLEPLAYER);
            mnuStart2PlayerGame = new TextMenuItem(MENU_START2PLAYER, menuFont);
+
+           mnuNumberOfWins = new SliderMenuItem(MENU_NUMBEROFWINS, menuFont, MENU_NUMBEROFWINS, 5, 1, 1);
+           mnuNumberOfWins.CurrentValue = 3;
            mnuInstructions = new TextMenuItem(MENU_INSTRUCTIONS, menuFont);
            mnuCredits = new TextMenuItem(MENU_CREDITS, menuFont);
            mnuToggleFullscreen = new TextMenuItem(MENU_TOGGLEFULLSCREEN, menuFont);
@@ -55,6 +60,7 @@ namespace KlimaKonflikt
 
            this.AddMenuItem(mnuStart1PlayerGame);
            this.AddMenuItem(mnuStart2PlayerGame);
+           this.AddMenuItem(mnuNumberOfWins);
            this.AddMenuItem(mnuInstructions);
            this.AddMenuItem(mnuCredits);
            this.AddMenuItem(mnuToggleFullscreen);

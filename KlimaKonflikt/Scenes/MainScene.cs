@@ -15,30 +15,42 @@ namespace KlimaKonflikt.Scenes
 {
     public class MainScene : Scene
     {
+
+        public int NumberOfWinsToWinGame { get; set; }
+        KKPlayer m_roundWinner = null;
+
+        private enum GameState
+        {
+            WaitingToPlay,
+            Playing,
+            RoundOver,
+            GameOver
+        }
         #region Variables
 
 
         private bool m_debug = false;
         private RandomController m_FireController;
         private GameBoardControllerBase m_OilController, m_SackController;
-
-        private bool m_gameWaitingToBegin = true;
+        private Color m_overlayColor = new Color(100, 100, 100, 150);
+        private string m_overlaySubtext = "Press ENTER to continue";
+        private Vector2 m_overlaySubtextSize;
+        private GameState m_gameState;
         private float m_damageFactor = 1.0F;
 
         private GraphicTimer m_timer;
 
         private SimpleDirectionController m_DirectionController;
-        private bool m_GameOver = false;
         private SoundEffect m_SeedPlanting, m_OilDrip, m_SeedFueling, m_OilFueling;
         private SoundEffectInstance m_MainGameTune;
         private Point m_OilTowerBeginTilePosition, m_WheelbarrowBeginTilePosition;
         private Ejerskab[,] m_EjerskabsOversigt;
         private RealRandom m_RandomX, m_RandomY;
-        
+
         private Texture2D m_TileFloor, m_OilSpill, m_Flower, m_HealthBar, m_ScorePicOilBarrel, m_ScorePicFlowerSack;
         private GameImage m_OilTowerImage, m_WheelBarrowImage, m_CompleteFloorGameImage, m_PulsatingCircle;
         private Sprite m_OilTower, m_WheelBarrow;
-        private SpriteFont m_Font;
+        private SpriteFont m_largeFont, m_mediumFont, m_smallFont;
         private Rectangle[,] m_AmmoPlacering;
 
         private List<Color> m_HealthColors = new List<Color>()
@@ -94,8 +106,9 @@ namespace KlimaKonflikt.Scenes
             m_AmmoImages[m_OilBarrel] = GameImages.GetOlieImage();
             m_Adversaries[m_SeedSack] = m_OilBarrel;
             m_Adversaries[m_OilBarrel] = m_SeedSack;
-            m_Players.Add(m_SeedSack);
+
             m_Players.Add(m_OilBarrel);
+            m_Players.Add(m_SeedSack);
         }
 
         private void InitializePlayersAndMonsters()
@@ -129,7 +142,7 @@ namespace KlimaKonflikt.Scenes
                 m_AmmoPlacering[1, y] = new Rectangle(910, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
             }
             m_FireController = new RandomController(m_Board);
-            m_timer = new GraphicTimer(m_Font, 3);
+            m_timer = new GraphicTimer(m_largeFont, 3);
             m_timer.TimesUp += new EventHandler<EventArgs>(m_timer_TimesUp);
         }
 
@@ -164,7 +177,10 @@ namespace KlimaKonflikt.Scenes
             Texture2D completeFloor = Texture2D.FromFile(Game.GraphicsDevice, m_Board.LevelImageFileName);
             m_CompleteFloorGameImage = new GameImage(completeFloor);
             m_Board.CompleteBackground = m_CompleteFloorGameImage;
-            m_Font = Game.Content.Load<SpriteFont>("Arial");
+            m_largeFont = Game.Content.Load<SpriteFont>("LargeArial");
+            m_mediumFont = Game.Content.Load<SpriteFont>("MediumArial");
+            m_smallFont = Game.Content.Load<SpriteFont>("SmallArial");
+            m_overlaySubtextSize = m_smallFont.MeasureString(m_overlaySubtext);
             Texture2D wheelBarrowTexture = Game.Content.Load<Texture2D>("wheelbarrel");
             m_OilTowerImage = GameImages.GetOlieTaarnImage(Game.Content);
             m_OilTower = new Sprite(m_OilTowerImage, 0, m_Board.Tiles[m_OilTowerBeginTilePosition.X, m_OilTowerBeginTilePosition.Y].Center);
@@ -198,7 +214,8 @@ namespace KlimaKonflikt.Scenes
 
         void m_timer_TimesUp(object sender, EventArgs e)
         {
-            m_gameWaitingToBegin = false;
+
+            m_gameState = GameState.Playing;
         }
 
         void UnitMoved(object sender, EventArgs<Sprite> e)
@@ -239,7 +256,7 @@ namespace KlimaKonflikt.Scenes
                 }
                 //else
                 //{
-                    
+
                 //}
 
 
@@ -266,7 +283,7 @@ namespace KlimaKonflikt.Scenes
         {
             WalledTile playerTile = m_Board.GetTileFromPixelPosition(player.X, player.Y);
 
-          
+
 
             if (player.Ammunition > 0 && player.EjerskabsType != m_EjerskabsOversigt[playerTile.HorizontalIndex, playerTile.VerticalIndex])
             {
@@ -302,7 +319,7 @@ namespace KlimaKonflikt.Scenes
             {
                 player.Health -= 1F;
             }
-            
+
         }
 
         private WalledTile MoveRefuelPosition(KKPlayer player)
@@ -343,6 +360,28 @@ namespace KlimaKonflikt.Scenes
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
+
+            if (keyboardState.IsKeyDown(Keys.Enter))
+            {
+                switch (m_gameState)
+                {
+                    case GameState.RoundOver:
+                        ResetRound();
+                        break;
+                    case GameState.GameOver:
+                        if (m_OilBarrel.RoundsWon == NumberOfWinsToWinGame)
+                        {
+                            SceneManager.ChangeScene(SceneNames.OILWINSCENE);
+                        }
+                        else
+                        {
+                            SceneManager.ChangeScene(SceneNames.FLOWERWINSCENE);
+                        }
+                        break;
+                }
+
+            }
+
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
                 SceneManager.ChangeScene(SceneNames.MENUSCENE);
@@ -360,17 +399,17 @@ namespace KlimaKonflikt.Scenes
                 m_MainGameTune.Resume();
             }
 
-                if (keyboardState.IsKeyDown(Keys.RightControl) && keyboardState.IsKeyDown(Keys.Insert))
-                {
-                    m_damageFactor = 1 - m_damageFactor;
-                }
+            if (keyboardState.IsKeyDown(Keys.RightControl) && keyboardState.IsKeyDown(Keys.Insert))
+            {
+                m_damageFactor = 1 - m_damageFactor;
+            }
 
             if (keyboardState.IsKeyDown(Keys.F1))
-                {
-                    m_debug = !m_debug;
-                }
+            {
+                m_debug = !m_debug;
+            }
 
-            
+
             #region speedchange
 
             if (keyboardState.IsKeyDown(Keys.D1))
@@ -399,40 +438,56 @@ namespace KlimaKonflikt.Scenes
                 SinglePlayer = true;
             }
 
-
             #endregion
 
-            if (!IsPaused && !m_gameWaitingToBegin)
+            if (!IsPaused && m_gameState == GameState.Playing)
             {
+                if (m_SeedSack.Health <= 0.0F)
+                {
+                    m_SeedSack.Health = 0.0F;
+                    m_OilBarrel.RoundsWon++;
+                    m_gameState = GameState.RoundOver;
+                    m_roundWinner = m_OilBarrel;
+                }
+                else if (m_OilBarrel.Health <= 0.0F)
+                {
+                    m_OilBarrel.Health = 0.0F;
+                    m_SeedSack.RoundsWon++;
+                    m_gameState = GameState.RoundOver;
+                    m_roundWinner = m_SeedSack;
+                }
+                foreach (KKPlayer player in m_Players)
+                {
+                    if (player.RoundsWon == NumberOfWinsToWinGame)
+                    {
+                        m_gameState = GameState.GameOver;
+                    }
+                }
+                    m_OilController.Update(gameTime, m_OilBarrel);
+                    m_SackController.Update(gameTime, m_SeedSack);
+                    foreach (KKMonster fire in m_Fires)
+                    {
+                        m_FireController.Update(gameTime, fire);
+                    }
 
-                //oilController.Update(gameTime, OilDrum);
-                //astarController.TargetTile = RefuelPositions[OilDrum];// board.GetTileFromPixelPosition(OilDrum.GetPosition());
-                m_OilController.Update(gameTime, m_OilBarrel);
-                m_SackController.Update(gameTime, m_SeedSack);
-                foreach (KKMonster fire in m_Fires)
-                {
-                    m_FireController.Update(gameTime, fire);
-                }
-      
-                m_ScoreDifference = m_SeedSack.EjedeFelter - m_OilBarrel.EjedeFelter;
-                float scoreDifferenceFactor = Math.Abs(m_ScoreDifference) / 200;
-                switch (Math.Sign(m_ScoreDifference))
-                {
-                    case -1: // frø er foran
-                        m_SeedSack.Health -= scoreDifferenceFactor * m_damageFactor;
-                        break;
+                    m_ScoreDifference = m_SeedSack.EjedeFelter - m_OilBarrel.EjedeFelter;
+                    float scoreDifferenceFactor = Math.Abs(m_ScoreDifference) / 200;
+                    switch (Math.Sign(m_ScoreDifference))
+                    {
+                        case -1: // frø er foran
+                            m_SeedSack.Health -= scoreDifferenceFactor * m_damageFactor;
+                            break;
 
-                    case 1: // OilDrum er foran
-                        m_OilBarrel.Health -= scoreDifferenceFactor * m_damageFactor;
-                        break;
-                }
-                float maxSpeed = .4F;
-                float lowestHealth = Math.Min(m_SeedSack.Health, m_OilBarrel.Health);
-                if (lowestHealth < 50 && !m_GameOver)
-                {
-                    m_MainGameTune.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
-                }
-                
+                        case 1: // OilDrum er foran
+                            m_OilBarrel.Health -= scoreDifferenceFactor * m_damageFactor;
+                            break;
+                    }
+                    float maxSpeed = .4F;
+                    float lowestHealth = Math.Min(m_SeedSack.Health, m_OilBarrel.Health);
+                    if (lowestHealth < 50 && m_gameState == GameState.Playing)
+                    {
+                        m_MainGameTune.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
+                    }
             }
             base.Update(gameTime);
         }
@@ -445,21 +500,6 @@ namespace KlimaKonflikt.Scenes
             // TODO: Add your drawing code here
             SpriteBatch.Begin();
 
-            if (m_SeedSack.Health <= 0.5F)
-            {
-
-                m_GameOver = true;
-                SceneManager.ChangeScene(SceneNames.OILWINSCENE);
-                SpriteBatch.End();
-                return;
-            }
-            else if (m_OilBarrel.Health <= 0.5F)
-            {
-                m_GameOver = true;
-                SceneManager.ChangeScene(SceneNames.FLOWERWINSCENE);
-                SpriteBatch.End();
-                return;
-            }
 
             base.Draw(gameTime);
 
@@ -509,20 +549,20 @@ namespace KlimaKonflikt.Scenes
             }
 
             string strScoreDifference = ((-1) * m_ScoreDifference).ToString();
-            float scoreWidth = m_Font.MeasureString(strScoreDifference).X;
-            Vector2 scorePosition = new Vector2(50 - scoreWidth/2, 55);
+            float scoreWidth = m_largeFont.MeasureString(strScoreDifference).X;
+            Vector2 scorePosition = new Vector2(50 - scoreWidth / 2, 55);
             Vector2 scoreShadowPosition = new Vector2(55 - scoreWidth / 2, 60);
 
-            SpriteBatch.DrawString(m_Font, strScoreDifference, scoreShadowPosition, Color.Black);
-            SpriteBatch.DrawString(m_Font, strScoreDifference, scorePosition, player1ScoreColor);
+            SpriteBatch.DrawString(m_largeFont, strScoreDifference, scoreShadowPosition, Color.Black);
+            SpriteBatch.DrawString(m_largeFont, strScoreDifference, scorePosition, player1ScoreColor);
 
             strScoreDifference = m_ScoreDifference.ToString();
-            scoreWidth = m_Font.MeasureString(strScoreDifference).X;
+            scoreWidth = m_largeFont.MeasureString(strScoreDifference).X;
             scorePosition = new Vector2(940 - scoreWidth / 2, 55);
             scoreShadowPosition = new Vector2(945 - scoreWidth / 2, 60);
 
-            SpriteBatch.DrawString(m_Font, strScoreDifference, scoreShadowPosition, Color.Black);
-            SpriteBatch.DrawString(m_Font, strScoreDifference, scorePosition, player2ScoreColor);      
+            SpriteBatch.DrawString(m_largeFont, strScoreDifference, scoreShadowPosition, Color.Black);
+            SpriteBatch.DrawString(m_largeFont, strScoreDifference, scorePosition, player2ScoreColor);
 
             SpriteBatch.Draw(m_HealthBar, olieBarRectangle, m_HealthColors[OilDrumHealthBarIndex]);
             SpriteBatch.Draw(m_HealthBar, SeedSackBarRectangle, m_HealthColors[SeedSackHealthBarIndex]);
@@ -554,10 +594,20 @@ namespace KlimaKonflikt.Scenes
                     }
 
                 }
+            }
 
-    
+            //draw scores
+            SpriteBatch.DrawString(m_largeFont, m_OilBarrel.RoundsWon + "/" + NumberOfWinsToWinGame, new Vector2(30, 680), Color.Silver);
+            SpriteBatch.DrawString(m_largeFont, m_SeedSack.RoundsWon + "/" + NumberOfWinsToWinGame, new Vector2(900, 680), Color.Silver);
+            if (m_gameState == GameState.RoundOver)
+            {
+                DrawOverlay("Round won by player " + (m_Players.IndexOf(m_roundWinner) + 1));
+            }
+            else if (m_gameState == GameState.GameOver)
+            {
+                DrawOverlay("GAME won by player " + (m_Players.IndexOf(m_roundWinner) + 1));
+            }
 
-        }
             SpriteBatch.End();
         }
 
@@ -578,6 +628,15 @@ namespace KlimaKonflikt.Scenes
 
         public override void Reset()
         {
+            ResetRound();
+            foreach (KKPlayer player in m_Players)
+            {
+                player.ResetGame();
+            }
+        }
+
+        private void ResetRound()
+        {
             m_EjerskabsOversigt = new Ejerskab[m_Board.TilesHorizontally, m_Board.TilesVertically];
             m_RefuelPositions[m_SeedSack] = m_Board.Tiles[m_WheelbarrowBeginTilePosition.X, m_WheelbarrowBeginTilePosition.Y];
             m_RefuelPositions[m_OilBarrel] = m_Board.Tiles[m_OilTowerBeginTilePosition.X, m_OilTowerBeginTilePosition.Y];
@@ -597,11 +656,11 @@ namespace KlimaKonflikt.Scenes
             m_DirectionController.TargetTile = m_RefuelPositions[m_OilBarrel];
 
             //aggressiveFireController = new SimpleDirectionController(board);
-            
+
             if (SinglePlayer)
             {
                 //oilController = directionController;
-                m_RandomX = new RealRandom(1, m_Board.TilesHorizontally-2);
+                m_RandomX = new RealRandom(1, m_Board.TilesHorizontally - 2);
                 m_RandomY = new RealRandom(1, m_Board.TilesVertically - 2);
             }
             else
@@ -615,7 +674,7 @@ namespace KlimaKonflikt.Scenes
             m_SackController.TileCenterCrossed += TileCenterCrossed;
             m_SackController.UnitMoved += UnitMoved;
 
-            
+
             //flytter ild tilbage til udgangspositioner
             foreach (KKMonster fire in m_Fires)
             {
@@ -623,20 +682,35 @@ namespace KlimaKonflikt.Scenes
             }
 
             m_ScoreDifference = 0;
-
             m_MainGameTune.Pitch = 0;
             m_Board.Reset();
-            m_gameWaitingToBegin = true;
+            m_gameState = GameState.WaitingToPlay;
             m_timer.SecondsToCountDown = 3;
             m_timer.Reset();
+
+            m_roundWinner = null;
+
         }
         #endregion
 
 
+
+        private void DrawOverlay(string textToWrite)
+        {
+            Vector2 textSize = m_mediumFont.MeasureString(textToWrite);
+            Vector2 overlayPosition = GameDevGame.Current.ViewPortCenter - textSize / 2;
+            Vector2 subtextPosition = GameDevGame.Current.ViewPortCenter - m_overlaySubtextSize / 2;
+            Rectangle background = new Rectangle((int)overlayPosition.X - 25, (int)overlayPosition.Y - 15, (int)textSize.X + 50, (int)textSize.Y + 45);
+            GameDevGame.Current.SpriteBatch.DrawRectangle(background, m_overlayColor);
+            GameDevGame.Current.SpriteBatch.DrawString(m_mediumFont, textToWrite, overlayPosition + (Vector2.One * 3), Color.Black);
+            GameDevGame.Current.SpriteBatch.DrawString(m_mediumFont, textToWrite, overlayPosition + (Vector2.One), Color.White);
+            GameDevGame.Current.SpriteBatch.DrawString(m_smallFont, m_overlaySubtext, subtextPosition + Vector2Helper.Down * 45, Color.Black);
+            GameDevGame.Current.SpriteBatch.DrawString(m_smallFont, m_overlaySubtext, subtextPosition + Vector2Helper.Down * 43, Color.White);
+
+        }
+
         private double TileCostCalculator(WalledTile tile)
         {
-
-            
             foreach (KKMonster monster in m_Fires)
             {
                 WalledTile monsterTile = (WalledTile)m_Board.GetTileFromPixelPosition(monster.GetPosition());
@@ -653,7 +727,7 @@ namespace KlimaKonflikt.Scenes
                 }
             }
 
-            Ejerskab ejer = m_EjerskabsOversigt[tile.HorizontalIndex,tile.VerticalIndex];
+            Ejerskab ejer = m_EjerskabsOversigt[tile.HorizontalIndex, tile.VerticalIndex];
 
 
             switch (ejer)
@@ -668,7 +742,7 @@ namespace KlimaKonflikt.Scenes
                     else
                     {
                         return 2;
-                    } 
+                    }
                 case Ejerskab.Olie:
                     return 4;
             }

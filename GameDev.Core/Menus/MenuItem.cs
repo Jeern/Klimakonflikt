@@ -30,6 +30,8 @@ namespace GameDev.Core.Menus
 
         #region Properties
 
+        public int MillisecondsBetweenKeyReceives { get; set; }
+        private DateTime m_lastKeyboardReceive = DateTime.MinValue;
         protected bool NeedsPositionRecalculation { get; set; }
         public string Name { get; set; }
         private bool m_isSelected;
@@ -91,6 +93,7 @@ namespace GameDev.Core.Menus
             this.Name = name;
             this.Position = position;
             this.Centered = centered;
+            MillisecondsBetweenKeyReceives = 200;
             this.Selectable = true;
         }
 
@@ -137,6 +140,15 @@ namespace GameDev.Core.Menus
             {
                 Activated(this, EventArgs.Empty);
             }
+        }
+        public bool IsReadyForKeyboardInteraction
+        {
+            get { return ((TimeSpan)(DateTime.Now - m_lastKeyboardReceive)).TotalMilliseconds > MillisecondsBetweenKeyReceives; }
+        }
+
+        public void ResetKeyboardIntervalTimer()
+        {
+            m_lastKeyboardReceive = DateTime.Now;
         }
         protected abstract void RecalculatePosition();
     }
