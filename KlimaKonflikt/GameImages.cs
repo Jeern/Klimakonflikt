@@ -102,7 +102,7 @@ namespace KlimaKonflikt
                       }), 20);
         }
 
-        public static GameImage GetOlieTaarnImage(ContentManager Content)
+        public static GameImage GetOlieTaarnImage()
         {
             return new GameImage(
                 new SequencedIterator<Texture2D>(new RepeatingSequencer(0, 39),
@@ -152,7 +152,7 @@ namespace KlimaKonflikt
         }
 
 
-        public static GameImage GetIldImage(ContentManager Content)
+        public static GameImage GetIldImage()
         {
 
              return new GameImage(
@@ -174,7 +174,7 @@ namespace KlimaKonflikt
 
 
 
-        public static GameImage GetOilBarrelImage(ContentManager Content)
+        public static GameImage GetOilBarrelImage( )
         {
             return new GameImage(
                 new SequencedIterator<Texture2D>(new AlternatingSequencer(0, 6),
@@ -190,7 +190,7 @@ namespace KlimaKonflikt
                       }), 45);
         }
 
-        public static GameImage GetFlowersackImage(ContentManager Content)
+        public static GameImage GetFlowersackImage( )
         {
             return new GameImage(
                 new SequencedIterator<Texture2D>(new RepeatingSequencer(0, 6),
@@ -206,7 +206,7 @@ namespace KlimaKonflikt
                       }), 10);
         }
 
-        public static GameImage GetPulsatingCircleImage(ContentManager Content)
+        public static GameImage GetPulsatingCircleImage( )
         {
             return new GameImage(
                 new SequencedIterator<Texture2D>(new AlternatingSequencer(1),

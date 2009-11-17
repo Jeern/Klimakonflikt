@@ -6,6 +6,7 @@ using GameDev.Core.Graphics;
 using GameDev.Core.SceneManagement;
 using GameDev.Core.Sequencing;
 using GameDev.GameBoard;
+using GameDev.Core.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,6 +19,7 @@ namespace KlimaKonflikt.Scenes
 
         public int NumberOfWinsToWinGame { get; set; }
         KKPlayer m_roundWinner = null;
+        SmokePlumeParticleSystem m_smokeParticle;
 
         private enum GameState
         {
@@ -32,13 +34,14 @@ namespace KlimaKonflikt.Scenes
         private bool m_debug = false;
         private RandomController m_FireController;
         private GameBoardControllerBase m_OilController, m_SackController;
-        private Color m_overlayColor = new Color(100, 100, 100, 150);
+        private Color m_overlayColor = new Color(100, 100, 100, 180);
         private string m_overlaySubtext = "Press ENTER to continue";
         private Vector2 m_overlaySubtextSize;
         private GameState m_gameState;
         private float m_damageFactor = 1.0F;
 
         private GraphicTimer m_timer;
+        private float m_timeTillSmokePuff;
 
         private SimpleDirectionController m_DirectionController;
         private SoundEffect m_SeedPlanting, m_OilDrip, m_SeedFueling, m_OilFueling;
@@ -48,7 +51,7 @@ namespace KlimaKonflikt.Scenes
         private RealRandom m_RandomX, m_RandomY;
 
         private Texture2D m_TileFloor, m_OilSpill, m_Flower, m_HealthBar, m_ScorePicOilBarrel, m_ScorePicFlowerSack;
-        private GameImage m_OilTowerImage, m_WheelBarrowImage, m_CompleteFloorGameImage, m_PulsatingCircle;
+        private GameImage m_OilTowerImage, m_WheelBarrowImage, m_CompleteFloorGameImage;
         private Sprite m_OilTower, m_WheelBarrow;
         private SpriteFont m_largeFont, m_mediumFont, m_smallFont;
         private Rectangle[,] m_AmmoPlacering;
@@ -93,9 +96,17 @@ namespace KlimaKonflikt.Scenes
             InitializeBoard();
             InitializeImages();
             InitializePlayersAndMonsters();
+            InitializeParticleSystem();
             SaveToDictionaries();
             AddComponents();
             Reset();
+        }
+
+        private void InitializeParticleSystem()
+        {
+            m_smokeParticle = new SmokePlumeParticleSystem(25);
+            m_smokeParticle.Initialize();
+            //this.Components.Add(m_smokeParticle);
         }
 
         private void SaveToDictionaries()
@@ -113,15 +124,15 @@ namespace KlimaKonflikt.Scenes
 
         private void InitializePlayersAndMonsters()
         {
-            m_SeedSack = new KKPlayer(GameImages.GetFlowersackImage(Game.Content), .2F,
+            m_SeedSack = new KKPlayer(GameImages.GetFlowersackImage(), .2F,
                 m_Board.Tiles[m_Board.StartPositionFlowerSack.X, m_Board.StartPositionFlowerSack.Y].Center,
-                10, m_PulsatingCircle, m_SeedPlanting, m_SeedFueling, Ejerskab.Blomst);
-            m_OilBarrel = new KKPlayer(GameImages.GetOilBarrelImage(Game.Content), .2F,
+                10, m_SeedPlanting, m_SeedFueling, Ejerskab.Blomst);
+            m_OilBarrel = new KKPlayer(GameImages.GetOilBarrelImage(), .2F,
                 m_Board.Tiles[m_Board.StartPositionOilBarrel.X, m_Board.StartPositionOilBarrel.Y].Center,
-                10, m_PulsatingCircle, m_OilDrip, m_OilFueling, Ejerskab.Olie);
+                10, m_OilDrip, m_OilFueling, Ejerskab.Olie);
             foreach (Point startPos in m_Board.StartPositionsFire)
             {
-                m_Fires.Add(new KKMonster(GameImages.GetIldImage(Game.Content), .10F,
+                m_Fires.Add(new KKMonster(GameImages.GetIldImage(), .10F,
                     m_Board.Tiles[startPos.X, startPos.Y].Center,
                     new GameDev.Core.Sequencing.SequencedIterator<Direction>(
                     new RandomSequencer(0, 2), Direction.Down, Direction.Right, Direction.Up), 20));
@@ -182,14 +193,12 @@ namespace KlimaKonflikt.Scenes
             m_smallFont = Game.Content.Load<SpriteFont>("SmallArial");
             m_overlaySubtextSize = m_smallFont.MeasureString(m_overlaySubtext);
             Texture2D wheelBarrowTexture = Game.Content.Load<Texture2D>("wheelbarrel");
-            m_OilTowerImage = GameImages.GetOlieTaarnImage(Game.Content);
+            m_OilTowerImage = GameImages.GetOlieTaarnImage();
             m_OilTower = new Sprite(m_OilTowerImage, 0, m_Board.Tiles[m_OilTowerBeginTilePosition.X, m_OilTowerBeginTilePosition.Y].Center);
 
             m_WheelBarrowImage = new GameImage(wheelBarrowTexture);
 
             m_WheelBarrow = new Sprite(m_WheelBarrowImage, 0, m_Board.Tiles[m_WheelbarrowBeginTilePosition.X, m_WheelbarrowBeginTilePosition.Y].Center);
-            m_PulsatingCircle = GameImages.GetPulsatingCircleImage(Game.Content);
-
 
         }
 
@@ -359,7 +368,7 @@ namespace KlimaKonflikt.Scenes
         public override void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-
+            m_smokeParticle.Update(gameTime);
 
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
@@ -489,6 +498,17 @@ namespace KlimaKonflikt.Scenes
                         m_MainGameTune.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
                     }
             }
+
+            m_timeTillSmokePuff -= gameTime.ElapsedGameTime.Milliseconds;
+            if (m_timeTillSmokePuff <= 0)
+            {
+                foreach (KKMonster  fire in m_Fires)
+                {
+                    m_smokeParticle.AddParticles(fire.GetPosition().ToVector2());
+                }
+                m_timeTillSmokePuff = ParticleSystem.Random.Next(750);
+            }
+
             base.Update(gameTime);
         }
 
@@ -576,9 +596,9 @@ namespace KlimaKonflikt.Scenes
                 {
                     tilePosition = new Vector2(t.X, t.Y);
                     tilePosition += boardPosition;
-                    SpriteBatch.DrawString(GameDevGame.Current.DebugFont, TileCostCalculator((WalledTile)t).ToString(), tilePosition, Color.Black);
+                    SpriteBatch.DrawString(m_smallFont, TileCostCalculator((WalledTile)t).ToString(), tilePosition, Color.Black);
                     tilePosition -= Vector2.One;
-                    SpriteBatch.DrawString(GameDevGame.Current.DebugFont, TileCostCalculator((WalledTile)t).ToString(), tilePosition, Color.White);
+                    SpriteBatch.DrawString(m_smallFont, TileCostCalculator((WalledTile)t).ToString(), tilePosition, Color.White);
 
                 }
                 if (((A_StarController)m_OilController).Path != null)
@@ -587,7 +607,7 @@ namespace KlimaKonflikt.Scenes
 
                     foreach (WalledTile t in ((A_StarController)m_OilController).Path)
                     {
-                        tilePosition = t.GetPosition().ToVector();
+                        tilePosition = t.GetPosition().ToVector2();
                         tilePosition += boardPosition + Vector2.One * 15;
 
                         SpriteBatch.Draw(BaseTextures.Circle_128x128, new Rectangle((int)tilePosition.X, (int)tilePosition.Y, 10, 10), Color.Blue);
@@ -597,8 +617,10 @@ namespace KlimaKonflikt.Scenes
             }
 
             //draw scores
-            SpriteBatch.DrawString(m_largeFont, m_OilBarrel.RoundsWon + "/" + NumberOfWinsToWinGame, new Vector2(30, 680), Color.Silver);
-            SpriteBatch.DrawString(m_largeFont, m_SeedSack.RoundsWon + "/" + NumberOfWinsToWinGame, new Vector2(900, 680), Color.Silver);
+            SpriteBatch.DrawString(m_mediumFont, m_OilBarrel.RoundsWon + "/" + NumberOfWinsToWinGame, new Vector2(40, 700), Color.Silver);
+            SpriteBatch.DrawString(m_mediumFont, m_SeedSack.RoundsWon + "/" + NumberOfWinsToWinGame, new Vector2(925, 700), Color.Silver);
+
+            //draw end of round/game message
             if (m_gameState == GameState.RoundOver)
             {
                 DrawOverlay("Round won by player " + (m_Players.IndexOf(m_roundWinner) + 1));
@@ -607,6 +629,7 @@ namespace KlimaKonflikt.Scenes
             {
                 DrawOverlay("GAME won by player " + (m_Players.IndexOf(m_roundWinner) + 1));
             }
+            m_smokeParticle.Draw(gameTime);
 
             SpriteBatch.End();
         }

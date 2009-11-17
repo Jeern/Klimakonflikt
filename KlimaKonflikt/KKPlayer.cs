@@ -28,12 +28,10 @@ namespace KlimaKonflikt
         public SoundEffect RefuelSound { get; set; }
 
         public Ejerskab EjerskabsType { get; set; }
-        public GameImage OutOfAmmoEffect { get; set; }
 
-        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo, GameImage outOfAmmoEffect, SoundEffect takeTileSound, SoundEffect refuelSound, Ejerskab ejerskabsType):base(gameImage, speed, startingPosition)
+        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo, SoundEffect takeTileSound, SoundEffect refuelSound, Ejerskab ejerskabsType):base(gameImage, speed, startingPosition)
         {
             m_startingAmmo = ammo;
-            this.OutOfAmmoEffect = outOfAmmoEffect;
             this.RefuelSound = refuelSound;
             this.TakeoverTileSound = takeTileSound;
             this.EjerskabsType = ejerskabsType;
@@ -59,12 +57,6 @@ namespace KlimaKonflikt
         }
         
 
-        public override void Update(GameTime gameTime)
-        {
-            OutOfAmmoEffect.Update(gameTime);
-            base.Update(gameTime);
-        }
-
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -72,8 +64,6 @@ namespace KlimaKonflikt
             Texture2D currentTexture = null;
             if (Ammunition == 0)
             {
-                //currentTexture = OutOfAmmoEffect.CurrentTexture;
-                //GameDevGame.Current.SpriteBatch.Draw(currentTexture, new Rectangle(X - currentTexture.Width / 2 + GameImageOffset.X, Y - currentTexture.Height / 2 + GameImageOffset.Y, currentTexture.Width, currentTexture.Height), Color.White);
                 colorEffect = Color.Red;
             }
              currentTexture = GameImage.CurrentTexture;

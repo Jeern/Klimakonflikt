@@ -22,6 +22,8 @@ namespace GameDev.Core
 {
     public class GameDevGame : Game
     {
+        public Random Random = new Random();
+
         static object _locker = new object();
         private static GameDevGame m_game;
         public static GameDevGame
