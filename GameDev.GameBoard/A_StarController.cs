@@ -25,17 +25,20 @@ namespace GameDev.GameBoard
     {
         public Path<WalledTile>  Path { get; private set; }
         private Func<WalledTile, double> m_estimate;
+        public List<Path<WalledTile>> PathsTried = new List<Path<WalledTile>>();
+        public int AcceptableCost { get; set; }
         public A_StarController(GameBoard board) : base(board) 
         {
             m_estimate = x => { return 0; };
+            TargetTiles = new List<WalledTile>();
         }
-        public A_StarController(GameBoard board, Func<WalledTile, double> estimate) : base(board)
+        public A_StarController(GameBoard board, Func<WalledTile, double> estimate) : this(board)
         {
             m_estimate = estimate;
         }
 
 
-        public WalledTile TargetTile { get; set; }
+        public List<WalledTile> TargetTiles { get; set; }
 
         public override void Update(GameTime gameTime, Sprite unitToUpdate)
         {
@@ -60,12 +63,30 @@ namespace GameDev.GameBoard
                     return;
                 }
             }
-//            DateTime start = DateTime.Now;
-            Path = A_StarPathFinder.FindPath<WalledTile>(currentTile, TargetTile, (w1, w2) => { return w1.Center.DistanceTo(w2.Center); }, m_estimate);
-            if (Path.TotalCost > 100)
+            bool acceptablePathFound = false;
+            int targetIndex = 0;
+
+            Path<WalledTile> _path = null;
+            PathsTried.Clear();
+            while (!acceptablePathFound && targetIndex < TargetTiles.Count)
             {
-                int i = 9;
+                WalledTile target = TargetTiles[targetIndex];
+               
+                 _path = A_StarPathFinder.FindPath<WalledTile>(currentTile, target, (w1, w2) => { return w1.Center.DistanceTo(w2.Center); }, m_estimate);
+                PathsTried.Add(_path);
+                acceptablePathFound = _path.TotalCost < AcceptableCost;
+                targetIndex++;
             }
+            if (!acceptablePathFound)
+            {
+                Path = PathsTried[0];
+            }
+            else
+	{
+                Path = _path;
+	}
+
+            
             List<WalledTile> reversed = Path.Reverse<WalledTile>().ToList();
             reversed.RemoveAt(0);
             WalledTile tileToGoto = null;
@@ -78,18 +99,6 @@ namespace GameDev.GameBoard
             {
                 controllee.Direction = currentTile.Exits[Random.Next(currentTile.Exits.Count)];
             }
-
-
-//            Console.WriteLine(DateTime.Now.Second);
-  //          DateTime end = DateTime.Now;
-    //        TimeSpan timetaken = end - start;
-      //      Console.WriteLine((int)timetaken.TotalMilliseconds);
-
-            //foreach (WalledTile atile in reversed)
-            //{
-            //    Console.WriteLine(atile.ToString());
-            //}
-
         }
 
         /// <summary>

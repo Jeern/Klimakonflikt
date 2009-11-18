@@ -22,7 +22,7 @@ using GameDev.Core.Sequencing;
 
 namespace GameDev.Core.Menus
 {
-    public class SliderMenuItem : TextMenuItem
+    public class IntervalMenuItem : TextMenuItem
     {
         public int MaxValue { get; private set; }
         public int MinValue { get; private set; }
@@ -66,13 +66,13 @@ namespace GameDev.Core.Menus
         private Rectangle m_sliderBar;
         Vector2 m_textSize;
 
-        public SliderMenuItem(string name, SpriteFont font, string text, int maxValue, int minValue, int tickInterval) : this(name, font, text, Vector2.Zero, Color.White, Color.Gray, true, maxValue, minValue, tickInterval)
+        public IntervalMenuItem(string name, SpriteFont font, string text, int maxValue, int minValue, int tickInterval) : this(name, font, text, Vector2.Zero, Color.White, Color.Gray, true, maxValue, minValue, tickInterval)
         {
 
         }
 
         
-        public SliderMenuItem(string name, SpriteFont font, string text, Vector2 position, Color activeColor, Color inactiveColor, bool centered, int maxValue, int minValue, int tickInterval)
+        public IntervalMenuItem(string name, SpriteFont font, string text, Vector2 position, Color activeColor, Color inactiveColor, bool centered, int maxValue, int minValue, int tickInterval)
             : base(name,font, text,position, activeColor, inactiveColor,centered)
         {
 

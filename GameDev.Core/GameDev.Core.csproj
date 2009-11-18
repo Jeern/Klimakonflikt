@@ -135,10 +135,11 @@
     <Compile Include="Graphics\SpriteBatchExtensions.cs" />
     <Compile Include="Graphics\TextureClipper.cs" />
     <Compile Include="Graphics\ViewPortExtensions.cs" />
+    <Compile Include="Menus\CheckBoxMenuItem.cs" />
     <Compile Include="Menus\TextMenuItem.cs" />
     <Compile Include="Menus\MenuBase.cs" />
     <Compile Include="Menus\MenuItem.cs" />
-    <Compile Include="Menus\SliderMenuItem.cs" />
+    <Compile Include="Menus\IntervalMenuItem.cs" />
     <Compile Include="Particles\ExplosionParticleSystem.cs" />
     <Compile Include="Particles\ExplosionSmokeParticleSystem.cs" />
     <Compile Include="Particles\Particle.cs" />
