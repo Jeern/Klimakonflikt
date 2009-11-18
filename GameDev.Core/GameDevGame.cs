@@ -42,15 +42,18 @@ namespace GameDev.Core
         public SpriteBatch SpriteBatch { get; set; }
         public float GameSpeed { get; set; }
 
-        public Vector2 ViewPortSize { get { return new Vector2(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height); } }
+        public Vector2 ViewPortSize { get {
+            return new Vector2(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height); 
+        } }
         public Vector2 ViewPortCenter { get { return ViewPortSize / 2; } }
-
+        
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
 
         public SpriteFont DebugFont { get; set; }
 
         public GameDevGame()
         {
+            
             GameDevGame.Current = this;
             this.GraphicsDeviceManager = new GraphicsDeviceManager(this);
             this.Services.AddService(typeof(GraphicsDeviceManager), GraphicsDeviceManager);

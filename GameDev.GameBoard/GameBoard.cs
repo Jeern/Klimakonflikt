@@ -20,6 +20,15 @@ namespace GameDev.GameBoard
 {
     public class GameBoard : DrawableGameComponent, IPlaceable
     {
+
+        public Tile TopLeft { get { return Tiles[0, 0]; } }
+        public Tile BottomLeft { get { return Tiles[0,  TilesHorizontally-1]; } }
+        public Tile TopRight { get { return Tiles[TilesVertically - 1, 0]; } }
+        public Tile BottomRight { get { return Tiles[TilesVertically-1, TilesHorizontally-1]; } }
+
+
+        public List<Tile> Corners { get { return new List<Tile>(new Tile[] {TopLeft, TopRight, BottomRight, BottomLeft}); } }
+
         private Random m_random;
         public string Name { get; set; }
         public WalledTile[,] Tiles { get; protected set; }

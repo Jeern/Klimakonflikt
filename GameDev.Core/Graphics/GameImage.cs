@@ -13,6 +13,17 @@ namespace GameDev.Core.Graphics
         private SequencedIterator<Texture2D> m_ImageIterator;
         private SequencedIterator<int> m_DelayMillisecondsIterator;
 
+        public static implicit operator GameImage(Texture2D texture)
+        {
+            return new GameImage(texture);
+        }
+
+        public static implicit operator Texture2D(GameImage image)
+        {
+            return image.CurrentTexture;
+        }
+
+
         public GameImage(Texture2D texture)
             : this(new SequencedIterator<Texture2D>(new StaticSequencer(), texture), 0)
         {

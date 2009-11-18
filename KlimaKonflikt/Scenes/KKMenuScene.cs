@@ -59,7 +59,7 @@ namespace KlimaKonflikt.Scenes
             }
 
             m_topLeft = new Vector2(-100, 80);
-            m_bottomRight = new Vector2(GameDevGame.Current.GraphicsDevice.Viewport.GetLeft() + 100, 700);
+            m_bottomRight = new Vector2(GameDevGame.Current.GraphicsDevice.Viewport.GetRight() + 100, 700);
 
 
             m_smokeParticleSystem = new SmokePlumeParticleSystem(50);
@@ -82,20 +82,19 @@ namespace KlimaKonflikt.Scenes
 
         void Menu_MenuItemActivated(GameDev.Core.Menus.MenuItem sender, EventArgs e)
         {
-            int numberOfWinsToWinGame = ((SliderMenuItem)Menu.GetMenuItem(KKGameMenu.MENU_NUMBEROFWINS)).CurrentValue;
-
+            int numberOfWinsToWinGame = ((IntervalMenuItem)Menu.GetMenuItem(KKGameMenu.MENU_NUMBEROFWINS)).CurrentValue;
+            MainScene mainScene = (MainScene)SceneManager.GetScene(SceneNames.MAINSCENE);
             switch (sender.Name)
             {
 
                 case KKGameMenu.MENU_STARTSINGLEPLAYER:
-                    MainScene mainScene = (MainScene)SceneManager.GetScene(SceneNames.MAINSCENE);
                        mainScene.SinglePlayer = true;
                     mainScene.NumberOfWinsToWinGame = numberOfWinsToWinGame;
                     SceneManager.ChangeScene(mainScene);
                     break;
 
                 case KKGameMenu.MENU_START2PLAYER:
-                    mainScene = (MainScene)SceneManager.GetScene(SceneNames.MAINSCENE);
+                    
                     mainScene.SinglePlayer = false;
                     mainScene.NumberOfWinsToWinGame = numberOfWinsToWinGame;
                     SceneManager.ChangeScene(mainScene);
@@ -107,6 +106,10 @@ namespace KlimaKonflikt.Scenes
 
                 case KKGameMenu.MENU_TOGGLEFULLSCREEN:
                     GameDevGame.Current.GraphicsDeviceManager.ToggleFullScreen();
+                    break;
+
+                case KKGameMenu.MENU_LETHALFIRE :
+                    mainScene.FireIsLethal = ((CheckBoxMenuItem)Menu.GetMenuItem(KKGameMenu.MENU_LETHALFIRE)).Checked;
                     break;
 
                 case KKGameMenu.MENU_CREDITS:
@@ -132,7 +135,7 @@ namespace KlimaKonflikt.Scenes
 
             foreach (VectorSprite sprite in m_sprites)
             {
-                if ((sprite.Position.X < -100 && sprite.Speed.X < 0) || (sprite.Speed.X > 0 && sprite.Position.X > GameDevGame.Current.GraphicsDevice.Viewport.GetLeft() + 100))
+                if ((sprite.Position.X < -100 && sprite.Speed.X < 0) || (sprite.Speed.X > 0 && sprite.Position.X > GameDevGame.Current.GraphicsDevice.Viewport.GetRight() + 100))
                 {
                     ResetSprite(sprite);
                 }
