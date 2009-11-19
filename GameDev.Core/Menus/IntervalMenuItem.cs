@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+#else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+#endif
 
 namespace GameDev.Core.Menus
 {

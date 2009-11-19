@@ -9,8 +9,12 @@
 
 using System;
 using System.Collections.Generic;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+#else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+#endif
 
 namespace GameDev.Core.Particles
 {

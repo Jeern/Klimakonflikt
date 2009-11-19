@@ -1,0 +1,289 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B19F5F7D-8425-42E8-80C3-0C59DE23CE49}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GameDev.Core.Silverlight</RootNamespace>
+    <AssemblyName>GameDev.Core.Silverlight</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Silverlight|AnyCPU' ">
+    <OutputPath>bin\Silverlight\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <NoConfig>true</NoConfig>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SilverArcade.SilverSprite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\SilverArcade.SilverSprite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Lib\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\GameDev.Core\BaseTextures.cs">
+      <Link>BaseTextures.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Control\IController.cs">
+      <Link>Control\IController.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Direction.cs">
+      <Link>Direction.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\DirectionHelper8.cs">
+      <Link>DirectionHelper8.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\DirectionHelper4.cs">
+      <Link>DirectionHelper4.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\EventArgs.cs">
+      <Link>EventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\AnyKeyCondition.cs">
+      <SubType>Code</SubType>
+      <Link>Events\AnyKeyCondition.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\Condition.cs">
+      <SubType>Code</SubType>
+      <Link>Events\Condition.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\GameDevEventHandler.cs">
+      <Link>Events\GameDevEventHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\GameExitReaction.cs">
+      <SubType>Code</SubType>
+      <Link>Events\GameExitReaction.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\KeyboardGameExitLink.cs">
+      <SubType>Code</SubType>
+      <Link>Events\KeyboardGameExitLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\KeysDownCondition.cs">
+      <SubType>Code</SubType>
+      <Link>Events\KeysDownCondition.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\ManyConditionsToManyReactionsLink.cs">
+      <SubType>Code</SubType>
+      <Link>Events\ManyConditionsToManyReactionsLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\ManyConditionsToOneReactionLink.cs">
+      <SubType>Code</SubType>
+      <Link>Events\ManyConditionsToOneReactionLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\MouseDownCondition.cs">
+      <SubType>Code</SubType>
+      <Link>Events\MouseDownCondition.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\OneConditionToManyReactionsLink.cs">
+      <SubType>Code</SubType>
+      <Link>Events\OneConditionToManyReactionsLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\OneConditionToOneReactionLink.cs">
+      <SubType>Code</SubType>
+      <Link>Events\OneConditionToOneReactionLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\Reaction.cs">
+      <SubType>Code</SubType>
+      <Link>Events\Reaction.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Events\TimerCondition.cs">
+      <SubType>Code</SubType>
+      <Link>Events\TimerCondition.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\GameDevGame.cs">
+      <Link>GameDevGame.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Graphics\GameDevTexture.cs">
+      <Link>Graphics\GameDevTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Graphics\GameImage.cs">
+      <Link>Graphics\GameImage.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Graphics\GraphicTimer.cs">
+      <Link>Graphics\GraphicTimer.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Graphics\SpriteBatchExtensions.cs">
+      <Link>Graphics\SpriteBatchExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Graphics\TextureClipper.cs">
+      <Link>Graphics\TextureClipper.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Graphics\ViewPortExtensions.cs">
+      <Link>Graphics\ViewPortExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Menus\CheckBoxMenuItem.cs">
+      <Link>Menus\CheckBoxMenuItem.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Menus\TextMenuItem.cs">
+      <Link>Menus\TextMenuItem.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Menus\MenuBase.cs">
+      <Link>Menus\MenuBase.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Menus\MenuItem.cs">
+      <Link>Menus\MenuItem.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Menus\IntervalMenuItem.cs">
+      <Link>Menus\IntervalMenuItem.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Particles\ExplosionParticleSystem.cs">
+      <Link>Particles\ExplosionParticleSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Particles\ExplosionSmokeParticleSystem.cs">
+      <Link>Particles\ExplosionSmokeParticleSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Particles\Particle.cs">
+      <Link>Particles\Particle.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Particles\ParticleSystem.cs">
+      <Link>Particles\ParticleSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Particles\SmokePlumeParticleSystem.cs">
+      <Link>Particles\SmokePlumeParticleSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\AnyKeySceneLink.cs">
+      <Link>SceneManagement\AnyKeySceneLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\KeyboardSceneChangeLink.cs">
+      <Link>SceneManagement\KeyboardSceneChangeLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\MenuScene.cs">
+      <Link>SceneManagement\MenuScene.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\MouseClickSceneChangeLink.cs">
+      <Link>SceneManagement\MouseClickSceneChangeLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\Scene.cs">
+      <Link>SceneManagement\Scene.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\SceneChangeReaction.cs">
+      <Link>SceneManagement\SceneChangeReaction.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\SceneManager.cs">
+      <Link>SceneManagement\SceneManager.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\StaticImageScene.cs">
+      <Link>SceneManagement\StaticImageScene.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SceneManagement\TimerSceneChangeLink.cs">
+      <Link>SceneManagement\TimerSceneChangeLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\SequenceCreator.cs">
+      <Link>SequenceCreator.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\AlternatingSequencer.cs">
+      <Link>Sequencing\AlternatingSequencer.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\ForwardingSequencer.cs">
+      <Link>Sequencing\ForwardingSequencer.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\MinMaxIterator.cs">
+      <Link>Sequencing\MinMaxIterator.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\RandomSequencer.cs">
+      <Link>Sequencing\RandomSequencer.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\RepeatingSequencer.cs">
+      <Link>Sequencing\RepeatingSequencer.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\SequencedIterator.cs">
+      <Link>Sequencing\SequencedIterator.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\Sequencer.cs">
+      <Link>Sequencing\Sequencer.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\IPlaceable.cs">
+      <Link>IPlaceable.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\DirectionChanger.cs">
+      <Link>DirectionChanger.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\ISequencer.cs">
+      <Link>Sequencing\ISequencer.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\KeyboardExtensions.cs">
+      <Link>KeyboardExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Placeable.cs">
+      <Link>Placeable.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\GeometryTools.cs">
+      <Link>GeometryTools.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sprite.cs">
+      <Link>Sprite.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\RealRandom.cs">
+      <Link>RealRandom.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Sequencing\StaticSequencer.cs">
+      <Link>Sequencing\StaticSequencer.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\Vector2Helper.cs">
+      <Link>Vector2Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\GameDev.Core\VectorSprite.cs">
+      <Link>VectorSprite.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
