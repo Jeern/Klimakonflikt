@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GameDev.GameBoard;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
-using Microsoft.Xna.Framework;
 using GameDev.Core.Graphics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 
 namespace KlimaKonflikt
 {
