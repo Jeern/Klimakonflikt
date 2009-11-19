@@ -614,7 +614,7 @@ namespace KlimaKonflikt.Scenes
                         Color pathDotColor = Color.Red;
                         if (path == astar.Path)
                         {
-                            pathDotColor = Color.Green;
+                            pathDotColor = Color.LightGreen;
                             
                         }
                         foreach (WalledTile t in path)
@@ -622,8 +622,10 @@ namespace KlimaKonflikt.Scenes
                             tilePosition = t.GetPosition().ToVector2();
                             tilePosition += boardPosition + Vector2.One * 15;
 
-                            SpriteBatch.Draw(BaseTextures.Circle_128x128, new Rectangle((int)tilePosition.X, (int)tilePosition.Y, 10, 10), Color.Blue);
-                            SpriteBatch.DrawString(m_smallFont, "path" +pathCounter,  tilePosition ,Color.White);
+                            //SpriteBatch.Draw(BaseTextures.Circle_128x128, new Rectangle((int)tilePosition.X, (int)tilePosition.Y, 10, 10), pathDotColor);
+                            SpriteBatch.DrawString(m_smallFont, "path" + pathCounter, tilePosition + Vector2.One, Color.Black);
+                            SpriteBatch.DrawString(m_smallFont, "path" +pathCounter,  tilePosition ,pathDotColor);
+                            
                         }
                         pathCounter++;
                     }
