@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GameDev.Core;
-using GameDev.Core.Graphics;
-using GameDev.Core.SceneManagement;
-using GameDev.Core.Sequencing;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 
 namespace GameDev.Core
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using GameDev.Core;
+﻿using Microsoft.Xna.Framework;
 
 namespace GameDev.Core.Events
 {

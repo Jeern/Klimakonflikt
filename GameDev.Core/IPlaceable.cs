@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace GameDev.Core
 {
     public interface IPlaceable

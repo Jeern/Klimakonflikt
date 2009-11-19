@@ -1,8 +1,5 @@
-﻿#region Usings
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-#endregion
 
 namespace GameDev.Core.Graphics
 {
