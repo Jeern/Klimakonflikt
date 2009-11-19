@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameDev.Core;
+#if SILVERLIGHT
+using SilverlightHelpers;
+#endif
 
 namespace GameDev.GameBoard
 {
-    public class GameBoardPath : IComparable<GameBoardPath> , ICloneable
+    public class GameBoardPath : IComparable<GameBoardPath>, ICloneable
     {
         public Tile FirstTile { get; set; }
         public Tile LastTile { get; set; }

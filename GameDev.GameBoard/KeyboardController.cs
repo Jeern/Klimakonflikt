@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
 using GameDev.Core;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Input;
+#else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+#endif
 
 namespace GameDev.GameBoard
 {

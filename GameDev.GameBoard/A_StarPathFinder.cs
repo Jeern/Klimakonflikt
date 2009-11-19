@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+#if SILVERLIGHT
+using SilverlightHelpers;
+#endif
 
 namespace GameDev.GameBoard
 {
