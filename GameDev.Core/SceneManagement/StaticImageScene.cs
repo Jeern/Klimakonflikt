@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using GameDev.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
-using GameDev.Core;
-using GameDev.Core.Graphics;
-
 
 namespace GameDev.Core.SceneManagement
 {

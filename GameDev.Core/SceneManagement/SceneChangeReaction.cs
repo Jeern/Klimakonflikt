@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using GameDev.Core.Events;
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using GameDev.Core.Events;
 
 namespace GameDev.Core.SceneManagement
 {
