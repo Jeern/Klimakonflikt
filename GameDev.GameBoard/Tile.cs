@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using GameDev.Core;
 using GameDev.Core.Graphics;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Graphics;
+using SilverlightHelpers;
+#else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+#endif
 
 namespace GameDev.GameBoard
 {

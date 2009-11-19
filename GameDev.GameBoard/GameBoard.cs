@@ -2,8 +2,13 @@ using System;
 using System.Collections.Generic;
 using GameDev.Core;
 using GameDev.Core.Graphics;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Graphics;
+#else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+#endif
 
 namespace GameDev.GameBoard
 {
@@ -174,7 +179,11 @@ namespace GameDev.GameBoard
 
         public bool ContainsPixel(int x, int y)
         {
-            return this.OuterRectangle.Contains(x, y);
+#if SILVERLIGHT
+            return OuterRectangle.Contains(new Point(x, y));
+#else
+            return OuterRectangle.Contains(x, y);
+#endif
         }
 
         public bool ContainsPixel(Point position)
@@ -184,7 +193,11 @@ namespace GameDev.GameBoard
 
         public bool ContainsPixel(IPlaceable place)
         {
-            return this.OuterRectangle.Contains(place.X, place.Y);
+#if SILVERLIGHT
+            return OuterRectangle.Contains(new Point(place.X, place.Y));
+#else
+            return OuterRectangle.Contains(place.X, place.Y);
+#endif
         }
 
 

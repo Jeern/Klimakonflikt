@@ -1,7 +1,11 @@
 ﻿using System;
 using GameDev.Core;
 using GameDev.Core.Control;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+#else
 using Microsoft.Xna.Framework;
+#endif
 
 namespace GameDev.GameBoard
 {

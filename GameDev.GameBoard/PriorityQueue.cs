@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+#if SILVERLIGHT
+using SilverlightHelpers;
+#endif
 
 namespace GameDev.GameBoard
 {
@@ -33,3 +36,4 @@ namespace GameDev.GameBoard
         }
     }
 }
+
