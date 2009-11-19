@@ -1,9 +1,7 @@
-﻿#region Usings
-using GameDev.Core;
+﻿using GameDev.Core;
 using GameDev.Core.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-#endregion
 
 namespace KlimaKonflikt
 {

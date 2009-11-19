@@ -1,19 +1,7 @@
-﻿using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-using Microsoft.Xna.Framework.Storage;
-using Microsoft.Xna.Framework.Audio;
-using GameDev.Core;
+﻿using GameDev.Core;
 using GameDev.Core.Graphics;
-using Microsoft.Xna.Framework;
 using GameDev.Core.Sequencing;
-using System;
-using System.Diagnostics;
-using System.Windows.Forms;
-using GameDev.GameBoard;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace KlimaKonflikt
 {
