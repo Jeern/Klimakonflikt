@@ -2,6 +2,7 @@
 using GameDev.Core.Menus;
 #if SILVERLIGHT
 using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Graphics;
 #else
 using Microsoft.Xna.Framework.Graphics;
 #endif
