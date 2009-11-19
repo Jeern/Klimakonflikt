@@ -10,6 +10,7 @@
 using System;
 #if SILVERLIGHT
 using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Graphics;
 #else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

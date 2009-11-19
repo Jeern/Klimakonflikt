@@ -1,6 +1,7 @@
 ﻿using GameDev.Core.Graphics;
 #if SILVERLIGHT
 using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Graphics;
 #else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,6 +35,11 @@ namespace GameDev.Core.SceneManagement
         {
             if (DestinationRectangle == Rectangle.Empty)
             {
+#if SILVERLIGHT
+                    Rectangle bounds = GameDevGame.Current.Window.ClientBounds;
+                    bounds.Offset(- bounds.Left, - bounds.Top);
+                    DestinationRectangle = bounds;
+#else
                 if (GameDevGame.Current.GraphicsDeviceManager.IsFullScreen)
                 {
                     DestinationRectangle = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.TitleSafeArea;
@@ -44,8 +50,8 @@ namespace GameDev.Core.SceneManagement
                     bounds.Offset(- bounds.Left, - bounds.Top);
                     DestinationRectangle = bounds;
                 }
+#endif
 
-                
             }
                 GameDevGame.Current.SpriteBatch.Begin();
                 if (BackgroundImage != null)
