@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+#else
+using Microsoft.Xna.Framework.Input;
+#endif
 
 namespace GameDev.Core
 {

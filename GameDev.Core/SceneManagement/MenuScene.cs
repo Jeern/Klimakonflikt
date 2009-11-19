@@ -1,6 +1,10 @@
 ﻿using GameDev.Core.Graphics;
 using GameDev.Core.Menus;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+#else
 using Microsoft.Xna.Framework.Graphics;
+#endif
 
 namespace GameDev.Core.SceneManagement
 {

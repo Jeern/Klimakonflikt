@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+#else
 using Microsoft.Xna.Framework;
+#endif
 
 namespace GameDev.Core.Events
 {

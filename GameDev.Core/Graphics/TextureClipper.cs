@@ -1,5 +1,9 @@
 ﻿using System;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+#else
 using Microsoft.Xna.Framework.Graphics;
+#endif
 
 namespace GameDev.Core.Graphics
 {
