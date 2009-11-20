@@ -8,7 +8,7 @@ using SilverArcade.SilverSprite;
 using Microsoft.Xna.Framework;
 #endif
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
 
     public class A_StarController : GameBoardControllerBase
@@ -64,12 +64,16 @@ namespace GameDev.GameBoard
                
                  _path = A_StarPathFinder.FindPath<WalledTile>(currentTile, target, (w1, w2) => { return w1.Center.DistanceTo(w2.Center); }, m_estimate);
                 PathsTried.Add(_path);
-                acceptablePathFound = _path.TotalCost < AcceptableCost;
+                acceptablePathFound = (_path.TotalCost + m_estimate(target) )< AcceptableCost;
                 targetIndex++;
             }
             if (!acceptablePathFound)
             {
                 Path = PathsTried[0];
+                if (TargetTiles.Count == 1)
+                {
+                    int i = 9;
+                }
             }
             else
 	{

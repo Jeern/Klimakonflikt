@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameDev.Core;
 using GameDev.Core.Graphics;
+using GameDev.GameBoard.AI;
 
 namespace GameDev.GameBoard
 {

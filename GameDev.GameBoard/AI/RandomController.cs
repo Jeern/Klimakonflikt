@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GameDev.Core;
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
 
     public class RandomController : GameBoardControllerBase

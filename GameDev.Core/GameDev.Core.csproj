@@ -145,6 +145,7 @@
     <Compile Include="Graphics\GameImage.cs" />
     <Compile Include="Graphics\GraphicTimer.cs" />
     <Compile Include="Graphics\SpriteBatchExtensions.cs" />
+    <Compile Include="Graphics\Texture2DExtensions.cs" />
     <Compile Include="Graphics\TextureClipper.cs" />
     <Compile Include="Graphics\ViewPortExtensions.cs" />
     <Compile Include="Menus\CheckBoxMenuItem.cs" />

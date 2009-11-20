@@ -6,6 +6,7 @@ using GameDev.Core.Graphics;
 using GameDev.Core.SceneManagement;
 using GameDev.Core.Sequencing;
 using GameDev.GameBoard;
+using GameDev.GameBoard.AI;
 using GameDev.Core.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -31,9 +32,12 @@ namespace KlimaKonflikt.Scenes
         }
         #region Variables
 
-
+        private GameImage m_healthPowerUpGameImage;
+        List<VectorSprite> m_PowerUps;
+        Dictionary<VectorSprite, WalledTile> m_powerupTiles;
+        private float m_timeToNextPowerUp;
         private bool m_debug = false;
-        private RandomController m_FireController;
+        private GameBoardControllerBase m_FireController;
         private GameBoardControllerBase m_OilController, m_SackController;
         private Color m_overlayColor = new Color(100, 100, 100, 180);
         private string m_overlaySubtext = "Press ENTER to continue";
@@ -78,7 +82,7 @@ namespace KlimaKonflikt.Scenes
         private Dictionary<KKPlayer, KKPlayer> m_Adversaries = new Dictionary<KKPlayer, KKPlayer>();
         private Dictionary<KKPlayer, WalledTile> m_RefuelPositions = new Dictionary<KKPlayer, WalledTile>();
         private Dictionary<KKPlayer, Sprite> m_RefuelImages = new Dictionary<KKPlayer, Sprite>();
-        private Dictionary<KKPlayer, GameImage> m_AmmoImages = new Dictionary<KKPlayer, GameImage>();
+        //private Dictionary<KKPlayer, GameImage> m_AmmoImages = new Dictionary<KKPlayer, GameImage>();
 
         private float m_ScoreDifference;
 
@@ -114,8 +118,8 @@ namespace KlimaKonflikt.Scenes
         {
             m_RefuelImages[m_SeedSack] = m_WheelBarrow;
             m_RefuelImages[m_OilBarrel] = m_OilTower;
-            m_AmmoImages[m_SeedSack] = GameImages.GetBlomstImage();
-            m_AmmoImages[m_OilBarrel] = GameImages.GetOlieImage();
+            //m_AmmoImages[m_SeedSack] = GameImages.GetBlomstImage();
+            //m_AmmoImages[m_OilBarrel] = GameImages.GetOlieImage();
             m_Adversaries[m_SeedSack] = m_OilBarrel;
             m_Adversaries[m_OilBarrel] = m_SeedSack;
 
@@ -127,10 +131,10 @@ namespace KlimaKonflikt.Scenes
         {
             m_SeedSack = new KKPlayer(GameImages.GetFlowersackImage(), .2F,
                 m_Board.Tiles[m_Board.StartPositionFlowerSack.X, m_Board.StartPositionFlowerSack.Y].Center,
-                10, m_SeedPlanting, m_SeedFueling, Ejerskab.Blomst);
+                10,100, m_SeedPlanting, m_SeedFueling, Ejerskab.Blomst);
             m_OilBarrel = new KKPlayer(GameImages.GetOilBarrelImage(), .2F,
                 m_Board.Tiles[m_Board.StartPositionOilBarrel.X, m_Board.StartPositionOilBarrel.Y].Center,
-                10, m_OilDrip, m_OilFueling, Ejerskab.Olie);
+                10, 100,m_OilDrip, m_OilFueling, Ejerskab.Olie);
             foreach (Point startPos in m_Board.StartPositionsFire)
             {
                 m_Fires.Add(new KKMonster(GameImages.GetIldImage(), .10F,
@@ -154,7 +158,10 @@ namespace KlimaKonflikt.Scenes
                 m_AmmoPlacering[0, y] = new Rectangle(20, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
                 m_AmmoPlacering[1, y] = new Rectangle(910, ammoBottomOffset - 55 * y, ammoSize, ammoSize);
             }
+            
             m_FireController = new RandomController(m_Board);
+            //m_FireController = new SimpleDirectionController(m_Board);
+            //((SimpleDirectionController)m_FireController).TargetTile = m_Board.Tiles[4, 4];
             m_timer = new GraphicTimer(m_largeFont, 3);
             m_timer.TimesUp += new EventHandler<EventArgs>(m_timer_TimesUp);
         }
@@ -169,6 +176,7 @@ namespace KlimaKonflikt.Scenes
 
         private void AddComponents()
         {
+            m_WheelBarrow.DrawOrder = 100;
             Components.Add(m_WheelBarrow);
             Components.Add(m_OilTower);
             Components.Add(m_SeedSack);
@@ -199,7 +207,7 @@ namespace KlimaKonflikt.Scenes
             m_OilTower = new Sprite(m_OilTowerImage, 0, m_Board.Tiles[m_OilTowerBeginTilePosition.X, m_OilTowerBeginTilePosition.Y].Center);
 
             m_WheelBarrowImage = new GameImage(wheelBarrowTexture);
-
+            m_healthPowerUpGameImage = Game.Content.Load<Texture2D>("PowerUps/healthpowerup");
             m_WheelBarrow = new Sprite(m_WheelBarrowImage, 0, m_Board.Tiles[m_WheelbarrowBeginTilePosition.X, m_WheelbarrowBeginTilePosition.Y].Center);
 
         }
@@ -275,6 +283,27 @@ namespace KlimaKonflikt.Scenes
 
             }
 
+            if (player.Health < player.MaxHealth)
+            {
+
+
+                VectorSprite found = null;
+                foreach (VectorSprite powerup in m_PowerUps)
+                {
+                    if (powerup.Position.DistanceTo(player.GetPosition().ToVector2()) < 25)
+                    {
+                        found = powerup;
+                        break;
+                    }
+                }
+                if (found != null)
+                {
+                    m_PowerUps.Remove(found);
+                    m_powerupTiles.Remove(found);
+                    player.Health += 20;
+                }
+            }
+
         }
 
         private void TileCollisionTest(KKPlayer player)
@@ -331,35 +360,52 @@ namespace KlimaKonflikt.Scenes
             do
             {
                 newPosition = m_Board.Tiles[m_RandomX.Next(), m_RandomY.Next()];
-            } while (m_RefuelPositions.ContainsValue(newPosition));
+            } while (m_RefuelPositions.ContainsValue(newPosition) || (m_powerupTiles.ContainsValue(newPosition)));
 
             m_RefuelPositions[player] = newPosition;
             m_RefuelImages[player].SetPosition(m_RefuelPositions[player].Center);
 
             if (SinglePlayer)
             {
-                A_StarController astar = (A_StarController)m_OilController;
-                if (m_OilBarrel.Ammunition == 10)
-                {
-                   
-                        astar.TargetTiles.Clear();
-                    astar.TargetTiles.Add(m_RefuelPositions[m_SeedSack]);
-                    astar.TargetTiles.Add(m_RefuelPositions[m_OilBarrel]);
-
-                }
-                else
-                {
-                    astar.TargetTiles.Clear();
-                    astar.TargetTiles.Add(m_RefuelPositions[m_OilBarrel]);
-                    astar.TargetTiles.Add(m_RefuelPositions[m_SeedSack]);
-                }
-                foreach (Tile t in m_Board.Corners)
-                {
-                    astar.TargetTiles.Add((WalledTile)t);
-                }
+                FindAITargets();
             }
 
             return newPosition;
+        }
+
+        private void FindAITargets()
+        {
+            KKPlayer player = m_OilBarrel;
+            A_StarController astar = (A_StarController)m_OilController;
+            astar.TargetTiles.Clear();
+
+
+            //if (player.EjedeFelter > m_Adversaries[player].EjedeFelter && player.Health < player.MaxHealth / 2 && player.Ammunition > 5)
+            //{
+            //    foreach (WalledTile t in m_powerupTiles.Values)
+            //    {
+            //        astar.TargetTiles.Add(t);
+            //    }
+            //}
+
+            if (m_OilBarrel.Ammunition == 10 && player.EjedeFelter > 1)
+            {
+
+                astar.TargetTiles.Add(m_RefuelPositions[m_SeedSack]);
+                astar.TargetTiles.Add(m_RefuelPositions[m_OilBarrel]);
+
+            }
+            else
+            {
+                astar.TargetTiles.Add(m_RefuelPositions[m_OilBarrel]);
+                astar.TargetTiles.Add(m_RefuelPositions[m_SeedSack]);
+            }
+
+            foreach (Tile t in m_Board.Corners)
+            {
+                astar.TargetTiles.Add((WalledTile)t);
+            }
+
         }
 
         #endregion
@@ -453,6 +499,31 @@ namespace KlimaKonflikt.Scenes
 
             if (!IsPaused && m_gameState == GameState.Playing)
             {
+                m_timeToNextPowerUp -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (m_powerupTiles.Count <= 3 && m_timeToNextPowerUp <= 0)
+                {
+                    Vector2 boardPosition = new Vector2(m_Board.Y, m_Board.Y);
+                    Tile oilTile = m_Board.GetTileFromPixelPosition(m_OilBarrel.GetPosition());
+                    Tile sackTile = m_Board.GetTileFromPixelPosition(m_SeedSack.GetPosition());
+                    
+                    
+                    Tile randomTile = null;
+
+                    do
+                    {
+                        randomTile = m_Board.GetRandomTile();    
+                    } while (!(randomTile != oilTile && sackTile != randomTile && randomTile != m_RefuelPositions[m_OilBarrel] && randomTile != m_RefuelPositions[m_SeedSack] && !m_powerupTiles.ContainsValue((WalledTile)randomTile)));
+                    
+                        VectorSprite powerup = new VectorSprite(randomTile.Center.ToVector2(), Vector2.Zero, m_healthPowerUpGameImage);
+                        powerup.Scale = new Vector2(0.25F,0.25F);
+
+                        m_PowerUps.Add(powerup);
+                        m_powerupTiles.Add(powerup, (WalledTile)randomTile);
+
+                    m_timeToNextPowerUp = 10000;
+                }
+
+
                 if (m_SeedSack.Health <= 0.0F)
                 {
                     m_SeedSack.Health = 0.0F;
@@ -525,6 +596,11 @@ namespace KlimaKonflikt.Scenes
 
             base.Draw(gameTime);
 
+            foreach (VectorSprite powerup in m_PowerUps)
+            {
+                powerup.Draw(gameTime);
+            }
+
             int shadowOffset = 9;
 
             for (int y = m_OilBarrel.Ammunition - 1; y >= 0; y--)
@@ -552,6 +628,8 @@ namespace KlimaKonflikt.Scenes
             if (SeedSackHealthBarIndex < 0) SeedSackHealthBarIndex = 0;
             if (OilDrumHealthBarIndex < 0) OilDrumHealthBarIndex = 0;
 
+
+            
             SpriteBatch.Draw(m_ScorePicOilBarrel, new Rectangle(10, 10, 120, 150), Color.White);
             SpriteBatch.Draw(m_ScorePicFlowerSack, new Rectangle(890, 10, 120, 150), Color.White);
 
@@ -698,8 +776,7 @@ namespace KlimaKonflikt.Scenes
             {
                 A_StarController astar = (A_StarController)new A_StarController(m_Board, TileCostCalculator);
                 m_OilController = astar;
-                astar.TargetTiles.Clear();
-                astar.TargetTiles.Add(m_RefuelPositions[m_OilBarrel]);
+                FindAITargets();
                 astar.AcceptableCost = 99;
                 m_RandomX = new RealRandom(1, m_Board.TilesHorizontally - 2);
                 m_RandomY = new RealRandom(1, m_Board.TilesVertically - 2);
@@ -729,6 +806,9 @@ namespace KlimaKonflikt.Scenes
             m_timer.SecondsToCountDown = 3;
             m_timer.Reset();
 
+            m_PowerUps = new List<VectorSprite>();
+            m_powerupTiles = new Dictionary<VectorSprite, WalledTile>();
+            m_timeToNextPowerUp = 10000;
             m_roundWinner = null;
 
         }

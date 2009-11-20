@@ -1,6 +1,6 @@
 ﻿using GameDev.Core;
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
     public class WalledBoardPathFinder
     {

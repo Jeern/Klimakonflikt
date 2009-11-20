@@ -5,7 +5,7 @@ using GameDev.Core;
 using SilverlightHelpers;
 #endif
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
     public class GameBoardPath : IComparable<GameBoardPath>, ICloneable
     {

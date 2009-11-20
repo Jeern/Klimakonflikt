@@ -20,14 +20,25 @@ namespace GameDev.Core
         public GameImage GameImage {
             get { return m_gameImage; }
             set { m_gameImage = value;
-            m_origin = new Vector2(GameImage.CurrentTexture.Width / 2, GameImage.CurrentTexture.Height / 2);
+           RecalculateOrigin();
             }
         }
-        public Vector2 Scale { get; set; }
+        private Vector2 m_scale = Vector2.One;
+
+        public Vector2 Scale { get { return m_scale; }
+            set {
+                m_scale = value;
+
+            }
+        }
         public static implicit operator VectorSprite(GameImage image) 
    {
       return new VectorSprite(image);
    }
+        private void RecalculateOrigin()
+        {
+            m_origin = GameImage.CurrentTexture.GetSize() * Scale /2;
+        }
 
 
 

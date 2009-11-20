@@ -4,6 +4,8 @@ using SilverArcade.SilverSprite;
 using Microsoft.Xna.Framework;
 #endif
 
+using System;
+
 namespace GameDev.Core
 {
     public static class Vector2Helper
@@ -17,6 +19,12 @@ namespace GameDev.Core
         {
             return new Vector2(p.X, p.Y);
         }
+
+        public static float DistanceTo(this Vector2 first, Vector2 other)
+        {
+            return (float)Math.Sqrt(Math.Pow(Math.Abs(first.X - other.X), 2) + Math.Pow(Math.Abs(first.Y - other.Y), 2));
+        }
+
 
     }
 }

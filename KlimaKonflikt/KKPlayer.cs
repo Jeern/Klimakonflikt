@@ -14,19 +14,33 @@ namespace KlimaKonflikt
         protected int m_startingAmmo;
         public SoundEffect TakeoverTileSound { get; set; }
         public SoundEffect RefuelSound { get; set; }
-
+        public float MaxHealth { get; set; }
         public Ejerskab EjerskabsType { get; set; }
 
-        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo, SoundEffect takeTileSound, SoundEffect refuelSound, Ejerskab ejerskabsType):base(gameImage, speed, startingPosition)
+        public KKPlayer(GameImage gameImage, float speed, Point startingPosition, int ammo, float maxHealth, SoundEffect takeTileSound, SoundEffect refuelSound, Ejerskab ejerskabsType):base(gameImage, speed, startingPosition)
         {
             m_startingAmmo = ammo;
             this.RefuelSound = refuelSound;
             this.TakeoverTileSound = takeTileSound;
             this.EjerskabsType = ejerskabsType;
+            this.MaxHealth = maxHealth;
             Reset();
         }
 
-        public float Health { get; set; }
+        private float m_health;
+        public float Health { get{return m_health;}
+            set
+            {
+                if (value > MaxHealth)
+                {
+                    m_health = MaxHealth;
+                }
+                else
+                {
+                    m_health = value;
+                }
+            }
+        }
 
         public int Ammunition { get; set; }
 
@@ -34,7 +48,7 @@ namespace KlimaKonflikt
         {
             base.Reset();
             this.Ammunition = m_startingAmmo;
-            this.Health = 100;
+            this.Health = MaxHealth;
             this.EjedeFelter = 0;
             
         }
