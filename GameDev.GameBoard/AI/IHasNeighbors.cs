@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
     public interface IHasNeighbours<N>
     {

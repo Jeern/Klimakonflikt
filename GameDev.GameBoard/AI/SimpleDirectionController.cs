@@ -7,7 +7,7 @@ using SilverArcade.SilverSprite;
 using Microsoft.Xna.Framework;
 #endif
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
 
     public class SimpleDirectionController : GameBoardControllerBase

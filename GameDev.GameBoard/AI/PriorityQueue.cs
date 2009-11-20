@@ -4,7 +4,7 @@ using System.Linq;
 using SilverlightHelpers;
 #endif
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
 
     //From Eric Lippert's blog: http://blogs.msdn.com/ericlippert/archive/2007/10/08/path-finding-using-a-in-c-3-0-part-three.aspx

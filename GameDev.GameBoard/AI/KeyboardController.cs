@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 #endif
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
 
     public class KeyboardController : GameBoardControllerBase

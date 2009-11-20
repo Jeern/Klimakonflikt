@@ -27,6 +27,11 @@ namespace GameDev.GameBoard
         public string Name { get; set; }
         public WalledTile[,] Tiles { get; protected set; }
 
+        public Tile GetRandomTile()
+        {
+            return Tiles[m_random.Next(TilesHorizontally), m_random.Next(TilesVertically)];
+        }
+
         public GameImage BaseImage{ get; set; }
         private GameImage _completeBackground;
         public GameImage CompleteBackground { get{return _completeBackground;}

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace GameDev.GameBoard
+namespace GameDev.GameBoard.AI
 {
     public class Path<T> : IEnumerable<T>
     {
