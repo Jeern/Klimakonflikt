@@ -8,10 +8,18 @@ using GameDev.Core.Sequencing;
 using GameDev.GameBoard;
 using GameDev.GameBoard.AI;
 using GameDev.Core.Particles;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Graphics;
+using SilverArcade.SilverSprite.Audio;
+using SilverArcade.SilverSprite.Input;
+using SilverlightHelpers;
+#else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+#endif
 
 namespace KlimaKonflikt.Scenes
 {
@@ -216,7 +224,11 @@ namespace KlimaKonflikt.Scenes
         {
             SoundEffect effect = Game.Content.Load<SoundEffect>(@"GameTunes\MainGameTune");
             m_MainGameTune = effect.CreateInstance();
+#if SILVERLIGHT
+            m_MainGameTune.Loop = true;
+#else
             m_MainGameTune.IsLooped = true;
+#endif
             m_SeedPlanting = Game.Content.Load<SoundEffect>("froe_plantes");
             m_OilDrip = Game.Content.Load<SoundEffect>("olieplet_spildes");
             m_SeedFueling = Game.Content.Load<SoundEffect>("tankfroe");

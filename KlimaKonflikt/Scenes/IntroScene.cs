@@ -1,8 +1,15 @@
 ﻿using GameDev.Core;
 using GameDev.Core.SceneManagement;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Audio;
+using SilverArcade.SilverSprite.Input;
+using SilverlightHelpers;
+#else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+#endif
 
 namespace KlimaKonflikt.Scenes
 {
