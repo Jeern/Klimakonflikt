@@ -74,6 +74,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Lib\GlobalAssemblyInfo.cs">
@@ -86,6 +87,54 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Klimakonflikt\Ejerskab.cs">
+      <Link>Ejerskab.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\GameImages.cs">
+      <Link>GameImages.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\KKGameMenu.cs">
+      <Link>KKGameMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\KKGameBoard.cs">
+      <Link>KKGameBoard.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\KKMonster.cs">
+      <Link>KKMonster.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\LevelLoader.cs">
+      <Link>LevelLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\KKPlayer.cs">
+      <Link>KKPlayer.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\Scenes\InstructionsScene.cs">
+      <Link>Scenes\InstructionsScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\Scenes\KKMenuScene.cs">
+      <Link>Scenes\KKMenuScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\Scenes\CreditsScene.cs">
+      <Link>Scenes\CreditsScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\Scenes\FlowerWinScene.cs">
+      <Link>Scenes\FlowerWinScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\Scenes\OilWinScene.cs">
+      <Link>Scenes\OilWinScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\Scenes\IntroScene.cs">
+      <Link>Scenes\IntroScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\Scenes\MainScene.cs">
+      <Link>Scenes\MainScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\KlimaKonfliktGame.cs">
+      <Link>KlimaKonfliktGame.cs</Link>
+    </Compile>
+    <Compile Include="..\Klimakonflikt\Scenes\SceneNames.cs">
+      <Link>Scenes\SceneNames.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -109,10 +158,13 @@
       <Project>{60327296-B46C-49FD-9804-90791A7C4E84}</Project>
       <Name>GameDev.GameBoard.Silverlight</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SilverlightHelpers\SilverlightHelpers.csproj">
+      <Project>{E8F81C63-C8B8-47A1-9863-648B78E485EF}</Project>
+      <Name>SilverlightHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Levels\" />
-    <Folder Include="Scenes\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

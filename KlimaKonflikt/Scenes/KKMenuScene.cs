@@ -5,10 +5,18 @@ using GameDev.Core.Graphics;
 using GameDev.Core.Menus;
 using GameDev.Core.Particles;
 using GameDev.Core.SceneManagement;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Audio;
+using SilverArcade.SilverSprite.Graphics;
+using SilverArcade.SilverSprite.Input;
+using SilverlightHelpers;
+#else
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+#endif
 
 namespace KlimaKonflikt.Scenes
 {
@@ -27,7 +35,11 @@ namespace KlimaKonflikt.Scenes
         {
             SoundEffect effect = GameDevGame.Current.Content.Load<SoundEffect>(@"GameTunes\CreditsTune");
             m_creditsTune = effect.CreateInstance();
+#if SILVERLIGHT
+            m_creditsTune.Loop = true;
+#else
             m_creditsTune.IsLooped = true;
+#endif
             this.Menu.MenuItemActivated += new GameDev.Core.Menus.MenuItemHandler(Menu_MenuItemActivated);
             m_Oilbarrel = GameImages.GetOilBarrelImage();
             m_seedSack = GameImages.GetFlowersackImage();

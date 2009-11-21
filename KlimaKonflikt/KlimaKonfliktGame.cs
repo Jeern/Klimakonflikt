@@ -1,7 +1,11 @@
 using GameDev.Core;
 using GameDev.Core.SceneManagement;
 using KlimaKonflikt.Scenes;
+#if SILVERLIGHT
+using SilverArcade.SilverSprite;
+#else
 using Microsoft.Xna.Framework;
+#endif
 
 namespace KlimaKonflikt
 {

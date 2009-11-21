@@ -37,6 +37,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SilverArcade.SilverSprite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\SilverArcade.SilverSprite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
@@ -49,6 +53,7 @@
     <Compile Include="..\Lib\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="HashSet.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
