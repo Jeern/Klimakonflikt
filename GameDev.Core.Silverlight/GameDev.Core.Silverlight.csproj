@@ -62,6 +62,9 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GameDev.Core\Graphics\Texture2DExtensions.cs">
+      <Link>Graphics\Texture2DExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Lib\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
