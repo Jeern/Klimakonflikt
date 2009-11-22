@@ -147,6 +147,19 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\64x64.xnb" />
+    <None Include="Content\Bar.xnb" />
+    <Content Include="Content\crosshair.xnb" />
+    <Content Include="Content\DefaultBackground.xnb" />
+    <Content Include="Content\full_level.xnb" />
+    <Content Include="Content\mur_afrunding.xnb" />
+    <Content Include="Content\Mur_horizontal.xnb" />
+    <Content Include="Content\Mur_vertical.xnb" />
+    <Content Include="Content\WheelBarrel.xnb" />
+    <Content Include="Content\LargeArial.spritefont" />
+    <Content Include="Content\MediumArial.spritefont" />
+    <Content Include="Content\MenuText.spritefont" />
+    <Content Include="Content\SmallArial.spritefont" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
