@@ -246,6 +246,46 @@
     <Content Include="Content\Olie\ThePatch0028.xnb" />
     <Content Include="Content\Olie\ThePatch0029.xnb" />
     <Content Include="Content\Olie\ThePatch0030.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0001.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0002.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0003.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0004.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0005.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0006.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0007.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0008.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0009.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0010.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0011.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0012.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0013.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0014.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0015.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0016.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0017.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0018.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0019.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0020.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0021.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0022.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0023.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0024.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0025.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0026.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0027.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0028.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0029.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0030.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0031.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0032.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0033.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0034.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0035.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0036.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0037.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0038.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0039.xnb" />
+    <Content Include="Content\OlieTaarnet\OilTower0040.xnb" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -264,7 +304,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\GameTunes\" />
-    <Folder Include="Content\OlieTaarnet\" />
     <Folder Include="Content\Powerups\" />
     <Folder Include="Content\SceneBackdrops\" />
     <Folder Include="Levels\" />
