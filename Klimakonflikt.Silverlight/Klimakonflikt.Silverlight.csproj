@@ -164,6 +164,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\AnimatedCircle\" />
+    <Folder Include="Content\Blomst\" />
+    <Folder Include="Content\Flowersack\" />
+    <Folder Include="Content\GameTunes\" />
+    <Folder Include="Content\Ild\" />
+    <Folder Include="Content\OilBarrel\" />
+    <Folder Include="Content\OlieTaarnet\" />
+    <Folder Include="Content\Olie\" />
+    <Folder Include="Content\Powerups\" />
     <Folder Include="Levels\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
