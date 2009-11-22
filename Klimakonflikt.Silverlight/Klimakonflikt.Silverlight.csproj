@@ -199,6 +199,16 @@
     <Content Include="Content\Flowersack\FlowerSack5.xnb" />
     <Content Include="Content\Flowersack\FlowerSack6.xnb" />
     <Content Include="Content\Flowersack\FlowerSack7.xnb" />
+    <Content Include="Content\Ild\ild0001.xnb" />
+    <Content Include="Content\Ild\ild0002.xnb" />
+    <Content Include="Content\Ild\ild0003.xnb" />
+    <Content Include="Content\Ild\ild0004.xnb" />
+    <Content Include="Content\Ild\ild0005.xnb" />
+    <Content Include="Content\Ild\ild0006.xnb" />
+    <Content Include="Content\Ild\ild0007.xnb" />
+    <Content Include="Content\Ild\ild0008.xnb" />
+    <Content Include="Content\Ild\ild0009.xnb" />
+    <Content Include="Content\Ild\ild0010.xnb" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -217,7 +227,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\GameTunes\" />
-    <Folder Include="Content\Ild\" />
     <Folder Include="Content\OilBarrel\" />
     <Folder Include="Content\OlieTaarnet\" />
     <Folder Include="Content\Olie\" />
