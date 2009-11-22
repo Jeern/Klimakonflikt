@@ -153,10 +153,17 @@
     <None Include="Content\Bar.xnb" />
     <Content Include="Content\crosshair.xnb" />
     <Content Include="Content\DefaultBackground.xnb" />
+    <Content Include="Content\froe_plantes.wav" />
     <Content Include="Content\full_level.xnb" />
+    <Content Include="Content\GameTunes\CreditsTune.wav" />
+    <Content Include="Content\GameTunes\IntroTune.wav" />
+    <Content Include="Content\GameTunes\MainGameTune.wav" />
     <Content Include="Content\mur_afrunding.xnb" />
     <Content Include="Content\Mur_horizontal.xnb" />
     <Content Include="Content\Mur_vertical.xnb" />
+    <Content Include="Content\olieplet_spildes.wav" />
+    <Content Include="Content\tankfroe.wav" />
+    <Content Include="Content\tankolie.wav" />
     <Content Include="Content\WheelBarrel.xnb" />
     <Content Include="Content\LargeArial.spritefont" />
     <Content Include="Content\MediumArial.spritefont" />
@@ -309,7 +316,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\GameTunes\" />
     <Folder Include="Levels\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
