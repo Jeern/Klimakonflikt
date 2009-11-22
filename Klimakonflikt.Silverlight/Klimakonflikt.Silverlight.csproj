@@ -209,6 +209,13 @@
     <Content Include="Content\Ild\ild0008.xnb" />
     <Content Include="Content\Ild\ild0009.xnb" />
     <Content Include="Content\Ild\ild0010.xnb" />
+    <Content Include="Content\OilBarrel\OilBarrel001.xnb" />
+    <Content Include="Content\OilBarrel\OilBarrel002.xnb" />
+    <Content Include="Content\OilBarrel\OilBarrel003.xnb" />
+    <Content Include="Content\OilBarrel\OilBarrel004.xnb" />
+    <Content Include="Content\OilBarrel\OilBarrel005.xnb" />
+    <Content Include="Content\OilBarrel\OilBarrel006.xnb" />
+    <Content Include="Content\OilBarrel\OilBarrel007.xnb" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -227,7 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\GameTunes\" />
-    <Folder Include="Content\OilBarrel\" />
     <Folder Include="Content\OlieTaarnet\" />
     <Folder Include="Content\Olie\" />
     <Folder Include="Content\Powerups\" />
