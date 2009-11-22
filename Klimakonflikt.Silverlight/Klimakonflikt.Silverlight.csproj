@@ -287,6 +287,11 @@
     <Content Include="Content\OlieTaarnet\OilTower0039.xnb" />
     <Content Include="Content\OlieTaarnet\OilTower0040.xnb" />
     <Content Include="Content\Powerups\healthpowerup.xnb" />
+    <Content Include="Content\SceneBackdrops\Credits.xnb" />
+    <Content Include="Content\SceneBackdrops\Flower_win.xnb" />
+    <Content Include="Content\SceneBackdrops\Instructions.xnb" />
+    <Content Include="Content\SceneBackdrops\Intro.xnb" />
+    <Content Include="Content\SceneBackdrops\Oil_win.xnb" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -305,7 +310,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\GameTunes\" />
-    <Folder Include="Content\SceneBackdrops\" />
     <Folder Include="Levels\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
