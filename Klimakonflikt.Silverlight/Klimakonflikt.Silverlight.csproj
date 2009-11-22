@@ -162,6 +162,36 @@
     <Content Include="Content\MediumArial.spritefont" />
     <Content Include="Content\MenuText.spritefont" />
     <Content Include="Content\SmallArial.spritefont" />
+    <Content Include="Content\Blomst\Blomst0001.xnb" />
+    <Content Include="Content\Blomst\Blomst0002.xnb" />
+    <Content Include="Content\Blomst\Blomst0003.xnb" />
+    <Content Include="Content\Blomst\Blomst0004.xnb" />
+    <Content Include="Content\Blomst\Blomst0005.xnb" />
+    <Content Include="Content\Blomst\Blomst0006.xnb" />
+    <Content Include="Content\Blomst\Blomst0007.xnb" />
+    <Content Include="Content\Blomst\Blomst0008.xnb" />
+    <Content Include="Content\Blomst\Blomst0009.xnb" />
+    <Content Include="Content\Blomst\Blomst0010.xnb" />
+    <Content Include="Content\Blomst\Blomst0011.xnb" />
+    <Content Include="Content\Blomst\Blomst0012.xnb" />
+    <Content Include="Content\Blomst\Blomst0013.xnb" />
+    <Content Include="Content\Blomst\Blomst0014.xnb" />
+    <Content Include="Content\Blomst\Blomst0015.xnb" />
+    <Content Include="Content\Blomst\Blomst0016.xnb" />
+    <Content Include="Content\Blomst\Blomst0017.xnb" />
+    <Content Include="Content\Blomst\Blomst0018.xnb" />
+    <Content Include="Content\Blomst\Blomst0019.xnb" />
+    <Content Include="Content\Blomst\Blomst0020.xnb" />
+    <Content Include="Content\Blomst\Blomst0021.xnb" />
+    <Content Include="Content\Blomst\Blomst0022.xnb" />
+    <Content Include="Content\Blomst\Blomst0023.xnb" />
+    <Content Include="Content\Blomst\Blomst0024.xnb" />
+    <Content Include="Content\Blomst\Blomst0025.xnb" />
+    <Content Include="Content\Blomst\Blomst0026.xnb" />
+    <Content Include="Content\Blomst\Blomst0027.xnb" />
+    <Content Include="Content\Blomst\Blomst0028.xnb" />
+    <Content Include="Content\Blomst\Blomst0029.xnb" />
+    <Content Include="Content\Blomst\Blomst0030.xnb" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +209,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Blomst\" />
     <Folder Include="Content\Flowersack\" />
     <Folder Include="Content\GameTunes\" />
     <Folder Include="Content\Ild\" />
