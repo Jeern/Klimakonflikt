@@ -286,6 +286,7 @@
     <Content Include="Content\OlieTaarnet\OilTower0038.xnb" />
     <Content Include="Content\OlieTaarnet\OilTower0039.xnb" />
     <Content Include="Content\OlieTaarnet\OilTower0040.xnb" />
+    <Content Include="Content\Powerups\healthpowerup.xnb" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -304,7 +305,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\GameTunes\" />
-    <Folder Include="Content\Powerups\" />
     <Folder Include="Content\SceneBackdrops\" />
     <Folder Include="Levels\" />
   </ItemGroup>
