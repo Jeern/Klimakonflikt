@@ -216,6 +216,36 @@
     <Content Include="Content\OilBarrel\OilBarrel005.xnb" />
     <Content Include="Content\OilBarrel\OilBarrel006.xnb" />
     <Content Include="Content\OilBarrel\OilBarrel007.xnb" />
+    <Content Include="Content\Olie\ThePatch0001.xnb" />
+    <Content Include="Content\Olie\ThePatch0002.xnb" />
+    <Content Include="Content\Olie\ThePatch0003.xnb" />
+    <Content Include="Content\Olie\ThePatch0004.xnb" />
+    <Content Include="Content\Olie\ThePatch0005.xnb" />
+    <Content Include="Content\Olie\ThePatch0006.xnb" />
+    <Content Include="Content\Olie\ThePatch0007.xnb" />
+    <Content Include="Content\Olie\ThePatch0008.xnb" />
+    <Content Include="Content\Olie\ThePatch0009.xnb" />
+    <Content Include="Content\Olie\ThePatch0010.xnb" />
+    <Content Include="Content\Olie\ThePatch0011.xnb" />
+    <Content Include="Content\Olie\ThePatch0012.xnb" />
+    <Content Include="Content\Olie\ThePatch0013.xnb" />
+    <Content Include="Content\Olie\ThePatch0014.xnb" />
+    <Content Include="Content\Olie\ThePatch0015.xnb" />
+    <Content Include="Content\Olie\ThePatch0016.xnb" />
+    <Content Include="Content\Olie\ThePatch0017.xnb" />
+    <Content Include="Content\Olie\ThePatch0018.xnb" />
+    <Content Include="Content\Olie\ThePatch0019.xnb" />
+    <Content Include="Content\Olie\ThePatch0020.xnb" />
+    <Content Include="Content\Olie\ThePatch0021.xnb" />
+    <Content Include="Content\Olie\ThePatch0022.xnb" />
+    <Content Include="Content\Olie\ThePatch0023.xnb" />
+    <Content Include="Content\Olie\ThePatch0024.xnb" />
+    <Content Include="Content\Olie\ThePatch0025.xnb" />
+    <Content Include="Content\Olie\ThePatch0026.xnb" />
+    <Content Include="Content\Olie\ThePatch0027.xnb" />
+    <Content Include="Content\Olie\ThePatch0028.xnb" />
+    <Content Include="Content\Olie\ThePatch0029.xnb" />
+    <Content Include="Content\Olie\ThePatch0030.xnb" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +265,6 @@
   <ItemGroup>
     <Folder Include="Content\GameTunes\" />
     <Folder Include="Content\OlieTaarnet\" />
-    <Folder Include="Content\Olie\" />
     <Folder Include="Content\Powerups\" />
     <Folder Include="Content\SceneBackdrops\" />
     <Folder Include="Levels\" />
