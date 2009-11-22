@@ -148,6 +148,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\64x64.xnb" />
+    <Content Include="Content\AnimatedCircle\Circle_large.xnb" />
+    <Content Include="Content\AnimatedCircle\Circle_small.xnb" />
     <None Include="Content\Bar.xnb" />
     <Content Include="Content\crosshair.xnb" />
     <Content Include="Content\DefaultBackground.xnb" />
@@ -177,7 +179,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\AnimatedCircle\" />
     <Folder Include="Content\Blomst\" />
     <Folder Include="Content\Flowersack\" />
     <Folder Include="Content\GameTunes\" />
