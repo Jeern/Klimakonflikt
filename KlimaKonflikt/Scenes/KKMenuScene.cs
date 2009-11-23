@@ -36,7 +36,7 @@ namespace KlimaKonflikt.Scenes
             SoundEffect effect = GameDevGame.Current.Content.Load<SoundEffect>(@"GameTunes\CreditsTune");
             m_creditsTune = effect.CreateInstance();
 #if SILVERLIGHT
-            m_creditsTune.Loop = true;
+            //m_creditsTune.Loop = true;
 #else
             m_creditsTune.IsLooped = true;
 #endif

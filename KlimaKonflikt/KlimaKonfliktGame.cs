@@ -33,7 +33,7 @@ namespace KlimaKonflikt
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
-#if DEBUG
+#if DEBUG || SILVERLIGHT
             graphics.IsFullScreen = false;
 #else
             graphics.IsFullScreen = true;

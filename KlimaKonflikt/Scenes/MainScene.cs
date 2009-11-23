@@ -198,12 +198,16 @@ namespace KlimaKonflikt.Scenes
 
         private void LoadGraphics()
         {
-            m_HealthBar = Game.Content.Load<Texture2D>("bar");
+            m_HealthBar = Game.Content.Load<Texture2D>("Bar");
             m_OilSpill = Game.Content.Load<Texture2D>("Olie/ThePatch0030");
             m_Flower = Game.Content.Load<Texture2D>("Blomst/Blomst0030");
             m_ScorePicOilBarrel = Game.Content.Load<Texture2D>("Oilbarrel/OilBarrel001");
             m_ScorePicFlowerSack = Game.Content.Load<Texture2D>("Flowersack/FlowerSack1");
+#if SILVERLIGHT
+            Texture2D completeFloor = Game.Content.Load<Texture2D>("Indie9000Level");
+#else
             Texture2D completeFloor = Texture2D.FromFile(Game.GraphicsDevice, m_Board.LevelImageFileName);
+#endif
             m_CompleteFloorGameImage = new GameImage(completeFloor);
             m_Board.CompleteBackground = m_CompleteFloorGameImage;
             m_largeFont = Game.Content.Load<SpriteFont>("LargeArial");
@@ -225,7 +229,7 @@ namespace KlimaKonflikt.Scenes
             SoundEffect effect = Game.Content.Load<SoundEffect>(@"GameTunes\MainGameTune");
             m_MainGameTune = effect.CreateInstance();
 #if SILVERLIGHT
-            m_MainGameTune.Loop = true;
+            //m_MainGameTune.Loop = true;
 #else
             m_MainGameTune.IsLooped = true;
 #endif
@@ -580,7 +584,9 @@ namespace KlimaKonflikt.Scenes
                     float lowestHealth = Math.Min(m_SeedSack.Health, m_OilBarrel.Health);
                     if (lowestHealth < 50 && m_gameState == GameState.Playing)
                     {
+#if !SILVERLIGHT
                         m_MainGameTune.Pitch = maxSpeed - (lowestHealth / 50 * maxSpeed);
+#endif
                     }
             }
 
@@ -812,7 +818,9 @@ namespace KlimaKonflikt.Scenes
             }
 
             m_ScoreDifference = 0;
+#if !SILVERLIGHT
             m_MainGameTune.Pitch = 0;
+#endif
             m_Board.Reset();
             m_gameState = GameState.WaitingToPlay;
             m_timer.SecondsToCountDown = 3;
