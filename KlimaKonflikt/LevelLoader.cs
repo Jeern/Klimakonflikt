@@ -5,9 +5,14 @@ using System.Linq;
 using System.Xml.Linq;
 using GameDev.Core.Graphics;
 #if SILVERLIGHT
+using PointAlias = SilverArcade.SilverSprite;
 using SilverArcade.SilverSprite;
 using SilverArcade.SilverSprite.Graphics;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Resources;
 #else
+using PointAlias = Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endif
@@ -18,7 +23,9 @@ namespace KlimaKonflikt
     {
         public static IEnumerable<KKGameBoard> GetLevels(Game game, GameImage tileImage, SpriteBatch spriteBatch, int tileSizeInPixels)
         {
-            
+#if SILVERLIGHT
+            yield return GetLevel("Levels/Level1.kklevel", game, tileImage, spriteBatch, tileSizeInPixels);  
+#else
             var xmlFiles =
                 from file in Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "Levels"), "*.kklevel")
                 select file;
@@ -27,11 +34,25 @@ namespace KlimaKonflikt
             {
                 yield return GetLevel(file, game, tileImage, spriteBatch, tileSizeInPixels);  
             }
+#endif
         }
-
+#if SILVERLIGHT
+        private static string GetContent(string fileName)
+        {
+            StreamResourceInfo info = Application.GetResourceStream(new Uri(fileName, UriKind.Relative));
+            using (StreamReader reader = new StreamReader(info.Stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+#endif
         private static KKGameBoard GetLevel(string fileName, Game game, GameImage tileImage, SpriteBatch spriteBatch, int tileSizeInPixels)
         {
+#if SILVERLIGHT
+            XDocument doc = XDocument.Parse(GetContent(fileName));
+#else
             XDocument doc = XDocument.Load(fileName);
+#endif
 
             string name = (from e in doc.Descendants("LevelInfo")
                           select e.Attribute("Name").Value).First();
@@ -57,11 +78,11 @@ namespace KlimaKonflikt
                     Right = Convert.ToBoolean(e.Attribute("Right").Value)
                 };
 
-            Point startPosFlowerSack = LoadPointElement(doc, "Flowersack");
-            Point startPosOilBarrel = LoadPointElement(doc, "Oilbarrel");
-            Point startPosWheelBarrow = LoadPointElement(doc, "Wheelbarrow");
-            Point startPosOilTower = LoadPointElement(doc, "Oiltower");
-            List<Point> startPosFires = LoadPointElements(doc, "Fire").ToList();
+            PointAlias.Point startPosFlowerSack = LoadPointElement(doc, "Flowersack");
+            PointAlias.Point startPosOilBarrel = LoadPointElement(doc, "Oilbarrel");
+            PointAlias.Point startPosWheelBarrow = LoadPointElement(doc, "Wheelbarrow");
+            PointAlias.Point startPosOilTower = LoadPointElement(doc, "Oiltower");
+            List<PointAlias.Point> startPosFires = LoadPointElements(doc, "Fire").ToList();
 
             var gameBoard = new KKGameBoard(tileImage, name, tilesHorizontally, tilesVertically, 
                 tileSizeInPixels, imageFileName, startPosFlowerSack, startPosWheelBarrow, startPosOilBarrel, startPosOilTower,
@@ -79,16 +100,16 @@ namespace KlimaKonflikt
 
         }
 
-        private static Point LoadPointElement(XDocument doc, string elementName)
+        private static PointAlias.Point LoadPointElement(XDocument doc, string elementName)
         {
             return LoadPointElements(doc, elementName).First(); 
         }
 
-        private static IEnumerable<Point> LoadPointElements(XDocument doc, string elementName)
+        private static IEnumerable<PointAlias.Point> LoadPointElements(XDocument doc, string elementName)
         {
             return
                 from e in doc.Descendants(elementName)
-                 select new Point(
+                 select new PointAlias.Point(
                      Convert.ToInt32(e.Attribute("Column").Value),
                      Convert.ToInt32(e.Attribute("Row").Value));
         }
@@ -102,6 +123,9 @@ namespace KlimaKonflikt
         /// <returns></returns>
         private static string GetImageFileName(string imageName, string kkLevelfileName)
         {
+#if SILVERLIGHT
+            return imageName;
+#else
             string fileName = Path.Combine(Path.GetDirectoryName(kkLevelfileName), imageName);
             if (File.Exists(fileName))
                 return fileName;
@@ -110,6 +134,7 @@ namespace KlimaKonflikt
                 return imageName;
 
             return null;
+#endif
         }
     }
 }

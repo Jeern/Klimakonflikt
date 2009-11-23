@@ -150,7 +150,7 @@
     <Content Include="Content\64x64.xnb" />
     <Content Include="Content\AnimatedCircle\Circle_large.xnb" />
     <Content Include="Content\AnimatedCircle\Circle_small.xnb" />
-    <None Include="Content\Bar.xnb" />
+    <Content Include="Content\Bar.xnb" />
     <Content Include="Content\crosshair.xnb" />
     <Content Include="Content\DefaultBackground.xnb" />
     <Content Include="Content\froe_plantes.wav" />
@@ -299,6 +299,15 @@
     <Content Include="Content\SceneBackdrops\Instructions.xnb" />
     <Content Include="Content\SceneBackdrops\Intro.xnb" />
     <Content Include="Content\SceneBackdrops\Oil_win.xnb" />
+    <Content Include="Content\Indie9000Level.png" />
+    <Content Include="Levels\Level1.kklevel" />
+    <Content Include="Content\Box_128x128.xnb" />
+    <Content Include="Content\Checkmark_128x128.xnb" />
+    <Content Include="Content\Circle_128x128.xnb" />
+    <Content Include="Content\DebugFont.spritefont" />
+    <Content Include="Content\explosion.xnb" />
+    <Content Include="Content\smoke.xnb" />
+    <Content Include="Content\Square_128x128.xnb" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -314,9 +323,6 @@
       <Project>{E8F81C63-C8B8-47A1-9863-648B78E485EF}</Project>
       <Name>SilverlightHelpers</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Levels\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
