@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Browser;
 
 namespace Klimakonflikt.Silverlight
 {
@@ -17,6 +18,10 @@ namespace Klimakonflikt.Silverlight
         public MainPage()
         {
             InitializeComponent();
+            HtmlPage.Plugin.Focus();
+            Focus();
         }
+
+        
     }
 }
