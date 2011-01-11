@@ -61,7 +61,7 @@ namespace GameDev.Core.Particles
             maxRotationSpeed = MathHelper.PiOver4;
 
             // additive blending is very good at creating fiery effects.
-            spriteBlendMode = SpriteBlendMode.Additive;
+            //spriteBlendMode = SpriteBlendMode.Additive;
 
             DrawOrder = AdditiveDrawOrder;
         }

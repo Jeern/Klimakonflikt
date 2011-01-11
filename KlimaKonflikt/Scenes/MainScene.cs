@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 #endif
 
 namespace KlimaKonflikt.Scenes
@@ -203,10 +204,14 @@ namespace KlimaKonflikt.Scenes
             m_Flower = Game.Content.Load<Texture2D>("Blomst/Blomst0030");
             m_ScorePicOilBarrel = Game.Content.Load<Texture2D>("Oilbarrel/OilBarrel001");
             m_ScorePicFlowerSack = Game.Content.Load<Texture2D>("Flowersack/FlowerSack1");
+            Texture2D completeFloor = null;
 #if SILVERLIGHT
-            Texture2D completeFloor = Game.Content.Load<Texture2D>("Indie9000Level");
+            completeFloor = Game.Content.Load<Texture2D>("Indie9000Level");
 #else
-            Texture2D completeFloor = Texture2D.FromFile(Game.GraphicsDevice, m_Board.LevelImageFileName);
+            using(var fs = File.OpenRead(m_Board.LevelImageFileName))
+            {
+                completeFloor = Texture2D.FromStream(Game.GraphicsDevice, fs);
+            }
 #endif
             m_CompleteFloorGameImage = new GameImage(completeFloor);
             m_Board.CompleteBackground = m_CompleteFloorGameImage;

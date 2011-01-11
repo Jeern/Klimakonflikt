@@ -15,19 +15,19 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1E65AB677C482C7CAC19A9E4F601B8AB"
+        "MsmKey" = "8:_2937A0A7B7DD151ABEA91B764D6958D4"
         "OwnerKey" = "8:_F5DBF3E665A84601BDC90494CE06E792"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1E65AB677C482C7CAC19A9E4F601B8AB"
-        "OwnerKey" = "8:_2D61262C21846A09274E0E1E03A08BB3"
+        "MsmKey" = "8:_2937A0A7B7DD151ABEA91B764D6958D4"
+        "OwnerKey" = "8:_3C59D928F54596FA57AE4FFB66217606"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_2D61262C21846A09274E0E1E03A08BB3"
+        "MsmKey" = "8:_3C59D928F54596FA57AE4FFB66217606"
         "OwnerKey" = "8:_F5DBF3E665A84601BDC90494CE06E792"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2D61262C21846A09274E0E1E03A08BB3"
+        "OwnerKey" = "8:_3C59D928F54596FA57AE4FFB66217606"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1E65AB677C482C7CAC19A9E4F601B8AB"
+        "OwnerKey" = "8:_2937A0A7B7DD151ABEA91B764D6958D4"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -119,10 +119,10 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
                     {
-                    "Name" = "8:.NET Framework 3.5 SP1"
-                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
                     {
@@ -152,7 +152,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "Version" = "8:3.5.30729"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0,Profile=Client"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=76617"
                 }
@@ -160,14 +160,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1E65AB677C482C7CAC19A9E4F601B8AB"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2937A0A7B7DD151ABEA91B764D6958D4"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GameDev.Core, Version=0.8.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:GameDev.Core, Version=0.9.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_1E65AB677C482C7CAC19A9E4F601B8AB"
+                    "_2937A0A7B7DD151ABEA91B764D6958D4"
                     {
                     "Name" = "8:GameDev.Core.dll"
                     "Attributes" = "3:512"
@@ -191,14 +191,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2D61262C21846A09274E0E1E03A08BB3"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3C59D928F54596FA57AE4FFB66217606"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GameDev.GameBoard, Version=0.8.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:GameDev.GameBoard, Version=0.9.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_2D61262C21846A09274E0E1E03A08BB3"
+                    "_3C59D928F54596FA57AE4FFB66217606"
                     {
                     "Name" = "8:GameDev.GameBoard.dll"
                     "Attributes" = "3:512"
@@ -279,8 +279,9 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:KlimaKonflikt"
         "ProductCode" = "8:{FA4C2CD2-6CDA-422C-AFF1-AF15E2A6D59C}"
-        "PackageCode" = "8:{F0DBCBE8-AA85-4EBD-B21A-3507B2F7133F}"
+        "PackageCode" = "8:{AF3DCA73-0592-4689-A62A-B577A34571B6}"
         "UpgradeCode" = "8:{72B41BDA-60DE-4E72-885D-62FF2EBD6639}"
+        "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
@@ -827,7 +828,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_F5DBF3E665A84601BDC90494CE06E792"
             {
-            "SourcePath" = "8:..\\KlimaKonflikt\\obj\\x86\\Debug\\KlimaKonflikt.exe"
+            "SourcePath" = "8:..\\KlimaKonflikt\\obj\\x86\\Release\\KlimaKonflikt.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_77C317263FD24F68B58E05212A2E0C95"
