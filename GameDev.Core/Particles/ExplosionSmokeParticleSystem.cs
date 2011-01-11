@@ -63,7 +63,7 @@ namespace GameDev.Core.Particles
             minRotationSpeed = -MathHelper.PiOver4;
             maxRotationSpeed = MathHelper.PiOver4;
 
-            spriteBlendMode = SpriteBlendMode.AlphaBlend;
+            //spriteBlendMode = SpriteBlendMode.AlphaBlend;
 
             DrawOrder = AlphaBlendDrawOrder;
         }

@@ -1,18 +1,18 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlimaKonflikt", "KlimaKonflikt\KlimaKonflikt.csproj", "{20E05587-688B-404C-970F-47419F11BFF8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.Core", "GameDev.Core\GameDev.Core.csproj", "{685E36FA-7469-4DCB-B2BB-06D5470D5AD8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.GameBoard", "GameDev.GameBoard\GameDev.GameBoard.csproj", "{FE295AC7-3102-4265-A606-A8784B3D34D0}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{E349482B-E282-437B-B610-F4D2B473E6F4}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\Flowersack.ico = Lib\Flowersack.ico
 		Lib\GlobalAssemblyInfo.cs = Lib\GlobalAssemblyInfo.cs
 		Lib\SilverArcade.SilverSprite.dll = Lib\SilverArcade.SilverSprite.dll
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlimaKonflikt", "KlimaKonflikt\KlimaKonflikt.csproj", "{20E05587-688B-404C-970F-47419F11BFF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.Core", "GameDev.Core\GameDev.Core.csproj", "{685E36FA-7469-4DCB-B2BB-06D5470D5AD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.GameBoard", "GameDev.GameBoard\GameDev.GameBoard.csproj", "{FE295AC7-3102-4265-A606-A8784B3D34D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "LevelEditor\LevelEditor.csproj", "{16421AA7-65E7-40A5-B341-D4B056360C77}"
 EndProject
@@ -27,6 +27,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.GameBoard.Silverlight", "GameDev.GameBoard.Silverlight\GameDev.GameBoard.Silverlight.csproj", "{60327296-B46C-49FD-9804-90791A7C4E84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightHelpers", "SilverlightHelpers\SilverlightHelpers.csproj", "{E8F81C63-C8B8-47A1-9863-648B78E485EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlimaKonfliktContent", "KlimaKonflikt\Content\KlimaKonfliktContent.contentproj", "{6DEEE6F3-A628-47E0-ADF5-FF0B9F490993}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.CoreContent", "GameDev.Core\Content\GameDev.CoreContent.contentproj", "{1CA66F92-9784-43D7-B143-828E829CA062}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LevelEditorSetup", "LevelEditorSetup\LevelEditorSetup.vdproj", "{977F9A25-1B4E-42BA-91E4-F31F8DB02495}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "KlimaKonfliktSetup", "KlimaKonfliktSetup\KlimaKonfliktSetup.vdproj", "{CF28923E-445C-4374-AF9D-085FD596397E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -163,6 +171,20 @@ Global
 		{60327296-B46C-49FD-9804-90791A7C4E84}.Silverlight|Mixed Platforms.ActiveCfg = Silverlight|Any CPU
 		{60327296-B46C-49FD-9804-90791A7C4E84}.Silverlight|Mixed Platforms.Build.0 = Silverlight|Any CPU
 		{60327296-B46C-49FD-9804-90791A7C4E84}.Silverlight|x86.ActiveCfg = Silverlight|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|x86.ActiveCfg = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|Any CPU.ActiveCfg = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|Any CPU.Build.0 = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|Mixed Platforms.Build.0 = Release|Any CPU
+		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|x86.ActiveCfg = Release|Any CPU
 		{6DEEE6F3-A628-47E0-ADF5-FF0B9F490993}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{6DEEE6F3-A628-47E0-ADF5-FF0B9F490993}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{6DEEE6F3-A628-47E0-ADF5-FF0B9F490993}.Debug|x86.ActiveCfg = Debug|x86
@@ -181,30 +203,38 @@ Global
 		{1CA66F92-9784-43D7-B143-828E829CA062}.Silverlight|Any CPU.ActiveCfg = Silverlight|x86
 		{1CA66F92-9784-43D7-B143-828E829CA062}.Silverlight|Mixed Platforms.ActiveCfg = Silverlight|x86
 		{1CA66F92-9784-43D7-B143-828E829CA062}.Silverlight|x86.ActiveCfg = Silverlight|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Debug|x86.ActiveCfg = Debug|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Release|Any CPU.ActiveCfg = Release|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Release|x86.ActiveCfg = Release|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Silverlight|Any CPU.ActiveCfg = Silverlight|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Silverlight|Mixed Platforms.ActiveCfg = Silverlight|x86
-		{1F5C7AA3-C90D-48BD-BB43-1579EA65EAC5}.Silverlight|x86.ActiveCfg = Silverlight|x86
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Release|x86.ActiveCfg = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|Any CPU.ActiveCfg = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|Any CPU.Build.0 = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|Mixed Platforms.Build.0 = Release|Any CPU
-		{E8F81C63-C8B8-47A1-9863-648B78E485EF}.Silverlight|x86.ActiveCfg = Release|Any CPU
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Debug|Any CPU.ActiveCfg = Debug
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Debug|Any CPU.Build.0 = Debug
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Debug|x86.ActiveCfg = Debug
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Debug|x86.Build.0 = Debug
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Release|Any CPU.ActiveCfg = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Release|Any CPU.Build.0 = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Release|Mixed Platforms.ActiveCfg = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Release|Mixed Platforms.Build.0 = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Release|x86.ActiveCfg = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Release|x86.Build.0 = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Silverlight|Any CPU.ActiveCfg = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Silverlight|Any CPU.Build.0 = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Silverlight|Mixed Platforms.ActiveCfg = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Silverlight|x86.ActiveCfg = Release
+		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Silverlight|x86.Build.0 = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|Any CPU.ActiveCfg = Debug
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|Any CPU.Build.0 = Debug
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|x86.ActiveCfg = Debug
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|x86.Build.0 = Debug
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|Any CPU.ActiveCfg = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|Any CPU.Build.0 = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|Mixed Platforms.ActiveCfg = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|Mixed Platforms.Build.0 = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|x86.ActiveCfg = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|x86.Build.0 = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|Any CPU.ActiveCfg = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|Any CPU.Build.0 = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|Mixed Platforms.ActiveCfg = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|x86.ActiveCfg = Release
+		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
