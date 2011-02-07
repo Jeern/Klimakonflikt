@@ -40,16 +40,17 @@ namespace GameDev.Core.SceneManagement
                     bounds.Offset(- bounds.Left, - bounds.Top);
                     DestinationRectangle = bounds;
 #else
-                if (GameDevGame.Current.GraphicsDeviceManager.IsFullScreen)
-                {
-                    DestinationRectangle = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.TitleSafeArea;
-                }
-                else
-                {
+                //if (GameDevGame.Current.GraphicsDeviceManager.IsFullScreen)
+                //{
+                //    DestinationRectangle = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.TitleSafeArea;
+
+                //}
+                //else
+                //{
                     Rectangle bounds = GameDevGame.Current.Window.ClientBounds;
                     bounds.Offset(- bounds.Left, - bounds.Top);
                     DestinationRectangle = bounds;
-                }
+//                }
 #endif
 
             }
