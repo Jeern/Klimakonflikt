@@ -149,6 +149,11 @@
             "AssemblyAsmDisplayName" = "8:LevelEditor.Core, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_BC9EA25C490995D5B431C01F77D9E0FA"
+                    {
+                    "Name" = "8:LevelEditor.Core.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:LevelEditor.Core.dll"
             "TargetName" = "8:"
@@ -292,19 +297,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:KlimaKonflikt LevelEditor"
-        "ProductCode" = "8:{4DC149DF-7973-41E9-B0E9-7BF87343E3F6}"
-        "PackageCode" = "8:{34051DEC-B906-40A5-BA53-540AAD682A25}"
+        "ProductCode" = "8:{6A579691-C8C2-4D59-BC4D-920913C3A5F9}"
+        "PackageCode" = "8:{6D984909-36D1-4E3A-9072-FBB0ABF7A59A}"
         "UpgradeCode" = "8:{0E3AD69A-F783-4F80-ACA1-7A8B5E42CDB7}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.8.5"
+        "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:KlimaKonflikters"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:KK Level Editor v.0.8.5"
+        "Title" = "8:KK Level Editor v.1.0.0"
         "Subject" = "8:"
         "ARPCONTACT" = "8:KlimaKonflikters"
         "Keywords" = "8:"
