@@ -174,18 +174,18 @@
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
     <None Include="KlimaKonflikt_TemporaryKey.pfx" />
-    <None Include="Levels\TestLevel.png">
+    <Content Include="Levels\TestLevel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\Indie9000Level.png">
+    </Content>
+    <Content Include="Levels\Indie9000Level.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\Level1.kklevel">
+    </Content>
+    <Content Include="Levels\Level1.kklevel">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\TestLevel.kklevel">
+    </Content>
+    <Content Include="Levels\TestLevel.kklevel">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
