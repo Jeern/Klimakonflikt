@@ -34,8 +34,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDev.CoreContent", "Game
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LevelEditorSetup", "LevelEditorSetup\LevelEditorSetup.vdproj", "{977F9A25-1B4E-42BA-91E4-F31F8DB02495}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "KlimaKonfliktSetup", "KlimaKonfliktSetup\KlimaKonfliktSetup.vdproj", "{CF28923E-445C-4374-AF9D-085FD596397E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,22 +217,6 @@ Global
 		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Silverlight|Mixed Platforms.ActiveCfg = Release
 		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Silverlight|x86.ActiveCfg = Release
 		{977F9A25-1B4E-42BA-91E4-F31F8DB02495}.Silverlight|x86.Build.0 = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|Any CPU.ActiveCfg = Debug
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|Any CPU.Build.0 = Debug
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|x86.ActiveCfg = Debug
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Debug|x86.Build.0 = Debug
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|Any CPU.ActiveCfg = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|Any CPU.Build.0 = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|Mixed Platforms.ActiveCfg = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|Mixed Platforms.Build.0 = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|x86.ActiveCfg = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Release|x86.Build.0 = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|Any CPU.ActiveCfg = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|Any CPU.Build.0 = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|Mixed Platforms.ActiveCfg = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|x86.ActiveCfg = Release
-		{CF28923E-445C-4374-AF9D-085FD596397E}.Silverlight|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

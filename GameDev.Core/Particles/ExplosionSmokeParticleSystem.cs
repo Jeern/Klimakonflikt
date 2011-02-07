@@ -1,12 +1,13 @@
-#region File Description
 //-----------------------------------------------------------------------------
 // ExplosionSmokeParticleSystem.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
-#endregion
 
+using System;
+using System.Collections.Generic;
+using System.Text;
 #if SILVERLIGHT
 using SilverArcade.SilverSprite;
 using SilverArcade.SilverSprite.Graphics;
@@ -57,13 +58,20 @@ namespace GameDev.Core.Particles
             minScale = 1.0f;
             maxScale = 2.0f;
 
+            // we need to reduce the number of particles on Windows Phone in order to keep
+            // a good framerate
+#if WINDOWS_PHONE
+            minNumParticles = 5;
+            maxNumParticles = 10;
+#else
             minNumParticles = 10;
             maxNumParticles = 20;
+#endif
 
             minRotationSpeed = -MathHelper.PiOver4;
             maxRotationSpeed = MathHelper.PiOver4;
 
-            //spriteBlendMode = SpriteBlendMode.AlphaBlend;
+			blendState = BlendState.AlphaBlend;
 
             DrawOrder = AlphaBlendDrawOrder;
         }

@@ -1,14 +1,13 @@
-#region File Description
 //-----------------------------------------------------------------------------
 // SmokePlumeParticleSystem.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
-#endregion
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 #if SILVERLIGHT
 using SilverArcade.SilverSprite;
 using SilverArcade.SilverSprite.Graphics;
@@ -27,13 +26,6 @@ namespace GameDev.Core.Particles
     /// </summary>
     public abstract class ParticleSystem : DrawableGameComponent
     {
-        private static Random random = new Random();
-        public static Random Random
-        {
-            get { return random; }
-        }
-
-
         public void Clear()
         {
             foreach (Particle particle in freeParticles)
@@ -148,10 +140,10 @@ namespace GameDev.Core.Particles
         protected float maxScale;
 
         /// <summary>
-        /// different effects can use different blend modes. fire and explosions work
+        /// different effects can use different blend states. fire and explosions work
         /// well with additive blending, for example.
         /// </summary>
-        //protected SpriteBlendMode spriteBlendMode;
+		protected BlendState blendState;
 
         #endregion
         
@@ -220,7 +212,7 @@ namespace GameDev.Core.Particles
                 throw new InvalidOperationException(message);
             }
             // load the texture....
-            texture = GameDevGame.Current.Content.Load<Texture2D>(textureFilename);
+            texture = Game.Content.Load<Texture2D>(textureFilename);
 
             // ... and calculate the center. this'll be used in the draw call, we
             // always want to rotate and scale around this point.
@@ -241,8 +233,8 @@ namespace GameDev.Core.Particles
         {
             // the number of particles we want for this effect is a random number
             // somewhere between the two constants specified by the subclasses.
-            int numParticles = 
-                ParticleSystem.Random.Next(minNumParticles, maxNumParticles);
+            int numParticles =
+                GameDevGame.Random.Next(minNumParticles, maxNumParticles);
 
             // create that many particles, if you can.
             for (int i = 0; i < numParticles && freeParticles.Count > 0; i++)
@@ -270,16 +262,16 @@ namespace GameDev.Core.Particles
             Vector2 direction = PickRandomDirection();
 
             // pick some random values for our particle
-            float velocity = 
-                ParticleSystem.RandomBetween(minInitialSpeed, maxInitialSpeed);
-            float acceleration = 
-                ParticleSystem.RandomBetween(minAcceleration, maxAcceleration);
+            float velocity =
+                GameDevGame.RandomBetween(minInitialSpeed, maxInitialSpeed);
+            float acceleration =
+                GameDevGame.RandomBetween(minAcceleration, maxAcceleration);
             float lifetime =
-                ParticleSystem.RandomBetween(minLifetime, maxLifetime);
+                GameDevGame.RandomBetween(minLifetime, maxLifetime);
             float scale =
-                ParticleSystem.RandomBetween(minScale, maxScale);
+                GameDevGame.RandomBetween(minScale, maxScale);
             float rotationSpeed =
-                ParticleSystem.RandomBetween(minRotationSpeed, maxRotationSpeed);
+                GameDevGame.RandomBetween(minRotationSpeed, maxRotationSpeed);
 
             // then initialize it with those random values. initialize will save those,
             // and make sure it is marked as active.
@@ -295,7 +287,7 @@ namespace GameDev.Core.Particles
         /// </summary>
         protected virtual Vector2 PickRandomDirection()
         {
-            float angle = ParticleSystem.RandomBetween(0, MathHelper.TwoPi);
+            float angle = GameDevGame.RandomBetween(0, MathHelper.TwoPi);
             return new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
         }
 
@@ -323,11 +315,7 @@ namespace GameDev.Core.Particles
                     {
                         freeParticles.Enqueue(p);
                     }
-                }
-                else
-                {
-                    freeParticles.Enqueue(p);
-                }
+                }   
             }
 
             base.Update(gameTime);
@@ -341,6 +329,7 @@ namespace GameDev.Core.Particles
         {
             // tell sprite batch to begin, using the spriteBlendMode specified in
             // initializeConstants
+            GameDevGame.Current.ParticleSpriteBatch.Begin(SpriteSortMode.Deferred, blendState);
             
             foreach (Particle p in particles)
             {
@@ -365,30 +354,19 @@ namespace GameDev.Core.Particles
                 // since we want the maximum alpha to be 1, not .25, we'll scale the 
                 // entire equation by 4.
                 float alpha = 4 * normalizedLifetime * (1 - normalizedLifetime);
-                Color color = new Color(new Vector4(1, 1, 1, alpha));
+				Color color = Color.White * alpha;
 
                 // make particles grow as they age. they'll start at 75% of their size,
                 // and increase to 100% once they're finished.
                 float scale = p.Scale * (.75f + .25f * normalizedLifetime);
 
-                GameDevGame.Current.SpriteBatch.Draw(texture, p.Position, null, color,
+                GameDevGame.Current.ParticleSpriteBatch.Draw(texture, p.Position, null, color,
                     p.Rotation, origin, scale, SpriteEffects.None, 0.0f);
             }
 
+            GameDevGame.Current.ParticleSpriteBatch.End();
+
             base.Draw(gameTime);
         }
-
-        #region Helper Functions
-
-        //  a handy little function that gives a random float between two
-        // values. This will be used in several places in the sample, in particilar in
-        // ParticleSystem.InitializeParticle.
-        public static float RandomBetween(float min, float max)
-        {
-            return min + (float)random.NextDouble() * (max - min);
-        }
-
-        #endregion
-
     }
 }

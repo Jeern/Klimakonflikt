@@ -57,7 +57,6 @@ namespace KlimaKonflikt.Scenes
         private GraphicTimer m_timer;
         private float m_timeTillSmokePuff;
 
-        private SimpleDirectionController m_DirectionController;
         private SoundEffect m_SeedPlanting, m_OilDrip, m_SeedFueling, m_OilFueling;
         private SoundEffectInstance m_MainGameTune;
         private Point m_OilTowerBeginTilePosition, m_WheelbarrowBeginTilePosition;
@@ -602,7 +601,7 @@ namespace KlimaKonflikt.Scenes
                 {
                     m_smokeParticle.AddParticles(fire.GetPosition().ToVector2());
                 }
-                m_timeTillSmokePuff = ParticleSystem.Random.Next(750);
+                m_timeTillSmokePuff = GameDevGame.Random.Next(750);
             }
 
             base.Update(gameTime);
@@ -614,7 +613,7 @@ namespace KlimaKonflikt.Scenes
             Game.GraphicsDevice.Clear(m_Background);
 
             // TODO: Add your drawing code here
-            SpriteBatch.Begin();
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
 
             base.Draw(gameTime);
@@ -747,9 +746,9 @@ namespace KlimaKonflikt.Scenes
             {
                 DrawOverlay("GAME won by player " + (m_Players.IndexOf(m_roundWinner) + 1));
             }
-            m_smokeParticle.Draw(gameTime);
 
             SpriteBatch.End();
+            m_smokeParticle.Draw(gameTime);
         }
 
         #endregion

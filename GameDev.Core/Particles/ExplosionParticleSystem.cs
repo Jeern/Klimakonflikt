@@ -1,12 +1,13 @@
-#region File Description
 //-----------------------------------------------------------------------------
 // ExplosionParticleSystem.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
-#endregion
 
+using System;
+using System.Collections.Generic;
+using System.Text;
 #if SILVERLIGHT
 using SilverArcade.SilverSprite;
 using SilverArcade.SilverSprite.Graphics;
@@ -54,14 +55,21 @@ namespace GameDev.Core.Particles
             minScale = .3f;
             maxScale = 1.0f;
 
+            // we need to reduce the number of particles on Windows Phone in order to keep
+            // a good framerate
+#if WINDOWS_PHONE
+            minNumParticles = 10;
+            maxNumParticles = 12;
+#else
             minNumParticles = 20;
             maxNumParticles = 25;
+#endif
 
             minRotationSpeed = -MathHelper.PiOver4;
             maxRotationSpeed = MathHelper.PiOver4;
 
             // additive blending is very good at creating fiery effects.
-            //spriteBlendMode = SpriteBlendMode.Additive;
+			blendState = BlendState.Additive;
 
             DrawOrder = AdditiveDrawOrder;
         }

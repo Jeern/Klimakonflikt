@@ -1,16 +1,19 @@
-#region File Description
 //-----------------------------------------------------------------------------
 // Particle.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
-#endregion
 
+using System;
+using System.Collections.Generic;
+using System.Text;
 #if SILVERLIGHT
 using SilverArcade.SilverSprite;
+using SilverArcade.SilverSprite.Graphics;
 #else
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 #endif
 
 namespace GameDev.Core.Particles
@@ -96,7 +99,7 @@ namespace GameDev.Core.Particles
             this.TimeSinceStart = 0.0f;
 
             // set rotation to some random value between 0 and 360 degrees.
-            this.Rotation = ParticleSystem.RandomBetween(0, MathHelper.TwoPi);
+            this.Rotation = GameDevGame.RandomBetween(0, MathHelper.TwoPi);
         }
 
         // update is called by the ParticleSystem on every frame. This is where the

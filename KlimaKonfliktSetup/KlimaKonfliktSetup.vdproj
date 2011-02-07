@@ -279,7 +279,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:KlimaKonflikt"
         "ProductCode" = "8:{FA4C2CD2-6CDA-422C-AFF1-AF15E2A6D59C}"
-        "PackageCode" = "8:{AF3DCA73-0592-4689-A62A-B577A34571B6}"
+        "PackageCode" = "8:{F6CFB370-06A3-4101-8254-CA334321A6DE}"
         "UpgradeCode" = "8:{72B41BDA-60DE-4E72-885D-62FF2EBD6639}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -399,6 +399,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_15659D9629154C6CBE93A72A62ABEA83"
+            {
+            "Name" = "8:KlimaKonflikt"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_F5DBF3E665A84601BDC90494CE06E792"
+            "Folder" = "8:_B773250ABB5640D799797075DCC85EF0"
+            "WorkingFolder" = "8:_77C317263FD24F68B58E05212A2E0C95"
+            "Icon" = "8:_F5DBF3E665A84601BDC90494CE06E792"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_2EE0E594C0EC424DB619E4B4113013CC"
+            {
+            "Name" = "8:KlimaKonflikt"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_F5DBF3E665A84601BDC90494CE06E792"
+            "Folder" = "8:_66F072B31C334C01B53F44C90CC2268E"
+            "WorkingFolder" = "8:_77C317263FD24F68B58E05212A2E0C95"
+            "Icon" = "8:_F5DBF3E665A84601BDC90494CE06E792"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
