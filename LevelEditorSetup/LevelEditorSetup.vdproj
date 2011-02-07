@@ -149,11 +149,6 @@
             "AssemblyAsmDisplayName" = "8:LevelEditor.Core, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_BC9EA25C490995D5B431C01F77D9E0FA"
-                    {
-                    "Name" = "8:LevelEditor.Core.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:LevelEditor.Core.dll"
             "TargetName" = "8:"
@@ -418,6 +413,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_469B044A16C34FE0B5FC1F072A55E05D"
+            {
+            "Name" = "8:KK LevelEditor"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B9B0CDE28631440DA0F1CEDC0FD9A6FD"
+            "Folder" = "8:_284AD840B6E1491FA7036BD359BCDBEE"
+            "WorkingFolder" = "8:_549C859979474C4E96774D9D0AF265C4"
+            "Icon" = "8:_B9B0CDE28631440DA0F1CEDC0FD9A6FD"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B67D732DD2C745339786FEAE2864FE31"
+            {
+            "Name" = "8:KK LevelEditor"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B9B0CDE28631440DA0F1CEDC0FD9A6FD"
+            "Folder" = "8:_217384A4A1FC4DEDA1B3BA5CA84A61B9"
+            "WorkingFolder" = "8:_549C859979474C4E96774D9D0AF265C4"
+            "Icon" = "8:_B9B0CDE28631440DA0F1CEDC0FD9A6FD"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {

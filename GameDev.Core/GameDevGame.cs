@@ -11,7 +11,12 @@ namespace GameDev.Core
 {
     public class GameDevGame : Game
     {
-        public Random Random = new Random();
+        private static Random random = new Random();
+        public static Random Random
+        {
+            get { return random; }
+        }
+
 
         static object _locker = new object();
         private static GameDevGame m_game;
@@ -29,6 +34,7 @@ namespace GameDev.Core
                 }
             }
         public SpriteBatch SpriteBatch { get; set; }
+        public SpriteBatch ParticleSpriteBatch { get; set; }
         public float GameSpeed { get; set; }
 
         public Vector2 ViewPortSize { get {
@@ -53,8 +59,21 @@ namespace GameDev.Core
         {
             base.Initialize();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            ParticleSpriteBatch = new SpriteBatch(GraphicsDevice);
+            
             this.DebugFont = Content.Load<SpriteFont>("DebugFont");
         }
+
+
+        // From the Particles Sample on the XNA/MSDN site
+        //  a handy little function that gives a random float between two
+        // values. This will be used in several places in the sample, in particilar in
+        // ParticleSystem.InitializeParticle.
+        public static float RandomBetween(float min, float max)
+        {
+            return min + (float)random.NextDouble() * (max - min);
+        }
+
 
     }
 }

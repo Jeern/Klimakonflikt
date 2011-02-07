@@ -144,7 +144,7 @@ namespace KlimaKonflikt.Scenes
             {
                 m_smokeParticleSystem.AddParticles(m_fireOil.Position + Vector2Helper.Down * 8);
                 m_smokeParticleSystem.AddParticles(m_fireSeed.Position + Vector2Helper.Down * 8);
-                m_timeToNextSmokePuff = GameDevGame.Current.Random.Next(300);
+                m_timeToNextSmokePuff = GameDevGame.Random.Next(300);
             }
 
         }

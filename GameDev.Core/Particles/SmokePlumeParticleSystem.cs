@@ -1,13 +1,13 @@
-#region File Description
 //-----------------------------------------------------------------------------
 // SmokePlumeParticleSystem.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
-#endregion
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 #if SILVERLIGHT
 using SilverArcade.SilverSprite;
 using SilverArcade.SilverSprite.Graphics;
@@ -51,7 +51,7 @@ namespace GameDev.Core.Particles
             maxLifetime = 3.0f;
 
             minScale = .1f;
-            maxScale = .40f;
+            maxScale = .4f;
 
             minNumParticles = 2;
             maxNumParticles = 5;
@@ -60,7 +60,7 @@ namespace GameDev.Core.Particles
             minRotationSpeed = -MathHelper.PiOver4 / 2.0f;
             maxRotationSpeed = MathHelper.PiOver4 / 2.0f;
 
-            //spriteBlendMode = SpriteBlendMode.AlphaBlend;
+			blendState = BlendState.AlphaBlend;
 
             DrawOrder = AlphaBlendDrawOrder;
         }
@@ -74,7 +74,7 @@ namespace GameDev.Core.Particles
         {
             // Point the particles somewhere between 80 and 100 degrees.
             // tweak this to make the smoke have more or less spread.
-            float radians = ParticleSystem.RandomBetween(
+            float radians = GameDevGame.RandomBetween(
                 MathHelper.ToRadians(80), MathHelper.ToRadians(100));
 
             Vector2 direction = Vector2.Zero;
@@ -97,7 +97,7 @@ namespace GameDev.Core.Particles
 
             // the base is mostly good, but we want to simulate a little bit of wind
             // heading to the right.
-            p.Acceleration.X += ParticleSystem.RandomBetween(10, 50);
+            p.Acceleration.X += GameDevGame.RandomBetween(10, 50);
         }
     }
 }

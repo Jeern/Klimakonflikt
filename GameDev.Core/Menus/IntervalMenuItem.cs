@@ -53,7 +53,6 @@ namespace GameDev.Core.Menus
 
 
         private List<Rectangle> m_tickMarks = new List<Rectangle>();
-        private Rectangle m_sliderBar;
         Vector2 m_textSize;
 
         public IntervalMenuItem(string name, SpriteFont font, string text, int maxValue, int minValue, int tickInterval) : this(name, font, text, Vector2.Zero, Color.White, Color.Gray, true, maxValue, minValue, tickInterval)
