@@ -151,12 +151,14 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Ejerskab.cs" />
+    <Compile Include="FlowerSackController.cs" />
     <Compile Include="GameImages.cs" />
     <Compile Include="KKGameMenu.cs" />
     <Compile Include="KKGameBoard.cs" />
     <Compile Include="KKMonster.cs" />
     <Compile Include="LevelLoader.cs" />
     <Compile Include="KKPlayer.cs" />
+    <Compile Include="OilController.cs" />
     <Compile Include="Scenes\InstructionsScene.cs" />
     <Compile Include="Scenes\KKMenuScene.cs" />
     <Compile Include="Scenes\CreditsScene.cs" />
